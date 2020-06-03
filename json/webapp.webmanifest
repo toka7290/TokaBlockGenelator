@@ -1,7 +1,7 @@
 {
   "name": "とかさんのBlockGenelator",
-  "short_name": "ManifestGenelator",
-  "description": "Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。",
+  "short_name": "BlockGenelator",
+  "description": "Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。block jsonを簡単に作ることができます。",
   "display": "standalone",
   "icons": [
     {
