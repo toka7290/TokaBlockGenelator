@@ -1,11 +1,19 @@
 $(function(){
     // 宣言
+    var isChanged = false;
     var format_version = "1.16.0";
     var is_separator_drag = false;
     onChangedJSON();
+    // ページ離脱時に警告表示
+    $(window).bind("beforeunload", function() {
+        if (isChanged) {
+            return "このページを離れようとしています。";
+        }
+    });
     // 変更
     $(document).on("change",'input,textarea,select',function(){
         onChangedJSON();
+        isChanged = true;
     });
     // セパレータ移動
     $(".separator").on("mousedown",function(e){
@@ -34,19 +42,49 @@ $(function(){
             $(".separator").next().css("flex-basis",nextwidth);
         }
     });
+    // シェア
+    $('#page_share').on("click",function(){
+        const data = {
+            title: "とかさんのBlockGenelator",
+            text: "アドオン作成補助ツールblock jsonを簡単に作成・編集",
+            url: "https://toka7290.github.io/TokaBlockGenelator/"
+        }
+        if (navigator.share) {
+            navigator.share(data);
+        }
+    });
     // 外部インポート
     $("#input_file").on("change",function(){
-        var data = $("#input_file").prop('files')[0]; 
-        var file_reader = new FileReader();
-        file_reader.onload = function(){
-            json_text = file_reader.result;
-            import_data(json_text);
-        };
-        try{
-            file_reader.readAsText(data);
-        }catch(e){
-            console.error("error:"+e);
+        importFile();
+    });
+    // ファイルドラッグ&ドロップ
+    $(window).on("dragover",function(event){
+        event.preventDefault();
+        $(".import_file").addClass('ondrag');
+    });
+    $(window).on("dragleave",function(event){
+        event.preventDefault();
+        $(".import_file").removeClass('dragover ondrag');
+    });
+    $(".import_file").on("dragover",function(event){
+        event.preventDefault();
+        $(".import_file").addClass('dragover');
+    });
+    $(".import_file").on("dragleave",function(event){
+        event.preventDefault();
+        $(".import_file").removeClass('dragover ondrag');
+    });
+    $(".import_file").on("drop",function(_event){
+        isChanged = true;
+        $(".import_file").removeClass('dragover ondrag');
+        var event = _event;
+        if( _event.originalEvent ){
+            event = _event.originalEvent;
         }
+        event.stopPropagation();
+        event.preventDefault();
+        $("#input_file").prop('files', event.dataTransfer.files);
+        importFile();
     });
     // プレビュー表示切替
     $("p#show_preview").on("click",function(){
@@ -112,6 +150,20 @@ $(function(){
         format_version = $('#format_version').val();
     });
 
+    // インポート処理
+    function importFile(){
+        var data = $("#input_file").prop('files')[0]; 
+        var file_reader = new FileReader();
+        file_reader.onload = function(){
+            json_text = file_reader.result;
+            import_data(json_text);
+        };
+        try{
+            file_reader.readAsText(data);
+        }catch(e){
+            console.error("error:"+e);
+        }
+    }
     // 更新処理
     function onChangedJSON(){
         onChangedflammable();
@@ -167,7 +219,6 @@ $(function(){
 
         block_ID = $('#description_block_name').val();
         ID = block_ID.split(/:/);
-        console.log(ID);
         if(block_ID==""){
             //ブロックIDが空です
             addIssue('error',"[Description:identifier] ブロックIDが空です。\"名前空間:ブロックID\"を入力してください。");

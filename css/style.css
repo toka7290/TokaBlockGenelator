@@ -154,14 +154,14 @@ div.header_menu{
     -moz-user-select: none;
     -ms-user-select: none;
 }
-div#import_file{
+div.import_file{
     display: inline-block;
 }
-div#import_file label{
+div.import_file label{
     margin: 0;
     padding: 0.5rem;
 }
-div#import_file input{
+div.import_file input{
     display: none;
 }
 div.header_menu p{
@@ -173,7 +173,7 @@ div.header_menu p{
     transition-property: background-color;
 }
 div.header_menu p:hover,
-div#import_file label:hover{
+div.import_file label:hover{
     cursor: pointer;
     background-color: var(--color_header_hover);
 }
@@ -201,6 +201,10 @@ div.header_menu_alt > *{
     margin: 0;
     white-space: nowrap;
 }
+div.header_menu_alt > *.ondrag{
+    outline: 5px dashed var(--color_header_text);
+}
+div.header_menu_alt > *.dragover,
 div.header_menu_alt > *:hover{
     cursor: pointer;
     transition: 0.5s;
@@ -217,6 +221,16 @@ div.header_menu_alt a{
     display: inline-block;
     line-height: 0;
 }
+ul.share_page{
+    list-style: none;
+    position: absolute;
+    z-index: -10;
+    top: 3rem;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    background-color: var(--color_header);
+}
 ul.more_info{
     display: none;
     list-style: none;
@@ -228,9 +242,12 @@ ul.more_info{
     margin: 0;
     background-color: var(--color_header);
 }
+div.open_share_page:hover ul.share_page,
 div.open_more_info:hover ul.more_info{
     display: block;
+    z-index: 10;
 }
+ul.share_page li,
 ul.more_info a{
     display: flex;
     align-items: center;
@@ -240,6 +257,7 @@ ul.more_info a{
     transition-duration: 0.5s;
     transition-property: background-color;
 }
+ul.share_page li:hover,
 ul.more_info a:hover{
     background-color: var(--color_header_2_hover);
 }
@@ -397,6 +415,10 @@ div.issue_contlrol_bar{
     background-color: var(--color_toolbar);
     padding: 2px;
     vertical-align: middle;
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
 div.issue_contlrol_bar:hover{
     cursor: pointer;
@@ -459,6 +481,10 @@ ul.issue_list li:nth-child(2n){
 ul.issue_list li img{
     width: 1.2rem;
     vertical-align: middle;
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
 ul.issue_list li p{
     display: inline;

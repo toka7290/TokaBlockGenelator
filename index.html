@@ -80,23 +80,37 @@
         <link rel="stylesheet" href="css/phone.css" media="(max-width: 35rem)">
     </head>
     <body>
+        <div id="fb-root"></div>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v7.0" nonce="RjOu0Nz6"></script>
         <header class="header">
             <div class="header_main">
                 <img src="img/icon.webp" alt="" class="title_icon" onerror="this.src='img/icon_2000.png'">
                 <div class="title">
                     <h1>とかさんのBlockGenelator</h1>
-                    <p>version:0.0.1</p>
+                    <p>version:0.2.0</p>
                 </div>
                 <div class="header_menu">
-                    <div id="import_file"><label for="input_file">Import</label><input type="file" name="input_file" id="input_file" accept=".json"></div>
+                    <div class="import_file"><label for="input_file">Import</label><input type="file" name="input_file" id="input_file" accept=".json"></div>
                     <p id="show_preview">Preview</p>
+                    <p id="page_share">share</p>
                     <p id="open_about">About</p>
                 </div>
                 <div class="header_menu_alt">
-                    <label for="input_file">
+                    <label for="input_file" class="import_file">
                         <img src="img/import.svg" alt="">
                         <p>Import</p>
                     </label>
+                    <div class="open_share_page">
+                        <img src="img/share.svg" alt="share">
+                        <ul class="share_page">
+                            <li><a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-url="https://toka7290.github.io/TokaBlockGenelator/" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></li>
+                            <li><div class="fb-share-button" data-href="https://toka7290.github.io/TokaBlockGenelator/" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ftoka7290.github.io%2FTokaBlockGenelator%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div></li>
+                            <li>
+                                <div class="line-it-button" data-lang="ja" data-type="share-a" data-ver="3" data-url="https://toka7290.github.io/TokaBlockGenelator/" data-color="default" data-size="large" data-count="false" style="display: none;"></div>
+                                <script src="https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loader.min.js" async="async" defer="defer"></script>
+                            </li>
+                        </ul>
+                    </div>
                     <div class="open_more_info">
                         <img src="img/more.svg" alt="">
                         <ul class="more_info">
@@ -115,7 +129,7 @@
                 <div class="about_content">
                     <img src="img/icon.webp" alt="" onerror="this.src='img/icon_2000.png'">
                     <h2>とかさんのBlockGenelator</h2>
-                    <p>version:0.0.1</p>
+                    <p>version:0.2.0</p>
                     <div class="about_external_link">
                         <a href="http://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener"><img src="img/homepage.svg" alt=""></a>
                         <a href="https://twitter.com/toka7290" target="_blank" title="Twitter" rel="noopener"><img src="img/twitter.svg" alt=""></a>
@@ -128,7 +142,7 @@
         <div class="content">
             <div class="editor">
                 <form name="editor_main">
-                    <fieldset class="basic">
+                    <fieldset class="basic" title="このブロックのフォーマットバージョンを設定します。">
                         <label for="format_version">フォーマットバージョン</label>
                         <select name="format_version" id="format_version">
                             <option value="1.16.0">1.16.0</option>

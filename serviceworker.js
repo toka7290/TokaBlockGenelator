@@ -19,6 +19,7 @@ var urlsToCache = [
     '/TokaBlockGenelator/img/icon_apple-touch-icon.png',
     '/TokaBlockGenelator/img/import.svg',
     '/TokaBlockGenelator/img/more.svg',
+    '/TokaBlockGenelator/img/share.svg',
     '/TokaBlockGenelator/img/twitter.svg',
     '/TokaBlockGenelator/img/warning.svg',
     '/TokaBlockGenelator/js/main.js',
@@ -36,6 +37,7 @@ self.addEventListener('install', function(event) {
                 return cache.addAll(urlsToCache);
             })
     );
+    event.waitUntil(self.skipWaiting());
 });
 
 // リソースフェッチ時のキャッシュロード処理
