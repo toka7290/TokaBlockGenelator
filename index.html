@@ -76,7 +76,7 @@
         <!-- css -->
         <link rel="stylesheet" href="css/color.css" media="all" async>
         <link rel="stylesheet" href="css/style.css" media="all" async>
-        <link rel="stylesheet" href="css/prism.css" media="all" async>
+        <link rel="stylesheet" href="css/prism.css" media="all" defer>
         <link rel="stylesheet" href="css/phone.css" media="(max-width: 35rem)" async>
     </head>
     <body>
@@ -185,7 +185,9 @@
                         <div title="このブロックの地図での色を設定します。#000000~#ffffffまで設定できます。">
                             <label for="components_map_color">地図の色</label>
                             <input type="text" name="components_map_color" id="components_map_color">
-                            <input type="color" name="components_map_color_pick" id="components_map_color_pick">
+                            <label>
+                                <input type="color" name="components_map_color_pick" id="components_map_color_pick">
+                            </label>
                         </div>
                         <div title="このブロックが吸収する光の量を設定します。">
                             <label for="components_block_light_absorption">光の吸収</label>
