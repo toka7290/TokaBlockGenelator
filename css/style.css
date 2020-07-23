@@ -17,6 +17,7 @@ body{
 fieldset{
     border-color: var(--color_boader);
     border-radius: 4px;
+    word-wrap: anywhere;
 }
 p{
     margin: 0;
@@ -115,7 +116,6 @@ label+*{
 }
 header{
     /* ヘッダー */
-    max-height: 3rem;
     color: var(--color_header_text);
     background-color: var(--color_header);
 }
@@ -156,10 +156,10 @@ div.header_menu{
 }
 div.import_file{
     display: inline-block;
+    padding: 0.5rem;
 }
 div.import_file label{
     margin: 0;
-    padding: 0.5rem;
 }
 div.import_file input{
     display: none;
@@ -221,16 +221,6 @@ div.header_menu_alt a{
     display: inline-block;
     line-height: 0;
 }
-ul.share_page{
-    list-style: none;
-    position: absolute;
-    z-index: -10;
-    top: 3rem;
-    right: 0;
-    padding: 0;
-    margin: 0;
-    background-color: var(--color_header);
-}
 ul.more_info{
     display: none;
     list-style: none;
@@ -242,12 +232,10 @@ ul.more_info{
     margin: 0;
     background-color: var(--color_header);
 }
-div.open_share_page:hover ul.share_page,
 div.open_more_info:hover ul.more_info{
     display: block;
     z-index: 10;
 }
-ul.share_page li,
 ul.more_info a{
     display: flex;
     align-items: center;
@@ -257,7 +245,6 @@ ul.more_info a{
     transition-duration: 0.5s;
     transition-property: background-color;
 }
-ul.share_page li:hover,
 ul.more_info a:hover{
     background-color: var(--color_header_2_hover);
 }
