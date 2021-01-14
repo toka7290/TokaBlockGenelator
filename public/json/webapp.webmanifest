@@ -1,6 +1,6 @@
 {
-  "name": "とかさんのBlockGenelator",
-  "short_name": "BlockGenelator",
+  "name": "とかさんのBlockGenerator",
+  "short_name": "BlockGenerator",
   "description": "Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。block jsonを簡単に作ることができます。",
   "display": "standalone",
   "icons": [
@@ -18,7 +18,7 @@
       "sizes": "2000x2000"
     }
   ],
-  "start_url": "/TokaBlockGenelator/index.html",
+  "start_url": "https://toka-block-genelator.vercel.app",
   "theme_color": "#60ad5e",
   "background_color": "#e8f5e9"
 }
