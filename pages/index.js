@@ -1,50 +1,11 @@
-import Head from "next/head";
+import Image from "next/image";
 
 export default function Home() {
   return (
     <div>
-      <Head>
-        <meta charset="UTF-8" />
-        <title>とかさんのBlockGenerator</title>
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <meta
-          name="keywords"
-          content="とかさん,Minecraft,マインクラフト,block,ブロック,json,Generator,tool,ツール,Addon,アドオン"
-        />
-        <meta
-          name="Description"
-          content="Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。block jsonを簡単に作ることができます。"
-        />
-        <meta http-equiv="content-language" content="ja" />
-        <meta name="theme-color" content="#60ad5e" />
-        <meta
-          property="og:url"
-          content="https://toka7290.github.io/TokaBlockGenelator/"
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="とかさんのBlockGenerator" />
-        <meta property="og:title" content="BlockGenerator" />
-        <meta
-          property="og:description"
-          content="Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。block jsonを簡単に作ることができます。"
-        />
-        <meta
-          property="og:image"
-          content="https://toka7290.github.io/TokaBlockGenelator/img/icon_2000.png"
-        />
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:site" content="@toka7290" />
-        <link rel="apple-touch-icon" href="/img/icon_apple-touch-icon.png" />
-        <link rel="icon" href="/img/icon.webp" />
-        <link rel="manifest" href="/json/webapp.webmanifest" />
-        <script src="/lib/jquery-3.5.1.min.js" defer></script>
-        <script src="/lib/prism.js" defer></script>
-        <script type="text/javascript" src="/js/main.js" defer></script>
-      </Head>
-
       <header class="header">
         <div class="header_main">
-          <img
+          <Image
             src="/img/icon.webp"
             alt=""
             class="title_icon"
@@ -70,11 +31,11 @@ export default function Home() {
           </div>
           <div class="header_menu_alt">
             <label for="input_file" class="import_file">
-              <img src="/img/import.svg" alt="" />
+              <Image src="/img/import.svg" alt="" />
               <p>Import</p>
             </label>
             <div class="open_more_info">
-              <img src="/img/more.svg" alt="" />
+              <Image src="/img/more.svg" alt="" />
               <ul class="more_info">
                 <li>
                   <a
@@ -83,7 +44,7 @@ export default function Home() {
                     title="とかさんのホームページ"
                     rel="noopener"
                   >
-                    <img src="/img/homepage.svg" alt="" />
+                    <Image src="/img/homepage.svg" alt="" />
                     <p>Homepage</p>
                   </a>
                 </li>
@@ -94,7 +55,7 @@ export default function Home() {
                     title="Twitter"
                     rel="noopener"
                   >
-                    <img src="/img/twitter.svg" alt="" />
+                    <Image src="/img/twitter.svg" alt="" />
                     <p>Twitter</p>
                   </a>
                 </li>
@@ -105,7 +66,7 @@ export default function Home() {
                     title="Github"
                     rel="noopener"
                   >
-                    <img src="/img/github.svg" alt="" />
+                    <Image src="/img/github.svg" alt="" />
                     <p>GitHub</p>
                   </a>
                 </li>
@@ -116,7 +77,7 @@ export default function Home() {
                     title="Block.jsonの解説ページに飛びます。"
                     rel="noopener"
                   >
-                    <img src="/img/help.svg" alt="" />
+                    <Image src="/img/help.svg" alt="" />
                     <p>Block Help</p>
                   </a>
                 </li>
@@ -126,10 +87,10 @@ export default function Home() {
         </div>
         <div class="page_about">
           <div class="close_about">
-            <img src="/img/close.svg" alt="" />
+            <Image src="/img/close.svg" alt="" />
           </div>
           <div class="about_content">
-            <img
+            <Image
               src="/img/icon.webp"
               alt=""
               onerror="this.src='/img/icon_2000.png'"
@@ -143,7 +104,7 @@ export default function Home() {
                 title="とかさんのホームページ"
                 rel="noopener"
               >
-                <img src="/img/homepage.svg" alt="" />
+                <Image src="/img/homepage.svg" alt="" />
               </a>
               <a
                 href="https://twitter.com/toka7290"
@@ -151,7 +112,7 @@ export default function Home() {
                 title="Twitter"
                 rel="noopener"
               >
-                <img src="/img/twitter.svg" alt="" />
+                <Image src="/img/twitter.svg" alt="" />
               </a>
               <a
                 href="https://github.com/toka7290/TokaBlockGenelator"
@@ -159,7 +120,7 @@ export default function Home() {
                 title="Github"
                 rel="noopener"
               >
-                <img src="/img/github.svg" alt="" />
+                <Image src="/img/github.svg" alt="" />
               </a>
               <a
                 href="http://tokamcwin10.blog.jp/archives/37132278.html"
@@ -167,7 +128,7 @@ export default function Home() {
                 title="Block.jsonの解説ページに飛びます。"
                 rel="noopener"
               >
-                <img src="/img/help.svg" alt="" />
+                <Image src="/img/help.svg" alt="" />
               </a>
             </div>
           </div>
@@ -345,16 +306,16 @@ export default function Home() {
           <div class="issue">
             <div class="issue_contlrol_bar">
               <div class="issue_contlrol_label">
-                <img src="/img/chevron-up.svg" alt="img" class="open" />
+                <Image src="/img/chevron-up.svg" alt="img" class="open" />
                 <span>問題</span>
               </div>
               <div class="issue_contlrol_num">
                 <div class="issue_contlrol_warning">
-                  <img src="/img/warning.svg" alt="" />
+                  <Image src="/img/warning.svg" alt="" />
                   <span class="issue_warning_num">警告:0</span>
                 </div>
                 <div class="issue_contlrol_error">
-                  <img src="/img/error.svg" alt="" />
+                  <Image src="/img/error.svg" alt="" />
                   <span class="issue_error_num">エラー:0</span>
                 </div>
               </div>
