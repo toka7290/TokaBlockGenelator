@@ -1,32 +1,33 @@
-div.title{
+@media screen and (min-width: 35rem) {
+  div.title {
     /* ヘッダー */
     display: none;
-}
-.title_icon{
+  }
+  .title_icon {
     display: block;
-}
-div.header_menu_alt{
+  }
+  div.header_menu_alt {
     display: none;
-}
-div.header_menu{
+  }
+  div.header_menu {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
-}
-div.content{
+  }
+  div.content {
     /* コンテンツ */
     display: flex;
     flex-direction: column;
     position: relative;
     overflow-y: hidden;
-}
-div.data_check{
+  }
+  div.data_check {
     /* データチェック */
     overflow-y: unset;
     height: auto;
     flex-basis: auto;
-}
-div.preview{
+  }
+  div.preview {
     /* プレビュー */
     display: none;
     z-index: 1;
@@ -35,8 +36,9 @@ div.preview{
     left: 0;
     right: 0;
     bottom: 0;
-}
-div.separator{
+  }
+  div.separator {
     /* セパレータ */
     display: none;
+  }
 }
