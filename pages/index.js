@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div>
+    <>
       <header class="header">
         <div class="header_main">
           <Image
@@ -326,6 +326,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
