@@ -23,7 +23,7 @@ function MyApp({ Component, pageProps }) {
         <meta name="theme-color" content="#60ad5e" />
         <meta
           property="og:url"
-          content="https://toka7290.github.io/TokaBlockGenelator/"
+          content="https://toka-block-genelator.vercel.app/"
         />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="とかさんのBlockGenerator" />
@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps }) {
         />
         <meta
           property="og:image"
-          content="https://toka7290.github.io/TokaBlockGenelator/img/icon_2000.png"
+          content="https://toka-block-genelator.vercel.app/img/icon_2000.png"
         />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:site" content="@toka7290" />

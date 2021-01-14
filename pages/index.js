@@ -141,6 +141,7 @@ export default function Home() {
               class="basic"
               title="このブロックのフォーマットバージョンを設定します。"
             >
+              <legend>Definition</legend>
               <label for="format_version">フォーマットバージョン</label>
               <select name="format_version" id="format_version">
                 <option value="1.16.0">1.16.0</option>
@@ -301,7 +302,9 @@ export default function Home() {
             <pre class="language-json">
               <code class="language-json"></code>
             </pre>
-            <textarea name="code_buffer" id="code_buffer"></textarea>
+            <label>
+              <textarea name="code_buffer" id="code_buffer"></textarea>
+            </label>
           </div>
           <div class="issue">
             <div class="issue_contlrol_bar">

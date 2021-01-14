@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/websaite#">
         <meta charset="UTF-8">
         <title>とかさんのBlockGenelator</title>
@@ -8,7 +9,7 @@
         <meta name="keywords" content="とかさん,Minecraft,マインクラフト,block,ブロック,json,Genelator,tool,ツール,Addon,アドオン">
         <meta name="Description" content="Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。block jsonを簡単に作ることができます。">
         <meta http-equiv="content-language" content="ja">
-        <meta name ="theme-color" content="#60ad5e">
+        <meta name="theme-color" content="#60ad5e">
         <meta property="og:url" content="https://toka7290.github.io/TokaBlockGenelator/" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="とかさんのBlockGenelator" />
@@ -50,16 +51,16 @@
         </script>
         <script>
             if ('serviceWorker' in navigator) {
-                window.addEventListener("load", function() {
-                    navigator.serviceWorker.register('/TokaBlockGenelator/serviceworker.js', {scope: '/TokaBlockGenelator/'})
-                    .then(function(reg) {
-                        // registration worked
-                        registration.onupdatefound = function() {
-                            registration.update();
-                        }
-                    }).catch(function(error) {
-                        // registration failed
-                    });
+                window.addEventListener("load", function () {
+                    navigator.serviceWorker.register('/TokaBlockGenelator/serviceworker.js', { scope: '/TokaBlockGenelator/' })
+                        .then(function (reg) {
+                            // registration worked
+                            registration.onupdatefound = function () {
+                                registration.update();
+                            }
+                        }).catch(function (error) {
+                            // registration failed
+                        });
                 });
             }
             let deferredPrompt;
@@ -79,6 +80,7 @@
         <link rel="stylesheet" href="css/prism.css" media="all" defer>
         <link rel="stylesheet" href="css/phone.css" media="(max-width: 35rem)" async>
     </head>
+
     <body>
         <header class="header">
             <div class="header_main">
@@ -101,10 +103,18 @@
                     <div class="open_more_info">
                         <img src="img/more.svg" alt="">
                         <ul class="more_info">
-                            <li><a href="http://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener"><img src="img/homepage.svg" alt=""><p>Homepage</p></a></li>
-                            <li><a href="https://twitter.com/toka7290" target="_blank" title="Twitter" rel="noopener"><img src="img/twitter.svg" alt=""><p>Twitter</p></a></li>
-                            <li><a href="https://github.com/toka7290/TokaBlockGenelator" target="_blank" title="Github" rel="noopener"><img src="img/github.svg" alt=""><p>GitHub</p></a></li>
-                            <li><a href="http://tokamcwin10.blog.jp/archives/37132278.html" target="_blank" title="Block.jsonの解説ページに飛びます。" rel="noopener"><img src="img/help.svg" alt=""><p>Block Help</p></a></li>
+                            <li><a href="http://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener"><img src="img/homepage.svg" alt="">
+                                    <p>Homepage</p>
+                                </a></li>
+                            <li><a href="https://twitter.com/toka7290" target="_blank" title="Twitter" rel="noopener"><img src="img/twitter.svg" alt="">
+                                    <p>Twitter</p>
+                                </a></li>
+                            <li><a href="https://github.com/toka7290/TokaBlockGenelator" target="_blank" title="Github" rel="noopener"><img src="img/github.svg" alt="">
+                                    <p>GitHub</p>
+                                </a></li>
+                            <li><a href="http://tokamcwin10.blog.jp/archives/37132278.html" target="_blank" title="Block.jsonの解説ページに飛びます。" rel="noopener"><img src="img/help.svg" alt="">
+                                    <p>Block Help</p>
+                                </a></li>
                         </ul>
                     </div>
                 </div>
@@ -130,6 +140,7 @@
             <div class="editor">
                 <form name="editor_main">
                     <fieldset class="basic" title="このブロックのフォーマットバージョンを設定します。">
+                        <legend>Definition</legend>
                         <label for="format_version">フォーマットバージョン</label>
                         <select name="format_version" id="format_version">
                             <option value="1.16.0">1.16.0</option>
@@ -209,6 +220,7 @@
                     <pre class="language-json">
                         <code class="language-json"></code>
                     </pre>
+                    <label></label>
                     <textarea name="code_buffer" id="code_buffer"></textarea>
                 </div>
                 <div class="issue">
@@ -236,4 +248,5 @@
             </div>
         </div>
     </body>
+
 </html>
