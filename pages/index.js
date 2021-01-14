@@ -40,15 +40,6 @@ export default function Home() {
         <script src="/lib/jquery-3.5.1.min.js" defer></script>
         <script src="/lib/prism.js" defer></script>
         <script type="text/javascript" src="/js/main.js" defer></script>
-        <link rel="stylesheet" href="/css/color.css" media="all" async />
-        <link rel="stylesheet" href="/css/style.css" media="all" async />
-        <link rel="stylesheet" href="/css/prism.css" media="all" defer />
-        <link
-          rel="stylesheet"
-          href="/css/phone.css"
-          media="(max-width: 35rem)"
-          async
-        />
       </Head>
 
       <header class="header">
