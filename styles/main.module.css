@@ -1,0 +1,10 @@
+.title_icon {
+  display: none;
+  margin: 0 0.5rem;
+  height: 2em;
+  align-self: center;
+}
+.open {
+  transform-origin: center;
+  transform: rotate(180deg);
+}
