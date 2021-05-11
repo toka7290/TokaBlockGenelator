@@ -21,10 +21,7 @@ function MyApp({ Component, pageProps }) {
         />
         <meta http-equiv="content-language" content="ja" />
         <meta name="theme-color" content="#60ad5e" />
-        <meta
-          property="og:url"
-          content="https://toka-block-genelator.vercel.app/"
-        />
+        <meta property="og:url" content="https://toka-block-genelator.vercel.app/" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="とかさんのBlockGenerator" />
         <meta property="og:title" content="BlockGenerator" />

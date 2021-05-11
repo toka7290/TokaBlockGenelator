@@ -1,5 +1,5 @@
 import Image from "next/image";
-import styles from "../styles/main.module.css";
+// import styles from "../styles/main.module.css";
 import React from "react";
 
 class Main extends React.Component {
@@ -38,13 +38,7 @@ class Main extends React.Component {
       <>
         <header className="header">
           <div className="header_main">
-            <Image
-              src="/img/icon.webp"
-              alt=""
-              className={styles.title_icon}
-              height={32}
-              width={32}
-            />
+            <Image src="/img/icon.webp" alt="" className="title_icon" height={32} width={32} />
             <div className="title">
               <h1>とかさんのBlockGenerator</h1>
               <p>version:0.3.0</p>
@@ -52,12 +46,7 @@ class Main extends React.Component {
             <div className="header_menu">
               <div className="import_file">
                 <label htmlFor="input_file">Import</label>
-                <input
-                  type="file"
-                  name="input_file"
-                  id="input_file"
-                  accept=".json"
-                />
+                <input type="file" name="input_file" id="input_file" accept=".json" />
               </div>
               <p id="show_preview">Preview</p>
               <p id="page_share">share</p>
@@ -78,12 +67,7 @@ class Main extends React.Component {
                       title="とかさんのホームページ"
                       rel="noopener"
                     >
-                      <Image
-                        src="/img/homepage.svg"
-                        alt=""
-                        height={32}
-                        width={32}
-                      />
+                      <Image src="/img/homepage.svg" alt="" height={32} width={32} />
                       <p>Homepage</p>
                     </a>
                   </li>
@@ -94,12 +78,7 @@ class Main extends React.Component {
                       title="Twitter"
                       rel="noopener"
                     >
-                      <Image
-                        src="/img/twitter.svg"
-                        alt=""
-                        height={32}
-                        width={32}
-                      />
+                      <Image src="/img/twitter.svg" alt="" height={32} width={32} />
                       <p>Twitter</p>
                     </a>
                   </li>
@@ -110,12 +89,7 @@ class Main extends React.Component {
                       title="Github"
                       rel="noopener"
                     >
-                      <Image
-                        src="/img/github.svg"
-                        alt=""
-                        height={32}
-                        width={32}
-                      />
+                      <Image src="/img/github.svg" alt="" height={32} width={32} />
                       <p>GitHub</p>
                     </a>
                   </li>
@@ -126,12 +100,7 @@ class Main extends React.Component {
                       title="Block.jsonの解説ページに飛びます。"
                       rel="noopener"
                     >
-                      <Image
-                        src="/img/help.svg"
-                        alt=""
-                        height={32}
-                        width={32}
-                      />
+                      <Image src="/img/help.svg" alt="" height={32} width={32} />
                       <p>Block Help</p>
                     </a>
                   </li>
@@ -154,12 +123,7 @@ class Main extends React.Component {
                   title="とかさんのホームページ"
                   rel="noopener"
                 >
-                  <Image
-                    src="/img/homepage.svg"
-                    alt=""
-                    height={32}
-                    width={32}
-                  />
+                  <Image src="/img/homepage.svg" alt="" height={32} width={32} />
                 </a>
                 <a
                   href="https://twitter.com/toka7290"
@@ -216,9 +180,7 @@ class Main extends React.Component {
                   />
                 </div>
                 <div title="このチェックを有効にすると、試験的なゲームプレイでのみブロックが有効化されます。">
-                  <label htmlFor="description_is_experimental">
-                    試験的なゲームプレイのみ
-                  </label>
+                  <label htmlFor="description_is_experimental">試験的なゲームプレイのみ</label>
                   <input
                     type="checkbox"
                     name="description_is_experimental"
@@ -253,9 +215,7 @@ class Main extends React.Component {
                   />
                 </div>
                 <div title="このブロックの破壊にかかる時間を設定します[秒]">
-                  <label htmlFor="components_destroy_time">
-                    破壊にかかる時間
-                  </label>
+                  <label htmlFor="components_destroy_time">破壊にかかる時間</label>
                   <input
                     type="number"
                     min="0"
@@ -269,9 +229,7 @@ class Main extends React.Component {
                   <p>s</p>
                 </div>
                 <div title="このブロックの爆発耐性を設定します。">
-                  <label htmlFor="components_explosion_resistance">
-                    爆発耐性
-                  </label>
+                  <label htmlFor="components_explosion_resistance">爆発耐性</label>
                   <input
                     type="number"
                     min="0"
@@ -345,9 +303,7 @@ class Main extends React.Component {
                   />
                 </div>
                 <div title="このブロックが吸収する光の量を設定します。">
-                  <label htmlFor="components_block_light_absorption">
-                    光の吸収
-                  </label>
+                  <label htmlFor="components_block_light_absorption">光の吸収</label>
                   <input
                     type="number"
                     min="0"
@@ -360,9 +316,7 @@ class Main extends React.Component {
                   />
                 </div>
                 <div title="このブロックが発する光の量を設定します。">
-                  <label htmlFor="components_block_light_emission">
-                    発光量
-                  </label>
+                  <label htmlFor="components_block_light_emission">発光量</label>
                   <input
                     type="number"
                     min="0.0"
@@ -401,7 +355,7 @@ class Main extends React.Component {
                   <Image
                     src="/img/chevron-up.svg"
                     alt="img"
-                    className={styles.open}
+                    className="open"
                     height={24}
                     width={24}
                   />
@@ -409,12 +363,7 @@ class Main extends React.Component {
                 </div>
                 <div className="issue_contlrol_num">
                   <div className="issue_contlrol_warning">
-                    <Image
-                      src="/img/warning.svg"
-                      alt=""
-                      height={19}
-                      width={19}
-                    />
+                    <Image src="/img/warning.svg" alt="" height={19} width={19} />
                     <span className="issue_warning_num">警告:0</span>
                   </div>
                   <div className="issue_contlrol_error">
