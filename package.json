@@ -8,5 +8,9 @@
   },
   "dependencies": {
     "nuxt": "^2.15.5"
+  },
+  "devDependencies": {
+    "@nuxtjs/svg": "^0.1.12",
+    "nuxt-svg-loader": "^1.2.0"
   }
 }

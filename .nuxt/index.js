@@ -60,7 +60,7 @@ async function createApp(ssrContext, config = {}) {
   // here we inject the router and store to all child components,
   // making them available everywhere as `this.$router` and `this.$store`.
   const app = {
-    head: {"meta":[],"link":[],"style":[],"script":[]},
+    head: {"title":"とかさんの Block Generator","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width,initial-scale=1"},{"name":"keywords","content":"とかさん,Minecraft,マインクラフト,block,ブロック,json,Generator,tool,ツール,Addon,アドオン"},{"name":"Description","content":"Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。block jsonを簡単に作ることができます。"},{"name":"theme-color","content":"#3870A9"},{"property":"og:url","content":"https:\u002F\u002Ftoka7290.github.io\u002FTokaTools\u002FTokaBlockGenerator\u002F"},{"property":"og:type","content":"website"},{"property":"og:site_name","content":"とかさんの Block Generator"},{"property":"og:title","content":"BlockGenerator"},{"property":"og:description","content":"Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。block jsonを簡単に作ることができます。"},{"property":"og:image","content":"https:\u002F\u002Ftoka7290.github.io\u002FTokaTools\u002FTokaBlockGenerator\u002Fimg\u002Ficon_2000.png"},{"name":"twitter:card","content":"summary"},{"name":"twitter:site","content":"@toka7290"}],"link":[{"rel":"apple-touch-icon","href":"\u002Ficon_apple-touch-icon.png"},{"rel":"icon","href":"\u002Ficon.svg"}],"script":[{"src":"\u002Flib\u002Fjquery-3.6.0.min.js"},{"src":"\u002Flib\u002Fprism.js"}],"style":[]},
 
     router,
     nuxt: {

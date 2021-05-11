@@ -6,6 +6,14 @@ import NuxtError from './components/nuxt-error.vue'
 import NuxtLoading from './components/nuxt-loading.vue'
 import NuxtBuildIndicator from './components/nuxt-build-indicator'
 
+import '..\\assets\\css\\color.min.css'
+
+import '..\\assets\\css\\phone.min.css'
+
+import '..\\assets\\css\\prism.min.css'
+
+import '..\\assets\\css\\style.min.css'
+
 import _6f6c098b from './layouts/default.vue'
 
 const layouts = { "_default": sanitizeComponent(_6f6c098b) }
@@ -94,6 +102,10 @@ export default {
 
     isFetching () {
       return this.nbFetching > 0
+    },
+
+    isPreview () {
+      return Boolean(this.$options.previewData)
     },
   },
 
