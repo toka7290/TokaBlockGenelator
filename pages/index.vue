@@ -7,7 +7,7 @@
         </div>
         <div class="title">
           <h1>とかさんの Block Generator</h1>
-          <p>version:1.1.0</p>
+          <p>version:nuxt_dev</p>
         </div>
         <div class="header-menu">
           <div class="header-menu-element import-file">
@@ -168,7 +168,7 @@
             />
             <div class="about-title">
               <h2>とかさんの Block Generator</h2>
-              <p>version:1.1.0</p>
+              <p>version:nuxt_dev</p>
             </div>
             <div class="about-external-link">
               <a
@@ -449,10 +449,14 @@
             <div class="editor-element-footer element-control">
               <div class="type-modal">
                 <label class="invisible-Control">
-                  <input type="button" class="modal-open" />
+                  <input
+                    type="button"
+                    class="modal-open"
+                    v-on:click="showModal"
+                  />
                   <div class="element-control-text">要素の追加・削除</div>
                 </label>
-                <div class="modal hide">
+                <div class="modal hide" v-on:click="closeModal">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -1335,6 +1339,20 @@ export default {
         default:
           this.$set(this.editor_show, 0, true);
           break;
+      }
+    },
+    showModal: function (event) {
+      /** @type {Element} */
+      const parent = event.target;
+      parent.parentElement.nextElementSibling.classList.remove("hide");
+    },
+    closeModal: function (event) {
+      /** @type {Element} */
+      const parent = event.target;
+      if (parent.className == "modal") {
+        parent.classList.add("hide");
+      } else if (parent.classList.contains("modal-close")) {
+        parent.closest(".modal").classList.add("hide");
       }
     },
   },

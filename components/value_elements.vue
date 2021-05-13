@@ -68,7 +68,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -326,7 +326,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -433,7 +433,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -508,7 +508,11 @@
             <div class="array-num">0</div>
             <input type="button" value="編集" class="modal-open" />
           </label>
-          <div class="modal hide">
+          <div
+            class="modal hide"
+            v-on:click="closeModal"
+            v-on:click="closeModal"
+          >
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -655,7 +659,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -829,7 +833,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -1247,7 +1251,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -1321,7 +1325,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -1413,7 +1417,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -1505,7 +1509,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -1597,7 +1601,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -1689,7 +1693,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -1781,7 +1785,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -1873,7 +1877,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -1965,7 +1969,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -2115,7 +2119,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -2213,7 +2217,11 @@
             <div class="array-num">0</div>
             <input type="button" value="編集" class="modal-open" />
           </label>
-          <div class="modal hide">
+          <div
+            class="modal hide"
+            v-on:click="closeModal"
+            v-on:click="closeModal"
+          >
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -2304,7 +2312,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -2403,7 +2411,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -2503,7 +2511,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -2577,7 +2585,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -2694,7 +2702,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -2757,7 +2765,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -2815,7 +2823,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -2903,7 +2911,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -2973,7 +2981,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -3173,7 +3181,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -3220,7 +3228,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -3303,7 +3311,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -3407,7 +3415,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -3468,7 +3476,11 @@
                             要素の追加・削除
                           </div>
                         </label>
-                        <div class="modal hide">
+                        <div
+                          class="modal hide"
+                          v-on:click="closeModal"
+                          v-on:click="closeModal"
+                        >
                           <div class="modal-dialog">
                             <div class="modal-content">
                               <div class="modal-header">
@@ -4149,7 +4161,7 @@
     </div>
     <div class="value-input type-modal">
       <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide">
+      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -4228,7 +4240,11 @@
                             要素の追加・削除
                           </div>
                         </label>
-                        <div class="modal hide">
+                        <div
+                          class="modal hide"
+                          v-on:click="closeModal"
+                          v-on:click="closeModal"
+                        >
                           <div class="modal-dialog">
                             <div class="modal-content">
                               <div class="modal-header">

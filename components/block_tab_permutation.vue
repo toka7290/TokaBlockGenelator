@@ -30,7 +30,7 @@
             <input type="button" class="modal-open" />
             <div class="element-control-text">要素の追加・削除</div>
           </label>
-          <div class="modal hide">
+          <div class="modal hide" v-on:click="closeModal">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
