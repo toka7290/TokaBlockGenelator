@@ -1,5 +1,6 @@
 export default {
   target: "static",
+  htmlAttrs: { dir: "ltr" },
   head: {
     title: "とかさんの Block Generator",
     meta: [
@@ -52,6 +53,9 @@ export default {
       {
         src: "/lib/prism.js",
       },
+      // {
+      //   src: "/js/main.min.js",
+      // },
     ],
   },
   css: [
@@ -65,17 +69,5 @@ export default {
       source: "~/assets/img/icon.svg",
     },
   },
-  chainWebpack: (config) => {
-    const svgRule = config.module.rule("svg");
-
-    svgRule.uses.clear();
-
-    svgRule
-      .use("babel-loader")
-      .loader("babel-loader")
-      .end()
-      .use("vue-svg-loader")
-      .loader("vue-svg-loader");
-  },
-  modules: ["@nuxtjs/svg"],
+  buildModules: ["@nuxtjs/svg"],
 };

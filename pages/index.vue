@@ -123,6 +123,7 @@
                   type="button"
                   id="open-about"
                   class="invisible-Control"
+                  v-on:click="toggleAbout"
                 />
                 <label class="open-about" for="open-about">
                   <img
@@ -139,13 +140,14 @@
         </div>
       </div>
       <div id="page-help"></div>
-      <div class="page-about about-hide">
+      <div class="page-about" v-show="page_about">
         <div class="about-area">
           <div class="close-about">
             <input
               type="button"
               id="close-about-btn"
               class="invisible-Control"
+              v-on:click="toggleAbout"
             />
             <label for="close-about-btn">
               <img
@@ -253,11 +255,16 @@
               name="hamburger-opener"
               id="hamburger-opener"
               class="invisible-Control"
+              v-on:click="toggleHamburger"
             />
-            <label for="hamburger-opener" class="switch-element-body">
+            <label
+              for="hamburger-opener"
+              class="switch-element-body"
+              v-bind:class="{ open: hamburger_show }"
+            >
               <div class="switcher-select-mark"></div>
               <div class="switcher-icon">
-                <img src="~/assets/img/menu.svg" alt="" />
+                <div v-html="svgMenu" />
               </div>
             </label>
           </div>
@@ -269,11 +276,16 @@
               value="main"
               class="invisible-Control"
               checked
+              v-on:click="toggleEditor('main')"
             />
-            <label for="editor-switch-main" class="switch-element-body">
+            <label
+              for="editor-switch-main"
+              class="switch-element-body"
+              v-bind:class="{ open: hamburger_show }"
+            >
               <div class="switcher-select-mark"></div>
               <div class="switcher-icon">
-                <SVGMain />
+                <div v-html="svgMain" />
               </div>
               <div class="switcher-editor-name">Main</div>
             </label>
@@ -285,11 +297,16 @@
               id="editor-switch-event"
               value="event"
               class="invisible-Control"
+              v-on:click="toggleEditor('event')"
             />
-            <label for="editor-switch-event" class="switch-element-body">
+            <label
+              for="editor-switch-event"
+              class="switch-element-body"
+              v-bind:class="{ open: hamburger_show }"
+            >
               <div class="switcher-select-mark"></div>
               <div class="switcher-icon">
-                <img src="~/assets/img/event.svg" alt="" />
+                <div v-html="svgEvent" />
               </div>
               <div class="switcher-editor-name">イベント</div>
             </label>
@@ -301,11 +318,16 @@
               id="editor-switch-permutations"
               value="permutations"
               class="invisible-Control"
+              v-on:click="toggleEditor('permutations')"
             />
-            <label for="editor-switch-permutations" class="switch-element-body">
+            <label
+              for="editor-switch-permutations"
+              class="switch-element-body"
+              v-bind:class="{ open: hamburger_show }"
+            >
               <div class="switcher-select-mark"></div>
               <div class="switcher-icon">
-                <img src="~/assets/img/permutation.svg" alt="" />
+                <div v-html="svgPermutation" />
               </div>
               <div class="switcher-editor-name">パーミュテーション</div>
             </label>
@@ -317,17 +339,27 @@
               id="editor-switch-blockState"
               value="blockState"
               class="invisible-Control"
+              v-on:click="toggleEditor('blockState')"
             />
-            <label for="editor-switch-blockState" class="switch-element-body">
+            <label
+              for="editor-switch-blockState"
+              class="switch-element-body"
+              v-bind:class="{ open: hamburger_show }"
+            >
               <div class="switcher-select-mark"></div>
               <div class="switcher-icon">
-                <img src="~/assets/img/blockState.svg" alt="" />
+                <div v-html="svgBlockState" />
               </div>
               <div class="switcher-editor-name">ブロック状態</div>
             </label>
           </div>
         </div>
-        <form name="editor-main" id="editor-main" class="editor-main">
+        <form
+          name="editor-main"
+          id="editor-main"
+          class="editor-main"
+          v-show="editor_show[0]"
+        >
           <div class="editor-element">
             <div class="editor-element-legend">
               <p>Definition</p>
@@ -380,7 +412,7 @@
                 />
                 <div for="description-is-experimental" class="checkbox-body">
                   <div class="checkbox-body-box">
-                    <SVGCheck />
+                    <div v-html="svgCheck" />
                   </div>
                   <p class="checkbox-body-text">試験的なゲームプレイのみ</p>
                 </div>
@@ -402,7 +434,7 @@
                   class="checkbox-body"
                 >
                   <div class="checkbox-body-box">
-                    <SVGCheck />
+                    <div v-html="svgCheck" />
                   </div>
                   <p class="checkbox-body-text">クリエイティブメニューに追加</p>
                 </div>
@@ -431,9 +463,7 @@
                             value="閉じる"
                             class="modal-close invisible-Control"
                           />
-                          <div class="close-btn-icon">
-                            <img src="~/assets/img/close.svg" alt="" />
-                          </div>
+                          <div class="close-btn-icon" v-html="svgClose"></div>
                         </label>
                       </div>
                       <div class="modal-body">
@@ -449,7 +479,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">ルートテーブル</p>
                             </div>
@@ -467,7 +497,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">表示名</p>
                             </div>
@@ -485,7 +515,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">タグ</p>
                             </div>
@@ -503,7 +533,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">配置フィルター</p>
                             </div>
@@ -521,7 +551,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">飛び越え禁止</p>
                             </div>
@@ -539,7 +569,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">通り抜け禁止</p>
                             </div>
@@ -557,7 +587,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">地図の色</p>
                             </div>
@@ -575,7 +605,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">作業台</p>
                             </div>
@@ -593,7 +623,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">ジオメトリ</p>
                             </div>
@@ -611,7 +641,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">
                                 マテリアルインスタンス
@@ -631,7 +661,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">衝突判定</p>
                             </div>
@@ -649,7 +679,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">選択判定</p>
                             </div>
@@ -667,7 +697,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">回転</p>
                             </div>
@@ -685,7 +715,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">通気性</p>
                             </div>
@@ -703,7 +733,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">光の吸収</p>
                             </div>
@@ -721,7 +751,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">発光量</p>
                             </div>
@@ -739,7 +769,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">破壊にかかる時間</p>
                             </div>
@@ -757,7 +787,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">爆発耐性</p>
                             </div>
@@ -775,7 +805,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">ピストンで破壊</p>
                             </div>
@@ -793,7 +823,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">ピストン押引不可</p>
                             </div>
@@ -811,7 +841,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">
                                 ピストン押込みのみ
@@ -831,7 +861,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">摩擦</p>
                             </div>
@@ -849,7 +879,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">燃焼</p>
                             </div>
@@ -867,7 +897,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">
                                 トリガ(落ちてきた時)
@@ -887,7 +917,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">
                                 トリガ(インタラクト)
@@ -907,7 +937,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">
                                 トリガ(置かれた時)
@@ -927,7 +957,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">
                                 トリガ(プレイヤーが置いた時)
@@ -947,7 +977,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">トリガ(踏んだ時)</p>
                             </div>
@@ -965,7 +995,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">トリガ(離れた時)</p>
                             </div>
@@ -983,7 +1013,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">
                                 トリガ(破壊された時)
@@ -1003,7 +1033,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">
                                 トリガ(ティック毎)
@@ -1023,7 +1053,7 @@
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
-                                <SVGCheck />
+                                <div v-html="svgCheck" />
                               </div>
                               <p class="checkbox-body-text">
                                 トリガ(ランダムティック)
@@ -1047,7 +1077,12 @@
             </div>
           </div>
         </form>
-        <form name="editor-event" id="editor-event" class="editor-event hide">
+        <form
+          name="editor-event"
+          id="editor-event"
+          class="editor-event"
+          v-show="editor_show[1]"
+        >
           <div class="event status-block">
             <div class="event status-block-controls">
               <div class="event status-block-header">
@@ -1073,7 +1108,8 @@
         <form
           name="editor-permutations"
           id="editor-permutations"
-          class="editor-permutations hide"
+          class="editor-permutations"
+          v-show="editor_show[2]"
         >
           <div class="permutations block-tabPanel">
             <div class="permutations block-tab-controls">
@@ -1116,7 +1152,8 @@
         <form
           name="editor-blockState"
           id="editor-blockState"
-          class="editor-blockState hide"
+          class="editor-blockState"
+          v-show="editor_show[3]"
         >
           <div class="blockState status-block">
             <div class="blockState status-block-controls">
@@ -1181,12 +1218,7 @@
               <code class="language-json"></code>
             </pre>
             <label>
-              <img
-                src="~/assets/img/blank.svg"
-                alt=""
-                width="19px"
-                height="19px"
-              />
+              <div v-html="svgBlank" />
               <textarea
                 name="code-buffer"
                 id="code-buffer"
@@ -1204,12 +1236,7 @@
           />
           <label for="issue-control" class="issue-status-bar">
             <div class="issue-status-label">
-              <img
-                src="~/assets/img/chevron-up.svg"
-                alt=""
-                width="19px"
-                height="19px"
-              />
+              <div v-html="svgChevron" />
               <span>問題</span>
             </div>
             <div class="issue-status-num">
@@ -1254,10 +1281,62 @@
 </template>
 
 <script>
-import SVGCheck from "~/assets/img/check.svg?inline";
-import SVGMain from "~/assets/img/main.svg?inline";
+import blockTabPermutation from "@/components/block_tab_permutation.vue";
+import svgCheck from "~/assets/img/check.svg?raw";
+import svgMain from "~/assets/img/main.svg?raw";
+import svgMenu from "~/assets/img/menu.svg?raw";
+import svgEvent from "~/assets/img/event.svg?raw";
+import svgPermutation from "~/assets/img/permutation.svg?raw";
+import svgBlockState from "~/assets/img/blockState.svg?raw";
+import svgBlank from "~/assets/img/blank.svg?raw";
+import svgChevron from "~/assets/img/chevron.svg?raw";
+import svgClose from "~/assets/img/close.svg?raw";
+// import Vue from "vue";
 export default {
-  comments: [SVGCheck, SVGMain],
-  modules: ["@nuxtjs/svg"],
+  data() {
+    return {
+      svgCheck,
+      svgMain,
+      svgMenu,
+      svgEvent,
+      svgPermutation,
+      svgBlockState,
+      svgBlank,
+      svgChevron,
+      svgClose,
+      page_about: false,
+      hamburger_show: false,
+      editor_show: [false, false, false, false],
+    };
+  },
+  created() {
+    this.toggleEditor();
+  },
+  methods: {
+    toggleAbout() {
+      this.page_about = !this.page_about;
+    },
+    toggleHamburger() {
+      this.hamburger_show = !this.hamburger_show;
+    },
+    toggleEditor(select_editor = "") {
+      this.editor_show.fill(false);
+      switch (select_editor) {
+        case "event":
+          this.$set(this.editor_show, 1, true);
+          break;
+        case "permutations":
+          this.$set(this.editor_show, 2, true);
+          break;
+        case "blockState":
+          this.$set(this.editor_show, 3, true);
+          break;
+        case "main":
+        default:
+          this.$set(this.editor_show, 0, true);
+          break;
+      }
+    },
+  },
 };
 </script>
