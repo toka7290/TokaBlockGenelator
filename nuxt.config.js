@@ -50,9 +50,9 @@ export default {
       {
         src: "/lib/jquery-3.6.0.min.js",
       },
-      {
-        src: "/lib/prism.js",
-      },
+      // {
+      //   src: "/lib/prism.js",
+      // },
       // {
       //   src: "/js/main.min.js",
       // },

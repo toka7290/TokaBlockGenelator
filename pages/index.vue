@@ -1,5 +1,5 @@
 <template>
-  <div class="body">
+  <div class="body" @dragover.prevent="fileDragover">
     <header class="header">
       <div class="header-main">
         <div class="title-icon">
@@ -7,7 +7,7 @@
         </div>
         <div class="title">
           <h1>とかさんの Block Generator</h1>
-          <p>version:nuxt_dev</p>
+          <p>version:project_Nuts_dev</p>
         </div>
         <div class="header-menu">
           <div class="header-menu-element import-file">
@@ -140,14 +140,13 @@
         </div>
       </div>
       <div id="page-help"></div>
-      <div class="page-about" v-show="page_about">
+      <div class="page-about" v-show="page_about" v-on:click="toggleAbout">
         <div class="about-area">
           <div class="close-about">
             <input
               type="button"
               id="close-about-btn"
               class="invisible-Control"
-              v-on:click="toggleAbout"
             />
             <label for="close-about-btn">
               <img
@@ -168,7 +167,7 @@
             />
             <div class="about-title">
               <h2>とかさんの Block Generator</h2>
-              <p>version:nuxt_dev</p>
+              <p>version:project_Nuts_dev</p>
             </div>
             <div class="about-external-link">
               <a
@@ -235,7 +234,12 @@
       <p>データを編集します</p>
       <p>エラー等は下にある[問題]タブから見ることができます。</p>
     </div>
-    <div class="file-drop-zone hide">
+    <div
+      class="file-drop-zone"
+      v-bind:class="{ hide: !show_drop_zone }"
+      @dragleave="fileDragleave"
+      @drop.stop="fileDragdrop"
+    >
       <div class="file-drop-zone-textarea">
         <img
           src="~/assets/img/import.svg"
@@ -372,7 +376,14 @@
                 <label for="format-version">フォーマットバージョン</label>
               </div>
               <div class="value-input">
-                <select name="format-version" id="format-version">
+                <select
+                  name="format-version"
+                  id="format-version"
+                  @change="
+                    changeFormatVersion();
+                    setJSON();
+                  "
+                >
                   <option value="1.16.100">1.16.100</option>
                   <option value="1.16.0">1.16.0</option>
                   <option value="1.12.0">1.12.0</option>
@@ -396,6 +407,7 @@
                   type="text"
                   name="block-name"
                   id="description-block-name"
+                  @change="setJSON"
                 />
               </div>
             </div>
@@ -409,6 +421,7 @@
                   name="description-is-experimental"
                   id="description-is-experimental"
                   class="invisible-Control"
+                  @change="setJSON"
                 />
                 <div for="description-is-experimental" class="checkbox-body">
                   <div class="checkbox-body-box">
@@ -428,6 +441,7 @@
                   name="description-register-to-creative-menu"
                   id="description-register-to-creative-menu"
                   class="invisible-Control"
+                  @change="setJSON"
                 />
                 <div
                   for="description-register-to-creative-menu"
@@ -1219,7 +1233,7 @@
           </div>
           <div class="code-preview">
             <pre class="language-json">
-              <code class="language-json"></code>
+              <code class="language-json">{{json}}</code>
             </pre>
             <label>
               <div v-html="svgBlank" />
@@ -1237,6 +1251,7 @@
             name="issue-control"
             id="issue-control"
             class="invisible-Control"
+            v-on:click="toggleIssue"
           />
           <label for="issue-control" class="issue-status-bar">
             <div class="issue-status-label">
@@ -1264,7 +1279,7 @@
               </div>
             </div>
           </label>
-          <div class="issue-content" style="display: none">
+          <div class="issue-content" v-show="show_issue">
             <ul class="issue-list"></ul>
           </div>
         </div>
@@ -1295,7 +1310,7 @@ import svgBlockState from "~/assets/img/blockState.svg?raw";
 import svgBlank from "~/assets/img/blank.svg?raw";
 import svgChevron from "~/assets/img/chevron.svg?raw";
 import svgClose from "~/assets/img/close.svg?raw";
-// import Vue from "vue";
+import componetsSuportList from "@/static/json/format.json";
 export default {
   data() {
     return {
@@ -1308,17 +1323,51 @@ export default {
       svgBlank,
       svgChevron,
       svgClose,
+      show_drop_zone: false,
       page_about: false,
       hamburger_show: false,
       editor_show: [false, false, false, false],
+      show_issue: false,
+      format_version: "1.16.100",
+      json: {},
     };
   },
   created() {
     this.toggleEditor();
   },
   methods: {
-    toggleAbout() {
-      this.page_about = !this.page_about;
+    fileDragover(event) {
+      event.stopPropagation();
+      event.preventDefault();
+      this.show_drop_zone = true;
+    },
+    fileDragleave(event) {
+      event.stopPropagation();
+      event.preventDefault();
+      this.show_drop_zone = false;
+    },
+    fileDragdrop(_event) {
+      this.show_drop_zone = false;
+      var event = _event;
+      if (_event.originalEvent) {
+        event = _event.originalEvent;
+      }
+      event.stopPropagation();
+      event.preventDefault();
+      console.log(event);
+      // $("#input-file").prop("files", event.dataTransfer.files);
+      // importJsonFile();
+    },
+    toggleAbout(event) {
+      /** @type {Element} */
+      const parent = event.target;
+      if (
+        parent.className == "page-about" ||
+        parent.id == "close-about-btn" ||
+        parent.id == "open-about"
+      ) {
+        this.page_about = !this.page_about;
+      }
     },
     toggleHamburger() {
       this.hamburger_show = !this.hamburger_show;
@@ -1341,6 +1390,9 @@ export default {
           break;
       }
     },
+    toggleIssue() {
+      this.show_issue = !this.show_issue;
+    },
     showModal: function (event) {
       /** @type {Element} */
       const parent = event.target;
@@ -1354,6 +1406,67 @@ export default {
       } else if (parent.classList.contains("modal-close")) {
         parent.closest(".modal").classList.add("hide");
       }
+    },
+    changeFormatVersion() {
+      this.format_version = document.getElementById("format-version").value;
+      console.log(componetsSuportList);
+      for (const format_key in componetsSuportList) {
+        Array.prototype.forEach.call(
+          document.getElementsByClassName(format_key),
+          (element) => {
+            element.classList.toggle(
+              "unsupported",
+              !componetsSuportList[format_key].includes(this.format_version)
+            );
+          }
+        );
+      }
+    },
+    changeElement(event) {
+      /** @type {Element} */
+      const parent = event.target;
+      const element_body = parent
+        .closest(".element-control")
+        .previousElementSibling.getElementsByClassName(".editor-element-body");
+      // const element_body = control_switch.closest(".element-control").prev(".editor-element-body");
+      if (parent.checked)
+        element_body.append(
+          $("#value-elements-component")
+            .contents()
+            .filter(`.value-element.${parent.getAttribute("name")}`)
+            .clone()
+        );
+      else
+        element_body
+          .contents()
+          .filter(`.value-element.${parent.getAttribute("name")}`)
+          .remove();
+    },
+    setJSON() {
+      this.json = new Object();
+      this.$set(this.json, "format_version", this.format_version);
+      this.$set(this.json, "minecraft:block", new Object());
+
+      // description
+      let description = new Object();
+      description["identifier"] = document.getElementById(
+        "description-block-name"
+      ).value;
+      switch (this.format_version) {
+        case "1.16.100":
+          // blockState
+          break;
+        case "1.16.0":
+        case "1.12.0":
+          description["is_experimental"] = document.getElementById(
+            "description-is-experimental"
+          ).checked;
+          description["register_to_creative-menu"] = document.getElementById(
+            "description-register-to-creative-menu"
+          ).checked;
+          break;
+      }
+      this.$set(this.json, ["minecraft:block"]["description"], description);
     },
   },
 };
