@@ -459,7 +459,15 @@
             <div class="editor-element-legend">
               <p>Components</p>
             </div>
-            <div class="editor-element-body"></div>
+            <div class="editor-element-body">
+              <components
+                v-for="(component, i) in $store.state.main_components"
+                :key="i"
+                :is="component"
+                v-bind:class="{ [getHash()]: true }"
+                @datas="setData($event, tmp)"
+              ></components>
+            </div>
             <div class="editor-element-footer element-control">
               <div class="type-modal">
                 <label class="invisible-Control">
@@ -494,6 +502,7 @@
                               type="checkbox"
                               name="components_loot"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -512,6 +521,7 @@
                               type="checkbox"
                               name="components_display_name"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -530,6 +540,7 @@
                               type="checkbox"
                               name="components_tag"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -548,6 +559,7 @@
                               type="checkbox"
                               name="components_placement_filter"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -566,6 +578,7 @@
                               type="checkbox"
                               name="components_preventsjumping"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -584,6 +597,7 @@
                               type="checkbox"
                               name="components_unwalkable"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -602,6 +616,7 @@
                               type="checkbox"
                               name="components_map_color"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -620,6 +635,7 @@
                               type="checkbox"
                               name="components_crafting_table"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -638,6 +654,7 @@
                               type="checkbox"
                               name="components_geometry"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -656,6 +673,7 @@
                               type="checkbox"
                               name="components_material_instances"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -676,6 +694,7 @@
                               type="checkbox"
                               name="components_entity_collision"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -694,6 +713,7 @@
                               type="checkbox"
                               name="components_pick_collision"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -712,6 +732,7 @@
                               type="checkbox"
                               name="components_rotation"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -730,6 +751,7 @@
                               type="checkbox"
                               name="components_breathability"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -748,6 +770,7 @@
                               type="checkbox"
                               name="components_block_light_absorption"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -766,6 +789,7 @@
                               type="checkbox"
                               name="components_block_light_emission"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -784,6 +808,7 @@
                               type="checkbox"
                               name="components_destroy_time"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -802,6 +827,7 @@
                               type="checkbox"
                               name="components_explosion_resistance"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -820,6 +846,7 @@
                               type="checkbox"
                               name="components_breakonpush"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -838,6 +865,7 @@
                               type="checkbox"
                               name="components_immovable"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -856,6 +884,7 @@
                               type="checkbox"
                               name="components_onlypistonpush"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -876,6 +905,7 @@
                               type="checkbox"
                               name="components_friction"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -894,6 +924,7 @@
                               type="checkbox"
                               name="components_flammable"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -912,6 +943,7 @@
                               type="checkbox"
                               name="components_event_on_fall_on"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -932,6 +964,7 @@
                               type="checkbox"
                               name="components_event_on_interact"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -952,6 +985,7 @@
                               type="checkbox"
                               name="components_event_on_placed"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -972,6 +1006,7 @@
                               type="checkbox"
                               name="components_event_on_player_placing"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -992,6 +1027,7 @@
                               type="checkbox"
                               name="components_event_on_step_on"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -1010,6 +1046,7 @@
                               type="checkbox"
                               name="components_event_on_step_off"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -1028,6 +1065,7 @@
                               type="checkbox"
                               name="components_event_on_player_destroyed"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -1048,6 +1086,7 @@
                               type="checkbox"
                               name="components_event_ticking"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -1068,6 +1107,7 @@
                               type="checkbox"
                               name="components_event_random_ticking"
                               class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
                             />
                             <div class="checkbox-body">
                               <div class="checkbox-body-box">
@@ -1300,7 +1340,10 @@
 </template>
 
 <script>
-import blockTabPermutation from "@/components/block_tab_permutation.vue";
+import Vue from "vue";
+import { mapMutations } from "vuex";
+import components_loot from "@/components/value_elements/components_loot.vue";
+import components_display_name from "@/components/value_elements/components_display_name.vue";
 import svgCheck from "~/assets/img/check.svg?raw";
 import svgMain from "~/assets/img/main.svg?raw";
 import svgMenu from "~/assets/img/menu.svg?raw";
@@ -1312,6 +1355,10 @@ import svgChevron from "~/assets/img/chevron.svg?raw";
 import svgClose from "~/assets/img/close.svg?raw";
 import componetsSuportList from "@/static/json/format.json";
 export default {
+  components: {
+    components_loot,
+    components_display_name,
+  },
   data() {
     return {
       svgCheck,
@@ -1328,8 +1375,8 @@ export default {
       hamburger_show: false,
       editor_show: [false, false, false, false],
       show_issue: false,
-      format_version: "1.16.100",
       json: {},
+      tmp: undefined,
     };
   },
   created() {
@@ -1354,7 +1401,6 @@ export default {
       }
       event.stopPropagation();
       event.preventDefault();
-      console.log(event);
       // $("#input-file").prop("files", event.dataTransfer.files);
       // importJsonFile();
     },
@@ -1408,15 +1454,20 @@ export default {
       }
     },
     changeFormatVersion() {
-      this.format_version = document.getElementById("format-version").value;
+      this.$store.commit(
+        "setFormatVersion",
+        document.getElementById("format-version").value
+      );
+      // this.format_version = document.getElementById("format-version").value;
       console.log(componetsSuportList);
+      const format_version = this.$store.state.format_version;
       for (const format_key in componetsSuportList) {
         Array.prototype.forEach.call(
           document.getElementsByClassName(format_key),
           (element) => {
             element.classList.toggle(
               "unsupported",
-              !componetsSuportList[format_key].includes(this.format_version)
+              !componetsSuportList[format_key].includes(format_version)
             );
           }
         );
@@ -1467,6 +1518,31 @@ export default {
           break;
       }
       this.$set(this.json, ["minecraft:block"]["description"], description);
+    },
+    toggleValueElement(event) {
+      /** @type {Element} */
+      const target = event.target;
+      this.$store.commit("toggleMainComponent", [
+        `${target.name}`,
+        target.checked,
+      ]);
+    },
+    setData(data = undefined) {
+      console.log(data);
+    },
+    getHash() {
+      let chars = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".split("");
+      for (let i = 0, len = chars.length; i < len; i++) {
+        switch (chars[i]) {
+          case "x":
+            chars[i] = Math.floor(Math.random() * 16).toString(16);
+            break;
+          case "y":
+            chars[i] = (Math.floor(Math.random() * 4) + 8).toString(16);
+            break;
+        }
+      }
+      return chars.join("");
     },
   },
 };

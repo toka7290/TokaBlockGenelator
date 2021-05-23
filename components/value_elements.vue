@@ -1,31 +1,5 @@
 <template id="value-elements-component">
   <div
-    class="value-element components_loot"
-    title="このブロックが破壊された時に落とすアイテムが記述されたルートテーブルを指定します。"
-  >
-    <div class="value-label">
-      <p>ルートテーブル</p>
-    </div>
-    <label class="value-input">
-      <input type="text" name="components-loot" class="components-loot" />
-    </label>
-  </div>
-  <div
-    class="value-element components_display_name"
-    title="ブロックの画面に表示される名前を設定します。"
-  >
-    <div class="value-label">
-      <p>表示名</p>
-    </div>
-    <label class="value-input">
-      <input
-        type="text"
-        name="components-display-name"
-        class="components-display-name"
-      />
-    </label>
-  </div>
-  <div
     class="value-element components_tag"
     title="ブロックにタグを設定します。"
   >
