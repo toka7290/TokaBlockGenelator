@@ -31,8 +31,11 @@ export default {
         }
       })(target.closest(".value-element.components_loot").classList.values());
       if (uuid == undefined) return;
-      console.log(uuid);
-      this.$emit("datas", target.value);
+      const index = this.$store.state.main_components.findIndex(
+        (val) => val.id == uuid
+      );
+      this.$store.state.main_components[index].data = target.value;
+      console.log(this.$store.state.main_components);
     },
   },
 };

@@ -463,9 +463,7 @@
               <components
                 v-for="(component, i) in $store.state.main_components"
                 :key="i"
-                :is="component"
-                v-bind:class="{ [getHash()]: true }"
-                @datas="setData($event, tmp)"
+                :is="`${component.name}`"
               ></components>
             </div>
             <div class="editor-element-footer element-control">
@@ -1526,23 +1524,6 @@ export default {
         `${target.name}`,
         target.checked,
       ]);
-    },
-    setData(data = undefined) {
-      console.log(data);
-    },
-    getHash() {
-      let chars = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".split("");
-      for (let i = 0, len = chars.length; i < len; i++) {
-        switch (chars[i]) {
-          case "x":
-            chars[i] = Math.floor(Math.random() * 16).toString(16);
-            break;
-          case "y":
-            chars[i] = (Math.floor(Math.random() * 4) + 8).toString(16);
-            break;
-        }
-      }
-      return chars.join("");
     },
   },
 };

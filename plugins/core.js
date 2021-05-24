@@ -1,4 +1,5 @@
 import Vue from "vue";
+
 Vue.mixin({
   methods: {
     // UUID生成
@@ -25,6 +26,16 @@ Vue.mixin({
         return false;
       }
       return true;
+    },
+    getClassUUID(/**@type {DOMTokenList} */ classlist) {
+      console.log(classlist);
+      return ((entry) => {
+        for (const iterator of entry) {
+          if (this.isUUID(iterator)) {
+            return iterator;
+          }
+        }
+      })(classlist.values());
     },
   },
 });
