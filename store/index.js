@@ -20,7 +20,9 @@ export const mutations = {
     } else {
       states.main_components = states.main_components.filter((val) => val.name != `${component}`);
     }
-    console.log(states.main_components);
+  },
+  setComponentData(states, [targetIndex, data]) {
+    states.main_components[targetIndex].data = data;
   },
 };
 

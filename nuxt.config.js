@@ -70,5 +70,5 @@ export default {
     },
   },
   buildModules: ["@nuxtjs/svg"],
-  plugins: ["~/plugins/core.js"],
+  plugins: ["~/plugins/core"],
 };

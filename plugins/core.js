@@ -1,45 +1,44 @@
-import Vue from "vue";
+export default ({}, inject) => {
+  inject("getUuid_v4", getUuid_v4);
+  inject("isUUID", isUUID);
+  inject("getClassUUID", getClassUUID);
+};
+// UUID生成
+const getUuid_v4 = () => {
+  let chars = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".split("");
+  for (let i = 0, len = chars.length; i < len; i++) {
+    switch (chars[i]) {
+      case "x":
+        chars[i] = Math.floor(Math.random() * 16).toString(16);
+        break;
+      case "y":
+        chars[i] = (Math.floor(Math.random() * 4) + 8).toString(16);
+        break;
+    }
+  }
+  return chars.join("");
+};
+// UUIDチェック
+const isUUID = (uuid = "") => {
+  const s = uuid.match(
+    "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+  );
+  if (s === null) {
+    return false;
+  }
+  return true;
+};
+const getClassUUID = (/**@type {DOMTokenList} */ classlist) => {
+  return ((entry) => {
+    for (const iterator of entry) {
+      if (isUUID(iterator)) {
+        return iterator;
+      }
+    }
+  })(classlist.values());
+};
 
-Vue.mixin({
-  methods: {
-    // UUID生成
-    getUuid_v4() {
-      let chars = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".split("");
-      for (let i = 0, len = chars.length; i < len; i++) {
-        switch (chars[i]) {
-          case "x":
-            chars[i] = Math.floor(Math.random() * 16).toString(16);
-            break;
-          case "y":
-            chars[i] = (Math.floor(Math.random() * 4) + 8).toString(16);
-            break;
-        }
-      }
-      return chars.join("");
-    },
-    // UUIDチェック
-    isUUID(uuid = "") {
-      const s = uuid.match(
-        "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
-      );
-      if (s === null) {
-        return false;
-      }
-      return true;
-    },
-    getClassUUID(/**@type {DOMTokenList} */ classlist) {
-      console.log(classlist);
-      return ((entry) => {
-        for (const iterator of entry) {
-          if (this.isUUID(iterator)) {
-            return iterator;
-          }
-        }
-      })(classlist.values());
-    },
-  },
-});
-export class JSONReplace {
+class JSONReplace {
   constructor() {
     this.replace_point = new Object();
   }
@@ -102,7 +101,7 @@ export class JSONReplace {
   }
 }
 
-export class Issue {
+class Issue {
   constructor() {
     this.error_list = new Array();
     this.warning_list = new Array();
