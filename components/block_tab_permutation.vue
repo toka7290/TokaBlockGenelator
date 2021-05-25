@@ -27,7 +27,7 @@
       <div class="editor-element-footer element-control">
         <div class="type-modal">
           <label class="invisible-Control">
-            <input type="button" class="modal-open" />
+            <input type="button" class="modal-open" v-on:click="showModal" />
             <div class="element-control-text">要素の追加・削除</div>
           </label>
           <div class="modal hide" v-on:click="closeModal">

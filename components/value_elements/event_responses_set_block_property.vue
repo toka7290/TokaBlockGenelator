@@ -11,7 +11,12 @@
         <div class="array-data type-modal">
           <label>
             <div class="array-num">0</div>
-            <input type="button" value="編集" class="modal-open" />
+            <input
+              type="button"
+              value="編集"
+              class="modal-open"
+              v-on:click="showModal"
+            />
           </label>
           <div class="modal hide" v-on:click="closeModal">
             <div class="modal-dialog">

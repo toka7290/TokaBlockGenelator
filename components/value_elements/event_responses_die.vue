@@ -4,7 +4,13 @@
       <p>キルする</p>
     </div>
     <div class="value-input type-modal">
-      <label><input type="button" value="編集" class="modal-open" /></label>
+      <label
+        ><input
+          type="button"
+          value="編集"
+          class="modal-open"
+          v-on:click="showModal"
+      /></label>
       <div class="modal hide" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">

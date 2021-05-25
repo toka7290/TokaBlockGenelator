@@ -7,8 +7,14 @@
       <p>配置フィルター</p>
     </div>
     <div class="value-input type-modal">
-      <label><input type="button" value="編集" class="modal-open" /></label>
-      <div class="modal hide" v-on:click="closeModal" v-on:click="closeModal">
+      <label
+        ><input
+          type="button"
+          value="編集"
+          class="modal-open"
+          v-on:click="showModal"
+      /></label>
+      <div class="modal hide" v-on:click="closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
