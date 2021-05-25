@@ -1343,6 +1343,54 @@ import Vue from "vue";
 import { mapMutations } from "vuex";
 import components_loot from "@/components/value_elements/components_loot.vue";
 import components_display_name from "@/components/value_elements/components_display_name.vue";
+import components_tag from "@/components/value_elements/components_tag.vue";
+import components_placement_filter from "@/components/value_elements/components_placement_filter.vue";
+import components_preventsjumping from "@/components/value_elements/components_preventsjumping.vue";
+import components_unwalkable from "@/components/value_elements/components_unwalkable.vue";
+import components_map_color from "@/components/value_elements/components_map_color.vue";
+import components_crafting_table from "@/components/value_elements/components_crafting_table.vue";
+import components_geometry from "@/components/value_elements/components_geometry.vue";
+import components_material_instances from "@/components/value_elements/components_material_instances.vue";
+import components_entity_collision from "@/components/value_elements/components_entity_collision.vue";
+import components_pick_collision from "@/components/value_elements/components_pick_collision.vue";
+import components_rotation from "@/components/value_elements/components_rotation.vue";
+import components_breathability from "@/components/value_elements/components_breathability.vue";
+import components_block_light_absorption from "@/components/value_elements/components_block_light_absorption.vue";
+import components_block_light_emission from "@/components/value_elements/components_block_light_emission.vue";
+import components_destroy_time from "@/components/value_elements/components_destroy_time.vue";
+import components_explosion_resistance from "@/components/value_elements/components_explosion_resistance.vue";
+import components_breakonpush from "@/components/value_elements/components_breakonpush.vue";
+import components_immovable from "@/components/value_elements/components_immovable.vue";
+import components_onlypistonpush from "@/components/value_elements/components_onlypistonpush.vue";
+import components_friction from "@/components/value_elements/components_friction.vue";
+import components_flammable from "@/components/value_elements/components_flammable.vue";
+import components_event_on_fall_on from "@/components/value_elements/components_event_on_fall_on.vue";
+import components_event_on_interact from "@/components/value_elements/components_event_on_interact.vue";
+import components_event_on_placed from "@/components/value_elements/components_event_on_placed.vue";
+import components_event_on_player_placing from "@/components/value_elements/components_event_on_player_placing.vue";
+import components_event_on_step_on from "@/components/value_elements/components_event_on_step_on.vue";
+import components_event_on_step_off from "@/components/value_elements/components_event_on_step_off.vue";
+import components_event_on_player_destroyed from "@/components/value_elements/components_event_on_player_destroyed.vue";
+import components_event_ticking from "@/components/value_elements/components_event_ticking.vue";
+import components_event_random_ticking from "@/components/value_elements/components_event_random_ticking.vue";
+import event_responses_set_block_property from "@/components/value_elements/event_responses_set_block_property.vue";
+import event_responses_set_block from "@/components/value_elements/event_responses_set_block.vue";
+import event_responses_set_block_at_pos from "@/components/value_elements/event_responses_set_block_at_pos.vue";
+import event_responses_spawn_loot from "@/components/value_elements/event_responses_spawn_loot.vue";
+import event_responses_add_mob_effect from "@/components/value_elements/event_responses_add_mob_effect.vue";
+import event_responses_remove_mob_effect from "@/components/value_elements/event_responses_remove_mob_effect.vue";
+import event_responses_damage from "@/components/value_elements/event_responses_damage.vue";
+import event_responses_decrement_stack from "@/components/value_elements/event_responses_decrement_stack.vue";
+import event_responses_die from "@/components/value_elements/event_responses_die.vue";
+import event_responses_play_effect from "@/components/value_elements/event_responses_play_effect.vue";
+import event_responses_play_sound from "@/components/value_elements/event_responses_play_sound.vue";
+import event_responses_teleport from "@/components/value_elements/event_responses_teleport.vue";
+import event_responses_transform_item from "@/components/value_elements/event_responses_transform_item.vue";
+import event_responses_trigger from "@/components/value_elements/event_responses_trigger.vue";
+import event_responses_run_command from "@/components/value_elements/event_responses_run_command.vue";
+import event_responses_swing from "@/components/value_elements/event_responses_swing.vue";
+import event_responses_sequence from "@/components/value_elements/event_responses_sequence.vue";
+import event_responses_randomize from "@/components/value_elements/event_responses_randomize.vue";
 import svgCheck from "~/assets/img/check.svg?raw";
 import svgMain from "~/assets/img/main.svg?raw";
 import svgMenu from "~/assets/img/menu.svg?raw";
@@ -1355,8 +1403,55 @@ import svgClose from "~/assets/img/close.svg?raw";
 import componetsSuportList from "@/static/json/format.json";
 export default {
   components: {
-    components_loot,
     components_display_name,
+    components_tag,
+    components_placement_filter,
+    components_preventsjumping,
+    components_unwalkable,
+    components_map_color,
+    components_crafting_table,
+    components_geometry,
+    components_material_instances,
+    components_entity_collision,
+    components_pick_collision,
+    components_rotation,
+    components_breathability,
+    components_block_light_absorption,
+    components_block_light_emission,
+    components_destroy_time,
+    components_explosion_resistance,
+    components_breakonpush,
+    components_immovable,
+    components_onlypistonpush,
+    components_friction,
+    components_flammable,
+    components_event_on_fall_on,
+    components_event_on_interact,
+    components_event_on_placed,
+    components_event_on_player_placing,
+    components_event_on_step_on,
+    components_event_on_step_off,
+    components_event_on_player_destroyed,
+    components_event_ticking,
+    components_event_random_ticking,
+    event_responses_set_block_property,
+    event_responses_set_block,
+    event_responses_set_block_at_pos,
+    event_responses_spawn_loot,
+    event_responses_add_mob_effect,
+    event_responses_remove_mob_effect,
+    event_responses_damage,
+    event_responses_decrement_stack,
+    event_responses_die,
+    event_responses_play_effect,
+    event_responses_play_sound,
+    event_responses_teleport,
+    event_responses_transform_item,
+    event_responses_trigger,
+    event_responses_run_command,
+    event_responses_swing,
+    event_responses_sequence,
+    event_responses_randomize,
   },
   data() {
     return {
