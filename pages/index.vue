@@ -1339,8 +1339,6 @@
 </template>
 
 <script>
-import Vue from "vue";
-import { mapMutations } from "vuex";
 import components_loot from "@/components/value_elements/components_loot.vue";
 import components_display_name from "@/components/value_elements/components_display_name.vue";
 import components_tag from "@/components/value_elements/components_tag.vue";
@@ -1403,6 +1401,7 @@ import svgClose from "~/assets/img/close.svg?raw";
 import componetsSuportList from "@/static/json/format.json";
 export default {
   components: {
+    components_loot,
     components_display_name,
     components_tag,
     components_placement_filter,
