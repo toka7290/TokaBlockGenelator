@@ -148,14 +148,11 @@
               id="close-about-btn"
               class="invisible-Control"
             />
-            <label for="close-about-btn">
-              <img
-                src="~/assets/img/close.svg"
-                alt=""
-                id="close-about-image"
-                width="50px"
-                height="50px"
-              />
+            <label
+              for="close-about-btn"
+              class="close-about-btn-icon"
+              v-html="svgClose"
+            >
             </label>
           </div>
           <div class="about-content">
