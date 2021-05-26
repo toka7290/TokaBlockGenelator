@@ -2,6 +2,8 @@ export default ({}, inject) => {
   inject("getUuid_v4", getUuid_v4);
   inject("isUUID", isUUID);
   inject("getClassUUID", getClassUUID);
+  inject("showModal", showModal);
+  inject("closeModal", closeModal);
 };
 // UUID生成
 const getUuid_v4 = () => {
@@ -37,6 +39,21 @@ const getClassUUID = (/**@type {DOMTokenList} */ classlist) => {
     }
   })(classlist.values());
 };
+
+function showModal(event) {
+  /** @type {Element} */
+  const parent = event.target;
+  parent.parentElement.nextElementSibling.classList.remove("hide");
+}
+function closeModal(event) {
+  /** @type {Element} */
+  const parent = event.target;
+  if (parent.className == "modal") {
+    parent.classList.add("hide");
+  } else if (parent.classList.contains("modal-close")) {
+    parent.closest(".modal").classList.add("hide");
+  }
+}
 
 class JSONReplace {
   constructor() {

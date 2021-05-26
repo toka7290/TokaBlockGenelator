@@ -12,9 +12,9 @@
           type="button"
           value="編集"
           class="modal-open"
-          v-on:click="showModal"
+          v-on:click="this.$showModal"
       /></label>
-      <div class="modal hide" v-on:click="closeModal">
+      <div class="modal hide" v-on:click="this.$closeModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -96,7 +96,13 @@
 </template>
 
 <script>
+import svgClose from "~/assets/img/close.svg?raw";
 export default {
+  data() {
+    return {
+      svgClose,
+    };
+  },
   methods: {
     onChangedValue(event) {
       /** @type {Element} */

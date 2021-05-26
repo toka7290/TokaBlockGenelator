@@ -470,11 +470,11 @@
                   <input
                     type="button"
                     class="modal-open"
-                    v-on:click="showModal"
+                    v-on:click="this.$showModal"
                   />
                   <div class="element-control-text">要素の追加・削除</div>
                 </label>
-                <div class="modal hide" v-on:click="closeModal">
+                <div class="modal hide" v-on:click="this.$closeModal">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
