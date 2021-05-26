@@ -14,7 +14,7 @@ export const mutations = {
       hasComponent = !states.main_components.some((val) => val == component);
     }
     if (hasComponent) {
-      const uuid = getUuid_v4();
+      const uuid = this.$getUuid_v4();
       const data = { name: component, id: uuid, data: undefined };
       states.main_components.push(data);
     } else {
@@ -31,18 +31,3 @@ export const getters = {
     return states.components;
   },
 };
-// UUID生成
-function getUuid_v4() {
-  let chars = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".split("");
-  for (let i = 0, len = chars.length; i < len; i++) {
-    switch (chars[i]) {
-      case "x":
-        chars[i] = Math.floor(Math.random() * 16).toString(16);
-        break;
-      case "y":
-        chars[i] = (Math.floor(Math.random() * 4) + 8).toString(16);
-        break;
-    }
-  }
-  return chars.join("");
-}

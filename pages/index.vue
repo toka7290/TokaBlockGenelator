@@ -1529,26 +1529,11 @@ export default {
     toggleIssue() {
       this.show_issue = !this.show_issue;
     },
-    showModal: function (event) {
-      /** @type {Element} */
-      const parent = event.target;
-      parent.parentElement.nextElementSibling.classList.remove("hide");
-    },
-    closeModal: function (event) {
-      /** @type {Element} */
-      const parent = event.target;
-      if (parent.className == "modal") {
-        parent.classList.add("hide");
-      } else if (parent.classList.contains("modal-close")) {
-        parent.closest(".modal").classList.add("hide");
-      }
-    },
     changeFormatVersion() {
       this.$store.commit(
         "setFormatVersion",
         document.getElementById("format-version").value
       );
-      // this.format_version = document.getElementById("format-version").value;
       console.log(componetsSuportList);
       const format_version = this.$store.state.format_version;
       for (const format_key in componetsSuportList) {
@@ -1562,26 +1547,6 @@ export default {
           }
         );
       }
-    },
-    changeElement(event) {
-      /** @type {Element} */
-      const parent = event.target;
-      const element_body = parent
-        .closest(".element-control")
-        .previousElementSibling.getElementsByClassName(".editor-element-body");
-      // const element_body = control_switch.closest(".element-control").prev(".editor-element-body");
-      if (parent.checked)
-        element_body.append(
-          $("#value-elements-component")
-            .contents()
-            .filter(`.value-element.${parent.getAttribute("name")}`)
-            .clone()
-        );
-      else
-        element_body
-          .contents()
-          .filter(`.value-element.${parent.getAttribute("name")}`)
-          .remove();
     },
     setJSON() {
       this.json = new Object();
