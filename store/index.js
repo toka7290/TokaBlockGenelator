@@ -26,19 +26,31 @@ export const mutations = {
     states.main_components[targetIndex].data = data;
   },
   setEventBlock(states) {
-    states.events.push({ id: this.$getUuid_v4(), components: new Array() });
+    let uuid = this.$getUuid_v4();
+    let data = states.events;
+    states.events = {
+      ...states.events,
+      [uuid]: {
+        id: uuid,
+        components: new Array(),
+      },
+    };
   },
-  toggleEventComponent(states, [component, parent_index, hasComponent = undefined]) {
+  deleteEventBlock(states, parent) {
+    this._vm.$delete(states.events, parent);
+    console.log(states.events);
+  },
+  toggleEventComponent(states, [component, parent, hasComponent = undefined]) {
     if (component == undefined) return;
     if (hasComponent == undefined) {
-      hasComponent = !states.events[parent_index].components.some((val) => val == component);
+      hasComponent = !states.events[parent].components.some((val) => val == component);
     }
     if (hasComponent) {
       const uuid = this.$getUuid_v4();
       const data = { name: component, id: uuid, data: undefined };
-      states.events[parent_index].components.push(data);
+      states.events[parent].components.push(data);
     } else {
-      states.events[parent_index].components = states.events[parent_index].components.filter(
+      states.events[parent].components = states.events[parent].components.filter(
         (val) => val.name != `${component}`
       );
     }

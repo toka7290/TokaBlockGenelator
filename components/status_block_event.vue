@@ -11,7 +11,11 @@
         /></label>
         <div class="event remove-status-block" title="イベントを削除します。">
           <label class="invisible-Control">
-            <input type="button" class="event-delete event" />
+            <input
+              type="button"
+              class="event-delete event"
+              v-on:click="deleteEvent"
+            />
             <div class="remove-button-text">- 削除</div>
           </label>
         </div>
@@ -19,8 +23,8 @@
       <div class="editor-element-body">
         <!-- TODO: -->
         <components
-          v-for="(event, i) in getEventComponents()"
-          :key="i"
+          v-for="(event, key) in components"
+          :key="key"
           :is="event.name"
           v-bind:class="{ [`${event.id}`]: true }"
         ></components>
@@ -686,24 +690,31 @@ export default {
     return {
       svgClose,
       id: "",
+      components: {},
     };
   },
   created() {
     let ev = this;
     this.id = Object.keys(ev.$vnode.data.class)[0];
+    this.components = this.getEventComponents();
   },
   methods: {
     /**
      * @return {object}
      */
     getEventComponents() {
-      return this.$store.state.events[this.getEventIndex(this.id)].components;
+      return this.$store.state.events[this.id].components;
     },
     getEventIndex(id) {
-      let res = 0;
-      this.$store.state.events.forEach((element, i) => {
-        if (element.id == id) res = i;
-      });
+      let res;
+      let events = this.$store.state.events;
+
+      for (let index = 0; index < events.length; index++) {
+        if (events[index].id == id) {
+          res = index;
+          break;
+        }
+      }
       return res;
     },
     toggleValueEventElement(event) {
@@ -711,9 +722,14 @@ export default {
       const target = event.target;
       this.$store.commit("toggleEventComponent", [
         `${target.name}`,
-        this.getEventIndex(this.id),
+        this.id,
         target.checked,
       ]);
+      this.components = this.getEventComponents();
+      console.log(this.components);
+    },
+    deleteEvent() {
+      this.$store.commit("deleteEventBlock", this.id);
     },
   },
 };

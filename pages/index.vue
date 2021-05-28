@@ -1166,7 +1166,7 @@
                 v-for="(event, i) in $store.state.events"
                 :key="i"
                 :is="`status_block_event`"
-                v-bind:class="{ [`${event.id}`]: true }"
+                v-bind:class="{ [`${i}`]: true }"
               ></components>
             </div>
           </div>
