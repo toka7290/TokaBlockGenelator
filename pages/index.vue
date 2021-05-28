@@ -1,6 +1,6 @@
 <template>
   <div class="body" @dragover.prevent="fileDragover">
-    <header class="header">
+    <header class="header" style="display: none">
       <div class="header-main">
         <div class="title-icon">
           <img src="~/assets/img/icon.svg" alt="" height="32px" width="32px" />
@@ -1149,14 +1149,26 @@
                     title="イベントを追加します。"
                   >
                     <label class="invisible-Control">
-                      <input type="button" id="event-add" class="event" />
+                      <input
+                        type="button"
+                        id="event-add"
+                        class="event"
+                        v-on:click="addEvent"
+                      />
                       <div class="add-button-text">+ 追加</div>
                     </label>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="event status-block-body"></div>
+            <div class="event status-block-body">
+              <components
+                v-for="(event, i) in $store.state.events"
+                :key="i"
+                :is="`status_block_event`"
+                v-bind:class="{ [`${event.id}`]: true }"
+              ></components>
+            </div>
           </div>
         </form>
         <form
@@ -1368,24 +1380,9 @@ import components_event_on_step_off from "@/components/value_elements/components
 import components_event_on_player_destroyed from "@/components/value_elements/components_event_on_player_destroyed.vue";
 import components_event_ticking from "@/components/value_elements/components_event_ticking.vue";
 import components_event_random_ticking from "@/components/value_elements/components_event_random_ticking.vue";
-import event_responses_set_block_property from "@/components/value_elements/event_responses_set_block_property.vue";
-import event_responses_set_block from "@/components/value_elements/event_responses_set_block.vue";
-import event_responses_set_block_at_pos from "@/components/value_elements/event_responses_set_block_at_pos.vue";
-import event_responses_spawn_loot from "@/components/value_elements/event_responses_spawn_loot.vue";
-import event_responses_add_mob_effect from "@/components/value_elements/event_responses_add_mob_effect.vue";
-import event_responses_remove_mob_effect from "@/components/value_elements/event_responses_remove_mob_effect.vue";
-import event_responses_damage from "@/components/value_elements/event_responses_damage.vue";
-import event_responses_decrement_stack from "@/components/value_elements/event_responses_decrement_stack.vue";
-import event_responses_die from "@/components/value_elements/event_responses_die.vue";
-import event_responses_play_effect from "@/components/value_elements/event_responses_play_effect.vue";
-import event_responses_play_sound from "@/components/value_elements/event_responses_play_sound.vue";
-import event_responses_teleport from "@/components/value_elements/event_responses_teleport.vue";
-import event_responses_transform_item from "@/components/value_elements/event_responses_transform_item.vue";
-import event_responses_trigger from "@/components/value_elements/event_responses_trigger.vue";
-import event_responses_run_command from "@/components/value_elements/event_responses_run_command.vue";
-import event_responses_swing from "@/components/value_elements/event_responses_swing.vue";
-import event_responses_sequence from "@/components/value_elements/event_responses_sequence.vue";
-import event_responses_randomize from "@/components/value_elements/event_responses_randomize.vue";
+
+import status_block_event from "@/components/status_block_event.vue";
+
 import svgCheck from "~/assets/img/check.svg?raw";
 import svgMain from "~/assets/img/main.svg?raw";
 import svgMenu from "~/assets/img/menu.svg?raw";
@@ -1430,24 +1427,7 @@ export default {
     components_event_on_player_destroyed,
     components_event_ticking,
     components_event_random_ticking,
-    event_responses_set_block_property,
-    event_responses_set_block,
-    event_responses_set_block_at_pos,
-    event_responses_spawn_loot,
-    event_responses_add_mob_effect,
-    event_responses_remove_mob_effect,
-    event_responses_damage,
-    event_responses_decrement_stack,
-    event_responses_die,
-    event_responses_play_effect,
-    event_responses_play_sound,
-    event_responses_teleport,
-    event_responses_transform_item,
-    event_responses_trigger,
-    event_responses_run_command,
-    event_responses_swing,
-    event_responses_sequence,
-    event_responses_randomize,
+    status_block_event,
   },
   data() {
     return {
@@ -1581,6 +1561,9 @@ export default {
         `${target.name}`,
         target.checked,
       ]);
+    },
+    addEvent() {
+      this.$store.commit("setEventBlock");
     },
   },
 };

@@ -16,7 +16,15 @@
           </label>
         </div>
       </div>
-      <div class="editor-element-body"></div>
+      <div class="editor-element-body">
+        <!-- TODO: -->
+        <components
+          v-for="(event, i) in getEventComponents()"
+          :key="i"
+          :is="event.name"
+          v-bind:class="{ [`${event.id}`]: true }"
+        ></components>
+      </div>
       <div class="editor-element-footer element-control">
         <div class="type-modal">
           <label class="invisible-Control">
@@ -51,6 +59,7 @@
                         type="checkbox"
                         name="event_responses_set_block_property"
                         class="element-control-switch invisible-Control"
+                        v-on:click="toggleValueEventElement"
                       />
                       <div class="checkbox-body">
                         <div class="checkbox-body-box">
@@ -82,6 +91,7 @@
                         type="checkbox"
                         name="event_responses_set_block"
                         class="element-control-switch invisible-Control"
+                        v-on:click="toggleValueEventElement"
                       />
                       <div class="checkbox-body">
                         <div class="checkbox-body-box">
@@ -113,6 +123,7 @@
                         type="checkbox"
                         name="event_responses_set_block_at_pos"
                         class="element-control-switch invisible-Control"
+                        v-on:click="toggleValueEventElement"
                       />
                       <div class="checkbox-body">
                         <div class="checkbox-body-box">
@@ -144,6 +155,7 @@
                         type="checkbox"
                         name="event_responses_spawn_loot"
                         class="element-control-switch invisible-Control"
+                        v-on:click="toggleValueEventElement"
                       />
                       <div class="checkbox-body">
                         <div class="checkbox-body-box">
@@ -175,6 +187,7 @@
                         type="checkbox"
                         name="event_responses_add_mob_effect"
                         class="element-control-switch invisible-Control"
+                        v-on:click="toggleValueEventElement"
                       />
                       <div class="checkbox-body">
                         <div class="checkbox-body-box">
@@ -206,6 +219,7 @@
                         type="checkbox"
                         name="event_responses_remove_mob_effect"
                         class="element-control-switch invisible-Control"
+                        v-on:click="toggleValueEventElement"
                       />
                       <div class="checkbox-body">
                         <div class="checkbox-body-box">
@@ -237,6 +251,7 @@
                         type="checkbox"
                         name="event_responses_damage"
                         class="element-control-switch invisible-Control"
+                        v-on:click="toggleValueEventElement"
                       />
                       <div class="checkbox-body">
                         <div class="checkbox-body-box">
@@ -268,6 +283,7 @@
                         type="checkbox"
                         name="event_responses_decrement_stack"
                         class="element-control-switch invisible-Control"
+                        v-on:click="toggleValueEventElement"
                       />
                       <div class="checkbox-body">
                         <div class="checkbox-body-box">
@@ -299,6 +315,7 @@
                         type="checkbox"
                         name="event_responses_die"
                         class="element-control-switch invisible-Control"
+                        v-on:click="toggleValueEventElement"
                       />
                       <div class="checkbox-body">
                         <div class="checkbox-body-box">
@@ -330,6 +347,7 @@
                         type="checkbox"
                         name="event_responses_play_effect"
                         class="element-control-switch invisible-Control"
+                        v-on:click="toggleValueEventElement"
                       />
                       <div class="checkbox-body">
                         <div class="checkbox-body-box">
@@ -361,6 +379,7 @@
                         type="checkbox"
                         name="event_responses_play_sound"
                         class="element-control-switch invisible-Control"
+                        v-on:click="toggleValueEventElement"
                       />
                       <div class="checkbox-body">
                         <div class="checkbox-body-box">
@@ -392,6 +411,7 @@
                         type="checkbox"
                         name="event_responses_teleport"
                         class="element-control-switch invisible-Control"
+                        v-on:click="toggleValueEventElement"
                       />
                       <div class="checkbox-body">
                         <div class="checkbox-body-box">
@@ -423,6 +443,7 @@
                         type="checkbox"
                         name="event_responses_transform_item"
                         class="element-control-switch invisible-Control"
+                        v-on:click="toggleValueEventElement"
                       />
                       <div class="checkbox-body">
                         <div class="checkbox-body-box">
@@ -454,6 +475,7 @@
                         type="checkbox"
                         name="event_responses_trigger"
                         class="element-control-switch invisible-Control"
+                        v-on:click="toggleValueEventElement"
                       />
                       <div class="checkbox-body">
                         <div class="checkbox-body-box">
@@ -485,6 +507,7 @@
                         type="checkbox"
                         name="event_responses_run_command"
                         class="element-control-switch invisible-Control"
+                        v-on:click="toggleValueEventElement"
                       />
                       <div class="checkbox-body">
                         <div class="checkbox-body-box">
@@ -516,6 +539,7 @@
                         type="checkbox"
                         name="event_responses_swing"
                         class="element-control-switch invisible-Control"
+                        v-on:click="toggleValueEventElement"
                       />
                       <div class="checkbox-body">
                         <div class="checkbox-body-box">
@@ -547,6 +571,7 @@
                         type="checkbox"
                         name="event_responses_sequence"
                         class="element-control-switch invisible-Control"
+                        v-on:click="toggleValueEventElement"
                       />
                       <div class="checkbox-body">
                         <div class="checkbox-body-box">
@@ -578,6 +603,7 @@
                         type="checkbox"
                         name="event_responses_randomize"
                         class="element-control-switch invisible-Control"
+                        v-on:click="toggleValueEventElement"
                       />
                       <div class="checkbox-body">
                         <div class="checkbox-body-box">
@@ -616,12 +642,79 @@
 </template>
 
 <script>
+import event_responses_set_block_property from "@/components/value_elements/event_responses_set_block_property.vue";
+import event_responses_set_block from "@/components/value_elements/event_responses_set_block.vue";
+import event_responses_set_block_at_pos from "@/components/value_elements/event_responses_set_block_at_pos.vue";
+import event_responses_spawn_loot from "@/components/value_elements/event_responses_spawn_loot.vue";
+import event_responses_add_mob_effect from "@/components/value_elements/event_responses_add_mob_effect.vue";
+import event_responses_remove_mob_effect from "@/components/value_elements/event_responses_remove_mob_effect.vue";
+import event_responses_damage from "@/components/value_elements/event_responses_damage.vue";
+import event_responses_decrement_stack from "@/components/value_elements/event_responses_decrement_stack.vue";
+import event_responses_die from "@/components/value_elements/event_responses_die.vue";
+import event_responses_play_effect from "@/components/value_elements/event_responses_play_effect.vue";
+import event_responses_play_sound from "@/components/value_elements/event_responses_play_sound.vue";
+import event_responses_teleport from "@/components/value_elements/event_responses_teleport.vue";
+import event_responses_transform_item from "@/components/value_elements/event_responses_transform_item.vue";
+import event_responses_trigger from "@/components/value_elements/event_responses_trigger.vue";
+import event_responses_run_command from "@/components/value_elements/event_responses_run_command.vue";
+import event_responses_swing from "@/components/value_elements/event_responses_swing.vue";
+import event_responses_sequence from "@/components/value_elements/event_responses_sequence.vue";
+import event_responses_randomize from "@/components/value_elements/event_responses_randomize.vue";
 import svgClose from "~/assets/img/close.svg?raw";
 export default {
+  components: {
+    event_responses_set_block_property,
+    event_responses_set_block,
+    event_responses_set_block_at_pos,
+    event_responses_spawn_loot,
+    event_responses_add_mob_effect,
+    event_responses_remove_mob_effect,
+    event_responses_damage,
+    event_responses_decrement_stack,
+    event_responses_die,
+    event_responses_play_effect,
+    event_responses_play_sound,
+    event_responses_teleport,
+    event_responses_transform_item,
+    event_responses_trigger,
+    event_responses_run_command,
+    event_responses_swing,
+    event_responses_sequence,
+    event_responses_randomize,
+  },
   data() {
     return {
       svgClose,
+      id: "",
     };
+  },
+  created() {
+    let ev = this;
+    this.id = Object.keys(ev.$vnode.data.class)[0];
+  },
+  methods: {
+    /**
+     * @return {object}
+     */
+    getEventComponents() {
+      return this.$store.state.events[this.getEventIndex(this.id)].components;
+    },
+    getEventIndex(id) {
+      let res = 0;
+      this.$store.state.events.forEach((element, i) => {
+        if (element.id == id) res = i;
+      });
+      return res;
+    },
+    toggleValueEventElement(event) {
+      /** @type {Element} */
+      const target = event.target;
+      this.$store.commit("toggleEventComponent", [
+        `${target.name}`,
+        this.getEventIndex(this.id),
+        target.checked,
+      ]);
+    },
   },
 };
 </script>
