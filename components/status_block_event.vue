@@ -690,13 +690,10 @@ export default {
     return {
       svgClose,
       id: "",
-      components: {},
     };
   },
   created() {
-    let ev = this;
-    this.id = Object.keys(ev.$vnode.data.class)[0];
-    this.components = this.getEventComponents();
+    this.id = Object.keys(this.$vnode.data.class)[0];
   },
   methods: {
     /**
@@ -714,10 +711,9 @@ export default {
         target.checked,
       ]);
       this.components = this.getEventComponents();
-      console.log(this.components);
     },
     deleteEvent() {
-      this.$store.commit("deleteEventBlock", this.id);
+      this.$store.commit("deleteStatusBlock", ["events", this.id]);
     },
   },
 };

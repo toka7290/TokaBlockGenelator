@@ -1237,6 +1237,7 @@
                         type="button"
                         id="blockState-add"
                         class="blockState"
+                        v-on:click="addBlockState"
                       />
                       <div class="add-button-text">+ 追加</div>
                     </label>
@@ -1244,7 +1245,14 @@
                 </div>
               </div>
             </div>
-            <div class="blockState status-block-body"></div>
+            <div class="blockState status-block-body">
+              <components
+                v-for="(event, i) in $store.state.block_states"
+                :key="i"
+                :is="`status_block_blockState`"
+                v-bind:class="{ [`${i}`]: true }"
+              ></components>
+            </div>
           </div>
         </form>
       </div>
@@ -1382,6 +1390,7 @@ import components_event_ticking from "@/components/value_elements/components_eve
 import components_event_random_ticking from "@/components/value_elements/components_event_random_ticking.vue";
 
 import status_block_event from "@/components/status_block_event.vue";
+import status_block_blockState from "@/components/status_block_blockState.vue";
 
 import svgCheck from "~/assets/img/check.svg?raw";
 import svgMain from "~/assets/img/main.svg?raw";
@@ -1428,6 +1437,7 @@ export default {
     components_event_ticking,
     components_event_random_ticking,
     status_block_event,
+    status_block_blockState,
   },
   data() {
     return {
@@ -1563,7 +1573,10 @@ export default {
       ]);
     },
     addEvent() {
-      this.$store.commit("setEventBlock");
+      this.$store.commit("setStatusBlock", "events");
+    },
+    addBlockState() {
+      this.$store.commit("setStatusBlock", "block_states");
     },
   },
 };

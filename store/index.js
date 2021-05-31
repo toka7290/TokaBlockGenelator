@@ -3,6 +3,7 @@ export const state = () => ({
   main_components: [], //component
   data: "test",
   events: [],
+  block_states: [],
 });
 
 export const mutations = {
@@ -25,20 +26,31 @@ export const mutations = {
   setComponentData(states, [targetIndex, data]) {
     states.main_components[targetIndex].data = data;
   },
-  setEventBlock(states) {
+  setStatusBlock(states, /**@type {(block_states|events)} */ type) {
     let uuid = this.$getUuid_v4();
-    let data = states.events;
-    states.events = {
-      ...states.events,
-      [uuid]: {
-        id: uuid,
-        components: new Array(),
-      },
-    };
+    switch (type) {
+      case "events":
+        states.events = {
+          ...states.events,
+          [uuid]: {
+            id: uuid,
+            components: new Array(),
+          },
+        };
+        break;
+      case "block_states":
+        states.block_states = {
+          ...states.block_states,
+          [uuid]: {
+            id: uuid,
+            components: new Array(),
+          },
+        };
+        break;
+    }
   },
-  deleteEventBlock(states, parent) {
-    this._vm.$delete(states.events, parent);
-    console.log(states.events);
+  deleteStatusBlock(states, [/**@type {(block_states|events)} */ type, parent]) {
+    this._vm.$delete(states[type], parent);
   },
   toggleEventComponent(states, [component, parent, hasComponent = undefined]) {
     if (component == undefined) return;

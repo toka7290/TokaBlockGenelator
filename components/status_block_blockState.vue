@@ -14,7 +14,11 @@
           title="ブロック状態を削除します。"
         >
           <label class="invisible-Control">
-            <input type="button" class="blockState-delete blockState" />
+            <input
+              type="button"
+              class="blockState-delete blockState"
+              v-on:click="deleteBlockState"
+            />
             <div class="remove-button-text">- 削除</div>
           </label>
         </div>
@@ -27,14 +31,18 @@
           <label for="blockState-type">型</label>
         </div>
         <div class="value-input">
-          <select name="blockState-type" class="blockState-type">
+          <select
+            name="blockState-type"
+            class="blockState-type"
+            @change="changeVal"
+          >
             <option value="val_Boolean">Boolean</option>
             <option value="val_Integer">Integer</option>
             <option value="val_String">String</option>
           </select>
         </div>
       </div>
-      <div class="switchable-element val_Boolean">
+      <div class="switchable-element val_Boolean" v-show="val_type == 0">
         <div class="value-element" title="デフォルトの値を変更します。">
           <label class="value-checkbox">
             <input
@@ -63,7 +71,7 @@
           </label>
         </div>
       </div>
-      <div class="switchable-element val_Integer hide">
+      <div class="switchable-element val_Integer" v-show="val_type == 1">
         <div
           class="value-element"
           title="取りうる値を設定します。0番目の値はデフォルトの値になります。"
@@ -105,7 +113,7 @@
           </div>
         </div>
       </div>
-      <div class="switchable-element val_String hide">
+      <div class="switchable-element val_String" v-show="val_type == 2">
         <div
           class="value-element"
           title="取りうる値を設定します。0番目の値はデフォルトの値になります。"
@@ -150,3 +158,26 @@
     </div>
   </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      id: "",
+      val_type: 0,
+    };
+  },
+  created() {
+    this.id = Object.keys(this.$vnode.data.class)[0];
+  },
+  methods: {
+    deleteBlockState() {
+      this.$store.commit("deleteStatusBlock", ["block_states", this.id]);
+    },
+    changeVal(event) {
+      /** @type {Element} */
+      const target = event.target;
+      this.val_type = target.selectedIndex;
+    },
+  },
+};
+</script>
