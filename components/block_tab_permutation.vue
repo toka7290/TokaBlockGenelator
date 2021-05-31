@@ -1030,12 +1030,89 @@
 </template>
 
 <script>
+import components_loot from "@/components/value_elements/components_loot.vue";
+import components_display_name from "@/components/value_elements/components_display_name.vue";
+import components_tag from "@/components/value_elements/components_tag.vue";
+import components_placement_filter from "@/components/value_elements/components_placement_filter.vue";
+import components_preventsjumping from "@/components/value_elements/components_preventsjumping.vue";
+import components_unwalkable from "@/components/value_elements/components_unwalkable.vue";
+import components_map_color from "@/components/value_elements/components_map_color.vue";
+import components_crafting_table from "@/components/value_elements/components_crafting_table.vue";
+import components_geometry from "@/components/value_elements/components_geometry.vue";
+import components_material_instances from "@/components/value_elements/components_material_instances.vue";
+import components_entity_collision from "@/components/value_elements/components_entity_collision.vue";
+import components_pick_collision from "@/components/value_elements/components_pick_collision.vue";
+import components_rotation from "@/components/value_elements/components_rotation.vue";
+import components_breathability from "@/components/value_elements/components_breathability.vue";
+import components_block_light_absorption from "@/components/value_elements/components_block_light_absorption.vue";
+import components_block_light_emission from "@/components/value_elements/components_block_light_emission.vue";
+import components_destroy_time from "@/components/value_elements/components_destroy_time.vue";
+import components_explosion_resistance from "@/components/value_elements/components_explosion_resistance.vue";
+import components_breakonpush from "@/components/value_elements/components_breakonpush.vue";
+import components_immovable from "@/components/value_elements/components_immovable.vue";
+import components_onlypistonpush from "@/components/value_elements/components_onlypistonpush.vue";
+import components_friction from "@/components/value_elements/components_friction.vue";
+import components_flammable from "@/components/value_elements/components_flammable.vue";
+import components_event_on_fall_on from "@/components/value_elements/components_event_on_fall_on.vue";
+import components_event_on_interact from "@/components/value_elements/components_event_on_interact.vue";
+import components_event_on_placed from "@/components/value_elements/components_event_on_placed.vue";
+import components_event_on_player_placing from "@/components/value_elements/components_event_on_player_placing.vue";
+import components_event_on_step_on from "@/components/value_elements/components_event_on_step_on.vue";
+import components_event_on_step_off from "@/components/value_elements/components_event_on_step_off.vue";
+import components_event_on_player_destroyed from "@/components/value_elements/components_event_on_player_destroyed.vue";
+import components_event_ticking from "@/components/value_elements/components_event_ticking.vue";
+import components_event_random_ticking from "@/components/value_elements/components_event_random_ticking.vue";
+
 import svgClose from "~/assets/img/close.svg?raw";
+
 export default {
+  components: {
+    components_loot,
+    components_display_name,
+    components_tag,
+    components_placement_filter,
+    components_preventsjumping,
+    components_unwalkable,
+    components_map_color,
+    components_crafting_table,
+    components_geometry,
+    components_material_instances,
+    components_entity_collision,
+    components_pick_collision,
+    components_rotation,
+    components_breathability,
+    components_block_light_absorption,
+    components_block_light_emission,
+    components_destroy_time,
+    components_explosion_resistance,
+    components_breakonpush,
+    components_immovable,
+    components_onlypistonpush,
+    components_friction,
+    components_flammable,
+    components_event_on_fall_on,
+    components_event_on_interact,
+    components_event_on_placed,
+    components_event_on_player_placing,
+    components_event_on_step_on,
+    components_event_on_step_off,
+    components_event_on_player_destroyed,
+    components_event_ticking,
+    components_event_random_ticking,
+  },
   data() {
     return {
       svgClose,
+      id: "",
     };
+  },
+  created() {
+    this.id = Object.keys(this.$vnode.data.class)[0];
+  },
+  methods: {
+    deletePermutation() {
+      this.$store.commit("deleteStatusBlock", ["permutations", this.id]);
+    },
   },
 };
 </script>

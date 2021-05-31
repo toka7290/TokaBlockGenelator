@@ -3,6 +3,7 @@ export const state = () => ({
   main_components: [], //component
   data: "test",
   events: [],
+  permutations: [],
   block_states: [],
 });
 
@@ -66,6 +67,25 @@ export const mutations = {
         (val) => val.name != `${component}`
       );
     }
+  },
+  setBlockTab(states, /**@type {(permutations)} */ type) {
+    let uuid = this.$getUuid_v4();
+    switch (type) {
+      case "permutations":
+        states.permutations = {
+          ...states.permutations,
+          [uuid]: {
+            id: uuid,
+            components: new Array(),
+          },
+        };
+        break;
+      default:
+        break;
+    }
+  },
+  deleteBlockTab(states, [/**@type {(permutations)} */ type, parent]) {
+    this._vm.$delete(states[type], parent);
   },
 };
 

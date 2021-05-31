@@ -1192,6 +1192,7 @@
                       <input
                         type="button"
                         class="permutations add-block-tab-element"
+                        v-on:click="addPermutation"
                       />
                       <div class="add-button-text">+ 追加</div>
                     </label>
@@ -1210,9 +1211,31 @@
                   </div>
                 </div>
               </div>
-              <div class="permutations block-tab-body"></div>
+              <div class="permutations block-tab-body">
+                <label
+                  v-for="(event, key, i) in $store.state.permutations"
+                  :key="i"
+                  class="permutations block-tab-children invisible-Control"
+                >
+                  <input
+                    type="radio"
+                    name="permutations"
+                    class="permutations block-tab"
+                    v-on:click="changeBlockTab(i)"
+                  />
+                  <div class="tab-number">{{ i }}</div>
+                </label>
+              </div>
             </div>
-            <div class="permutations block-tab-contents"></div>
+            <div class="permutations block-tab-contents">
+              <components
+                v-for="(event, key, num) in $store.state.permutations"
+                :key="key"
+                :is="`block_tab_permutation`"
+                v-bind:class="{ [`${key}`]: true }"
+                v-show="num == permutation"
+              ></components>
+            </div>
           </div>
         </form>
         <form
@@ -1391,6 +1414,7 @@ import components_event_random_ticking from "@/components/value_elements/compone
 
 import status_block_event from "@/components/status_block_event.vue";
 import status_block_blockState from "@/components/status_block_blockState.vue";
+import block_tab_permutation from "@/components/block_tab_permutation.vue";
 
 import svgCheck from "~/assets/img/check.svg?raw";
 import svgMain from "~/assets/img/main.svg?raw";
@@ -1437,6 +1461,7 @@ export default {
     components_event_ticking,
     components_event_random_ticking,
     status_block_event,
+    block_tab_permutation,
     status_block_blockState,
   },
   data() {
@@ -1454,6 +1479,7 @@ export default {
       page_about: false,
       hamburger_show: false,
       editor_show: [false, false, false, false],
+      permutation: 0,
       show_issue: false,
       json: {},
       tmp: undefined,
@@ -1577,6 +1603,12 @@ export default {
     },
     addBlockState() {
       this.$store.commit("setStatusBlock", "block_states");
+    },
+    addPermutation() {
+      this.$store.commit("setBlockTab", "permutations");
+    },
+    changeBlockTab(i) {
+      this.permutation = i;
     },
   },
 };
