@@ -705,18 +705,6 @@ export default {
     getEventComponents() {
       return this.$store.state.events[this.id].components;
     },
-    getEventIndex(id) {
-      let res;
-      let events = this.$store.state.events;
-
-      for (let index = 0; index < events.length; index++) {
-        if (events[index].id == id) {
-          res = index;
-          break;
-        }
-      }
-      return res;
-    },
     toggleValueEventElement(event) {
       /** @type {Element} */
       const target = event.target;
