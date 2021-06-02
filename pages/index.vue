@@ -1205,6 +1205,7 @@
                       <input
                         type="button"
                         class="permutations remove-block-tab-element"
+                        v-on:click="removePermutation"
                       />
                       <div class="remove-button-text">- 削除</div>
                     </label>
@@ -1213,17 +1214,19 @@
               </div>
               <div class="permutations block-tab-body">
                 <label
-                  v-for="(event, key, i) in $store.state.permutations"
-                  :key="i"
+                  v-for="(event, key, num) in $store.state.permutations"
+                  :key="num"
                   class="permutations block-tab-children invisible-Control"
                 >
                   <input
                     type="radio"
                     name="permutations"
                     class="permutations block-tab"
-                    v-on:click="changeBlockTab(i)"
+                    v-on:change="changeBlockTab(num)"
+                    v-model="permutation"
+                    v-bind:value="permutation"
                   />
-                  <div class="tab-number">{{ i }}</div>
+                  <div class="tab-number">{{ num }}</div>
                 </label>
               </div>
             </div>
@@ -1606,6 +1609,9 @@ export default {
     },
     addPermutation() {
       this.$store.commit("setBlockTab", "permutations");
+    },
+    removePermutation() {
+      this.$store.commit("deleteBlockTab", ["permutations", this.permutation]);
     },
     changeBlockTab(i) {
       this.permutation = i;

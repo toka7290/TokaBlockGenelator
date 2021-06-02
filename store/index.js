@@ -85,7 +85,23 @@ export const mutations = {
     }
   },
   deleteBlockTab(states, [/**@type {(permutations)} */ type, parent]) {
-    this._vm.$delete(states[type], parent);
+    this._vm.$delete(states[type], Object.keys(states[type])[parent]);
+  },
+  togglePermutationComponent(states, [component, parent, hasComponent = undefined]) {
+    console.log(component, parent, hasComponent);
+    if (component == undefined) return;
+    if (hasComponent == undefined) {
+      hasComponent = !states.permutations[parent].components.some((val) => val == component);
+    }
+    if (hasComponent) {
+      const uuid = this.$getUuid_v4();
+      const data = { name: component, id: uuid, data: undefined };
+      states.permutations[parent].components.push(data);
+    } else {
+      states.permutations[parent].components = states.permutations[parent].components.filter(
+        (val) => val.name != `${component}`
+      );
+    }
   },
 };
 
