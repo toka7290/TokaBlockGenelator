@@ -4,6 +4,7 @@ export default ({}, inject) => {
   inject("getClassUUID", getClassUUID);
   inject("showModal", showModal);
   inject("closeModal", closeModal);
+  inject("Issue", Issue);
 };
 // UUID生成
 const getUuid_v4 = () => {
@@ -122,7 +123,6 @@ class Issue {
   constructor() {
     this.error_list = new Array();
     this.warning_list = new Array();
-    $("ul.issue-list li").remove();
     $(".stat-warning,.stat-error").removeClass("stat-warning stat-error");
   }
   setIssueList() {

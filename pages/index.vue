@@ -1362,7 +1362,40 @@
             </div>
           </label>
           <div class="issue-content" v-show="show_issue">
-            <ul class="issue-list"></ul>
+            <ul class="issue-list">
+              <li
+                v-for="(elem, key, num) in $store.state.error_list"
+                :key="num"
+              >
+                <img
+                  src="~/assets/img/error.svg"
+                  alt=""
+                  width="19px"
+                  height="19px"
+                />
+                <p>{{ elem }}</p>
+              </li>
+              <li
+                v-for="(elem, key, num) in $store.state.warning_list"
+                :key="num"
+              >
+                <img
+                  src="~/assets/img/warning.svg"
+                  alt=""
+                  width="19px"
+                  height="19px"
+                />
+                <p>{{ elem }}</p>
+              </li>
+              <li
+                v-show="
+                  Object.keys($store.state.error_list).length == 0 &&
+                  Object.keys($store.state.warning_list).length == 0
+                "
+              >
+                問題はありません
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -1485,7 +1518,6 @@ export default {
       permutation: 0,
       show_issue: false,
       json: {},
-      tmp: undefined,
     };
   },
   created() {

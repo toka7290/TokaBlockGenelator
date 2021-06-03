@@ -5,6 +5,8 @@ export const state = () => ({
   events: [],
   permutations: [],
   block_states: [],
+  error_list: {},
+  warning_list: {},
 });
 
 export const mutations = {
@@ -102,6 +104,22 @@ export const mutations = {
         (val) => val.name != `${component}`
       );
     }
+  },
+  addWarning(states, [id, issue_comment]) {
+    // [id]: {comment:issue_comment,to:elem}
+    states.warning_list = {
+      ...states.warning_list,
+      [id]: issue_comment,
+    };
+  },
+  addError(states, [id, issue_comment]) {
+    states.error_list = {
+      ...states.error_list,
+      [id]: issue_comment,
+    };
+  },
+  deleteError(states, id) {
+    this._vm.$delete(states.error_list, id);
   },
 };
 
