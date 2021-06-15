@@ -8,6 +8,7 @@
         type="checkbox"
         name="components-unwalkable"
         class="components-unwalkable invisible-Control"
+        v-on:change="onChangedValue"
       />
       <div for="components-unwalkable" class="checkbox-body">
         <div class="checkbox-body-box">
@@ -34,18 +35,14 @@
 
 <script>
 export default {
+  props: ["group", "uuid"],
   methods: {
     onChangedValue(event) {
-      /** @type {Element} */
-      const target = event.target;
-      const uuid = this.$getClassUUID(
-        target.closest(".value-element.components_loot").classList
-      );
-      if (uuid == undefined) return;
-      const index = this.$store.state.main_components.findIndex(
-        (val) => val.id == uuid
-      );
-      this.$store.commit("setComponentData", [index, target.value]);
+      this.$store.commit("setComponentData", [
+        this.uuid,
+        this.group,
+        event.target.checked,
+      ]);
     },
   },
 };

@@ -7,7 +7,11 @@
       <p>通気性</p>
     </div>
     <label class="value-input">
-      <select name="components-breathability" class="components-breathability">
+      <select
+        name="components-breathability"
+        class="components-breathability"
+        v-on:change="onChangedValue"
+      >
         <option value="solid">solid</option>
         <option value="air">air</option>
       </select>
@@ -17,18 +21,14 @@
 
 <script>
 export default {
+  props: ["group", "uuid"],
   methods: {
     onChangedValue(event) {
-      /** @type {Element} */
-      const target = event.target;
-      const uuid = this.$getClassUUID(
-        target.closest(".value-element.components_loot").classList
-      );
-      if (uuid == undefined) return;
-      const index = this.$store.state.main_components.findIndex(
-        (val) => val.id == uuid
-      );
-      this.$store.commit("setComponentData", [index, target.value]);
+      this.$store.commit("setComponentData", [
+        this.uuid,
+        this.group,
+        event.target.value,
+      ]);
     },
   },
 };

@@ -429,7 +429,11 @@
               </label>
             </div>
             <div
-              class="value-element description_register_to_creative_menu unsupported"
+              class="
+                value-element
+                description_register_to_creative_menu
+                unsupported
+              "
               title="このチェックを有効にすると、ブロックがクリエイティブインベントリに追加されます。"
             >
               <label class="value-checkbox">
@@ -458,10 +462,11 @@
             </div>
             <div class="editor-element-body">
               <components
-                v-for="(component, i) in $store.state.main_components"
+                v-for="(component, key, i) in $store.state.main_components"
                 :key="i"
                 :is="`${component.name}`"
-                v-bind:class="{ [`${component.id}`]: true }"
+                :group="component.group"
+                :uuid="key"
               ></components>
             </div>
             <div class="editor-element-footer element-control">
@@ -758,7 +763,10 @@
                           </label>
                         </div>
                         <div
-                          class="value-element components_block_light_absorption"
+                          class="
+                            value-element
+                            components_block_light_absorption
+                          "
                           title="このブロックが吸収する光の量を設定します。"
                         >
                           <label class="value-checkbox">
@@ -994,7 +1002,10 @@
                           </label>
                         </div>
                         <div
-                          class="value-element components_event_on_player_placing"
+                          class="
+                            value-element
+                            components_event_on_player_placing
+                          "
                           title="ブロックがプレイヤーによって置かれた時のイベントを定義します。"
                         >
                           <label class="value-checkbox">
@@ -1053,7 +1064,10 @@
                           </label>
                         </div>
                         <div
-                          class="value-element components_event_on_player_destroyed"
+                          class="
+                            value-element
+                            components_event_on_player_destroyed
+                          "
                           title="プレイヤーによってブロックが破壊された時のイベントを定義します。"
                         >
                           <label class="value-checkbox">
@@ -1585,7 +1599,6 @@ export default {
         "setFormatVersion",
         document.getElementById("format-version").value
       );
-      console.log(componetsSuportList);
       const format_version = this.$store.state.format_version;
       for (const format_key in componetsSuportList) {
         Array.prototype.forEach.call(

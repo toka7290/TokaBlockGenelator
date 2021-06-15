@@ -43,6 +43,7 @@
                     name="components-flammable-flame-odds"
                     class="components-flammable-flame-odds"
                     value="0"
+                    v-on:change="setFlameOdds"
                   />
                 </label>
               </div>
@@ -61,7 +62,8 @@
                       name="components-flammable-burn-odds"
                       class="components-flammable-burn-odds"
                       value="0"
-                      disabled
+                      v-on:change="setBurnOdds"
+                      v-bind:disabled="0 >= data.flame"
                     />
                     <span>%</span>
                   </label>
@@ -86,20 +88,34 @@ export default {
   data() {
     return {
       svgClose,
+      data: {
+        flame: 0,
+        burn: 0,
+      },
     };
   },
+  props: ["group", "uuid"],
   methods: {
-    onChangedValue(event) {
-      /** @type {Element} */
-      const target = event.target;
-      const uuid = this.$getClassUUID(
-        target.closest(".value-element.components_loot").classList
-      );
-      if (uuid == undefined) return;
-      const index = this.$store.state.main_components.findIndex(
-        (val) => val.id == uuid
-      );
-      this.$store.commit("setComponentData", [index, target.value]);
+    setFlameOdds(event) {
+      this.data = {
+        ...this.data,
+        flame: event.target.value,
+      };
+      this.onChangedValue();
+    },
+    setBurnOdds(event) {
+      this.data = {
+        ...this.data,
+        burn: this.data.flame > 0 ? event.target.value : 0,
+      };
+      this.onChangedValue();
+    },
+    onChangedValue() {
+      this.$store.commit("setComponentData", [
+        this.uuid,
+        this.group,
+        this.data,
+      ]);
     },
   },
 };

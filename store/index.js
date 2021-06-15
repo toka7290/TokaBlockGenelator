@@ -1,10 +1,10 @@
 export const state = () => ({
   format_version: "1.16.100",
-  main_components: [], //component
+  main_components: {}, //component
   data: "test",
-  events: [],
-  permutations: [],
-  block_states: [],
+  events: {},
+  permutations: {},
+  block_states: {},
   error_list: {},
   warning_list: {},
 });
@@ -20,14 +20,28 @@ export const mutations = {
     }
     if (hasComponent) {
       const uuid = this.$getUuid_v4();
-      const data = { name: component, id: uuid, data: undefined };
-      states.main_components.push(data);
+      states.main_components = {
+        ...states.main_components,
+        [uuid]: {
+          group: "main", // グループでコンポーネントは管理。
+          name: component,
+          data: Object(),
+        },
+      };
     } else {
-      states.main_components = states.main_components.filter((val) => val.name != `${component}`);
+      for (const uuid in states.main_components) {
+        if (states.main_components[uuid].name == component) {
+          this._vm.$delete(states.main_components, uuid);
+        }
+      }
     }
   },
-  setComponentData(states, [targetIndex, data]) {
-    states.main_components[targetIndex].data = data;
+  setComponentData(states, [target_id, group, data]) {
+    if (group == "main") states.main_components[target_id].data = data;
+    else {
+      states.permutations[group].components[target_id].data = data;
+    }
+    console.log(data);
   },
   setStatusBlock(states, /**@type {(block_states|events)} */ type) {
     let uuid = this.$getUuid_v4();
@@ -90,19 +104,22 @@ export const mutations = {
     this._vm.$delete(states[type], Object.keys(states[type])[parent]);
   },
   togglePermutationComponent(states, [component, parent, hasComponent = undefined]) {
-    console.log(component, parent, hasComponent);
     if (component == undefined) return;
     if (hasComponent == undefined) {
       hasComponent = !states.permutations[parent].components.some((val) => val == component);
     }
     if (hasComponent) {
       const uuid = this.$getUuid_v4();
-      const data = { name: component, id: uuid, data: undefined };
-      states.permutations[parent].components.push(data);
+      states.permutations[parent].components = {
+        ...states.permutations[parent].components,
+        [uuid]: {
+          group: parent, // グループでコンポーネントは管理。
+          name: component,
+          data: undefined,
+        },
+      };
     } else {
-      states.permutations[parent].components = states.permutations[parent].components.filter(
-        (val) => val.name != `${component}`
-      );
+      this._vm.$delete(states.permutations[parent].components, uuid);
     }
   },
   addWarning(states, [id, issue_comment]) {

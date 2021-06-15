@@ -40,14 +40,21 @@
                   <select
                     name="components-geometry-switch"
                     class="components-geometry-switch"
+                    @change="changeVal"
                   >
                     <option value="val_cube">立方体</option>
                     <option value="val_geometry">ジオメトリを指定</option>
                   </select>
                 </label>
               </div>
-              <div class="switchable-element val_cube"></div>
-              <div class="switchable-element val_geometry hide">
+              <div
+                class="switchable-element val_cube"
+                v-show="val_type == 0"
+              ></div>
+              <div
+                class="switchable-element val_geometry"
+                v-show="val_type == 1"
+              >
                 <div
                   class="value-element"
                   title="使用するジオメトリ名を設定します。"
@@ -58,8 +65,9 @@
                   <label class="value-input">
                     <input
                       type="text"
-                      name="components-geometry-"
+                      name="components-geometry"
                       class="components-geometry"
+                      v-on:change="setGeometry"
                     />
                   </label>
                 </div>
@@ -83,20 +91,40 @@ export default {
   data() {
     return {
       svgClose,
+      val_type: 0,
+      data: {
+        type: 0,
+        geo: "",
+      },
     };
   },
+  props: ["group", "uuid"],
   methods: {
-    onChangedValue(event) {
+    setGeometry(event) {
+      if (this.val_type == 1) {
+        this.data = {
+          ...this.data,
+          geo: event.target.value,
+        };
+        this.onChangedValue();
+      }
+    },
+    onChangedValue() {
+      this.$store.commit("setComponentData", [
+        this.uuid,
+        this.group,
+        this.data,
+      ]);
+    },
+    changeVal(event) {
       /** @type {Element} */
       const target = event.target;
-      const uuid = this.$getClassUUID(
-        target.closest(".value-element.components_loot").classList
-      );
-      if (uuid == undefined) return;
-      const index = this.$store.state.main_components.findIndex(
-        (val) => val.id == uuid
-      );
-      this.$store.commit("setComponentData", [index, target.value]);
+      this.val_type = Number(target.selectedIndex);
+      this.data = {
+        ...this.data,
+        type: this.val_type,
+      };
+      this.onChangedValue();
     },
   },
 };

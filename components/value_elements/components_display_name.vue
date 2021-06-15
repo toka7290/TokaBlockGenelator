@@ -19,11 +19,14 @@
 
 <script>
 export default {
+  props: ["group", "uuid"],
   methods: {
     onChangedValue(event) {
-      /** @type {Element} */
-      const target = event.target;
-      this.$emit("datas", target.value);
+      this.$store.commit("setComponentData", [
+        this.uuid,
+        this.group,
+        event.target.value,
+      ]);
     },
   },
 };

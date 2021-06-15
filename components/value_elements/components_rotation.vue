@@ -15,6 +15,7 @@
           class="components-rotation-x"
           value="0"
           step="90"
+          v-on:change="onChangedValue($event, 0)"
         />
       </label>
       <label>
@@ -25,6 +26,7 @@
           class="components-rotation-y"
           value="0"
           step="90"
+          v-on:change="onChangedValue($event, 1)"
         />
       </label>
       <label>
@@ -35,6 +37,7 @@
           class="components-rotation-z"
           value="0"
           step="90"
+          v-on:change="onChangedValue($event, 2)"
         />
       </label>
     </div>
@@ -43,18 +46,14 @@
 
 <script>
 export default {
+  data() {
+    return { val: [0, 0, 0] };
+  },
+  props: ["group", "uuid"],
   methods: {
-    onChangedValue(event) {
-      /** @type {Element} */
-      const target = event.target;
-      const uuid = this.$getClassUUID(
-        target.closest(".value-element.components_loot").classList
-      );
-      if (uuid == undefined) return;
-      const index = this.$store.state.main_components.findIndex(
-        (val) => val.id == uuid
-      );
-      this.$store.commit("setComponentData", [index, target.value]);
+    onChangedValue(event, /**@type {(0|1|2)} */ axis) {
+      this.val[axis] = event.target.value;
+      this.$store.commit("setComponentData", [this.uuid, this.group, this.val]);
     },
   },
 };

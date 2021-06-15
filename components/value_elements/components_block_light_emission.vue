@@ -16,6 +16,7 @@
           class="components-block-light-emission"
           value="0.0"
           step="0.1"
+          v-on:change="onChangedValue"
         />
         <span class="components-block-light-emission-eq">=0</span>
       </label>
@@ -25,18 +26,14 @@
 
 <script>
 export default {
+  props: ["group", "uuid"],
   methods: {
     onChangedValue(event) {
-      /** @type {Element} */
-      const target = event.target;
-      const uuid = this.$getClassUUID(
-        target.closest(".value-element.components_loot").classList
-      );
-      if (uuid == undefined) return;
-      const index = this.$store.state.main_components.findIndex(
-        (val) => val.id == uuid
-      );
-      this.$store.commit("setComponentData", [index, target.value]);
+      this.$store.commit("setComponentData", [
+        this.uuid,
+        this.group,
+        event.target.value,
+      ]);
     },
   },
 };

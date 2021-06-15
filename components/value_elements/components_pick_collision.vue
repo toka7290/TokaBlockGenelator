@@ -40,19 +40,21 @@
                   <select
                     name="components-pick-collision-switch"
                     class="components-pick-collision-switch"
+                    @change="changeVal"
                   >
                     <option value="val_simple">簡易</option>
                     <option value="val_details">詳細</option>
                   </select>
                 </label>
               </div>
-              <div class="switchable-element val_simple">
+              <div class="switchable-element val_simple" v-show="val_type == 0">
                 <div class="value-element" title="判定の有無を設定します。">
                   <label class="value-checkbox">
                     <input
                       type="checkbox"
                       name="components-pick-collision-simple"
                       class="components-pick-collision-simple invisible-Control"
+                      v-on:change="setCollisionSimple"
                       checked
                     />
                     <div class="checkbox-body">
@@ -77,7 +79,10 @@
                   </label>
                 </div>
               </div>
-              <div class="switchable-element val_details hide">
+              <div
+                class="switchable-element val_details"
+                v-show="val_type == 1"
+              >
                 <div class="value-element" title="判定の原点を指定します。">
                   <div class="value-label">
                     <p>原点</p>
@@ -93,6 +98,7 @@
                         step="1"
                         min="-8"
                         max="8"
+                        v-on:change="setAxisValue($event, 'origin', 0)"
                       />
                     </label>
                     <label>
@@ -105,6 +111,7 @@
                         step="1"
                         min="0"
                         max="16"
+                        v-on:change="setAxisValue($event, 'origin', 1)"
                       />
                     </label>
                     <label>
@@ -117,6 +124,7 @@
                         step="1"
                         min="-8"
                         max="8"
+                        v-on:change="setAxisValue($event, 'origin', 2)"
                       />
                     </label>
                   </div>
@@ -139,6 +147,7 @@
                         step="1"
                         min="0"
                         max="16"
+                        v-on:change="setAxisValue($event, 'size', 0)"
                       />
                     </label>
                     <label>
@@ -151,6 +160,7 @@
                         step="1"
                         min="0"
                         max="16"
+                        v-on:change="setAxisValue($event, 'size', 1)"
                       />
                     </label>
                     <label>
@@ -163,6 +173,7 @@
                         step="1"
                         min="0"
                         max="16"
+                        v-on:change="setAxisValue($event, 'size', 2)"
                       />
                     </label>
                   </div>
@@ -187,20 +198,53 @@ export default {
   data() {
     return {
       svgClose,
+      val_type: 0,
+      data: {
+        type: 0,
+        simple: true,
+        origin: [0, 0, 0],
+        size: [0, 0, 0],
+      },
     };
   },
+  props: ["group", "uuid"],
   methods: {
-    onChangedValue(event) {
+    setCollisionSimple(event) {
+      this.data = {
+        ...this.data,
+        simple: event.target.checked,
+      };
+      this.onChangedValue();
+    },
+    setAxisValue(
+      event,
+      /**@type {("origin"|"size")} */ axis_type,
+      /**@type {(0|1|2)} */ axis
+    ) {
+      let tmp = this.data[`${axis_type}`].map((val) => val);
+      tmp.splice(axis, 1, Number(event.target.value));
+      this.data = {
+        ...this.data,
+        [axis_type]: tmp,
+      };
+      this.onChangedValue();
+    },
+    onChangedValue() {
+      this.$store.commit("setComponentData", [
+        this.uuid,
+        this.group,
+        this.data,
+      ]);
+    },
+    changeVal(event) {
       /** @type {Element} */
       const target = event.target;
-      const uuid = this.$getClassUUID(
-        target.closest(".value-element.components_loot").classList
-      );
-      if (uuid == undefined) return;
-      const index = this.$store.state.main_components.findIndex(
-        (val) => val.id == uuid
-      );
-      this.$store.commit("setComponentData", [index, target.value]);
+      this.val_type = Number(target.selectedIndex);
+      this.data = {
+        ...this.data,
+        type: this.val_type,
+      };
+      this.onChangedValue();
     },
   },
 };

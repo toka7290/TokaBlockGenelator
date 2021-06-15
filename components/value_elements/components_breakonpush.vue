@@ -22,6 +22,7 @@
             stroke-width="3"
             stroke-linecap="round"
             stroke-linejoin="round"
+            v-on:change="onChangedValue"
           >
             <polyline points="20 6 9 17 4 12"></polyline>
           </svg>
@@ -34,18 +35,14 @@
 
 <script>
 export default {
+  props: ["group", "uuid"],
   methods: {
     onChangedValue(event) {
-      /** @type {Element} */
-      const target = event.target;
-      const uuid = this.$getClassUUID(
-        target.closest(".value-element.components_loot").classList
-      );
-      if (uuid == undefined) return;
-      const index = this.$store.state.main_components.findIndex(
-        (val) => val.id == uuid
-      );
-      this.$store.commit("setComponentData", [index, target.value]);
+      this.$store.commit("setComponentData", [
+        this.uuid,
+        this.group,
+        event.target.checked,
+      ]);
     },
   },
 };

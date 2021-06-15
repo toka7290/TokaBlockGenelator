@@ -25,10 +25,12 @@
       </div>
       <div class="editor-element-body">
         <components
-          v-for="(component, i) in $store.state.permutations[id].components"
+          v-for="(component, key, i) in $store.state.permutations[id]
+            .components"
           :key="i"
           :is="`${component.name}`"
-          v-bind:class="{ [`${component.id}`]: true }"
+          :group="component.group"
+          :uuid="key"
         ></components>
       </div>
       <div class="editor-element-footer element-control">

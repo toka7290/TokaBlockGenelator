@@ -12,6 +12,8 @@
           type="text"
           name="components-map-color"
           class="components-map-color"
+          v-on:change="onChangedValue"
+          v-bind:value="val"
       /></label>
       <label
         ><svg aria-label="色選択" class="accessibility-label"></svg
@@ -19,6 +21,8 @@
           type="color"
           name="components-map-color-pick"
           class="components-map-color-pick"
+          v-on:change="onChangedValue"
+          v-bind:value="val"
       /></label>
     </div>
   </div>
@@ -26,18 +30,20 @@
 
 <script>
 export default {
+  data() {
+    return {
+      val: "",
+    };
+  },
+  props: ["group", "uuid"],
   methods: {
     onChangedValue(event) {
-      /** @type {Element} */
-      const target = event.target;
-      const uuid = this.$getClassUUID(
-        target.closest(".value-element.components_loot").classList
-      );
-      if (uuid == undefined) return;
-      const index = this.$store.state.main_components.findIndex(
-        (val) => val.id == uuid
-      );
-      this.$store.commit("setComponentData", [index, target.value]);
+      this.val = event.target.value;
+      this.$store.commit("setComponentData", [
+        this.uuid,
+        this.group,
+        event.target.value,
+      ]);
     },
   },
 };

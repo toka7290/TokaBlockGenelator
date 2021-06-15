@@ -43,6 +43,7 @@
                     name="components-crafting-table-grid-size"
                     class="components-crafting-table-grid-size"
                     value="3"
+                    v-on:change="setGridSize"
                   />
                 </label>
               </div>
@@ -55,12 +56,20 @@
                 </div>
                 <div class="value-input type-array-string">
                   <div class="array-list">
-                    <label class="array-data">
-                      <div class="array-num">0</div>
+                    <label
+                      class="array-data"
+                      v-for="(elem, i) in lists"
+                      :key="i"
+                    >
+                      <div class="array-num">{{ i }}</div>
                       <input
                         type="text"
                         name="components-crafting-table-crafting-tags"
-                        class="components-crafting-table-crafting-tags type-array-string"
+                        class="
+                          components-crafting-table-crafting-tags
+                          type-array-string
+                        "
+                        v-on:change="setTags($event, i)"
                       />
                     </label>
                   </div>
@@ -69,6 +78,7 @@
                       <input
                         type="button"
                         class="add-array-element invisible-Control"
+                        v-on:click="addArrayList"
                       />
                       <div class="add-array-label">
                         <div class="add-array-element-text">+ 追加</div>
@@ -78,6 +88,7 @@
                       <input
                         type="button"
                         class="remove-array-element invisible-Control"
+                        v-on:click="removeArrayList"
                       />
                       <div class="remove-array-label">
                         <div class="remove-array-element-text">- 削除</div>
@@ -98,6 +109,7 @@
                     type="text"
                     name="components-crafting-table-custom-description"
                     class="components-crafting-table-custom-description"
+                    v-on:change="setDescription"
                   />
                 </label>
               </div>
@@ -120,20 +132,56 @@ export default {
   data() {
     return {
       svgClose,
+      lists: [],
+      data: {
+        grid_size: 0,
+        custom_description: "",
+        tags: [],
+      },
     };
   },
+  props: ["group", "uuid"],
   methods: {
-    onChangedValue(event) {
-      /** @type {Element} */
-      const target = event.target;
-      const uuid = this.$getClassUUID(
-        target.closest(".value-element.components_loot").classList
-      );
-      if (uuid == undefined) return;
-      const index = this.$store.state.main_components.findIndex(
-        (val) => val.id == uuid
-      );
-      this.$store.commit("setComponentData", [index, target.value]);
+    addArrayList() {
+      this.lists = [...this.lists, ""];
+    },
+    removeArrayList() {
+      if (this.lists.length) {
+        let tmp = this.lists.map((val) => val);
+        tmp.splice(tmp.length - 1, 1);
+        this.lists = tmp;
+      }
+    },
+    setGridSize(event) {
+      this.data = {
+        ...this.data,
+        grid_size: event.target.value,
+      };
+      this.onChangedValue();
+    },
+    setDescription(event) {
+      this.data = {
+        ...this.data,
+        custom_description: event.target.value,
+      };
+      this.onChangedValue();
+    },
+    setTags(event, index) {
+      let tmp = this.lists.map((val) => val);
+      tmp.splice(index, 1, event.target.value);
+      this.lists = tmp;
+      this.data = {
+        ...this.data,
+        tags: this.lists,
+      };
+      this.onChangedValue();
+    },
+    onChangedValue() {
+      this.$store.commit("setComponentData", [
+        this.uuid,
+        this.group,
+        this.data,
+      ]);
     },
   },
 };
