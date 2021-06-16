@@ -105,20 +105,42 @@ export default {
   data() {
     return {
       svgClose,
+      data: {
+        event: "",
+        condition: "",
+        target: "",
+      },
     };
   },
+  props: ["group", "uuid"],
   methods: {
-    onChangedValue(event) {
-      /** @type {Element} */
-      const target = event.target;
-      const uuid = this.$getClassUUID(
-        target.closest(".value-element.components_loot").classList
-      );
-      if (uuid == undefined) return;
-      const index = this.$store.state.main_components.findIndex(
-        (val) => val.id == uuid
-      );
-      this.$store.commit("setComponentData", [index, target.value]);
+    setEvent(event) {
+      this.data = {
+        ...this.data,
+        event: event.target.value,
+      };
+      this.onChangedValue();
+    },
+    setCondition(event) {
+      this.data = {
+        ...this.data,
+        condition: event.target.value,
+      };
+      this.onChangedValue();
+    },
+    setTarget(event) {
+      this.data = {
+        ...this.data,
+        target: event.target.value,
+      };
+      this.onChangedValue();
+    },
+    onChangedValue() {
+      this.$store.commit("setComponentData", [
+        this.uuid,
+        this.group,
+        this.data,
+      ]);
     },
   },
 };
