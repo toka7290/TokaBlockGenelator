@@ -23,10 +23,11 @@
       <div class="editor-element-body">
         <!-- TODO: -->
         <components
-          v-for="(event, key) in components"
-          :key="key"
-          :is="event.name"
-          v-bind:class="{ [`${event.id}`]: true }"
+          v-for="(component, key, i) in $store.state.events[uuid].components"
+          :key="i"
+          :is="component.name"
+          :group="component.group"
+          :uuid="key"
         ></components>
       </div>
       <div class="editor-element-footer element-control">
@@ -689,31 +690,21 @@ export default {
   data() {
     return {
       svgClose,
-      id: "",
     };
   },
-  created() {
-    this.id = Object.keys(this.$vnode.data.class)[0];
-  },
+  props: ["uuid"],
   methods: {
-    /**
-     * @return {object}
-     */
-    getEventComponents() {
-      return this.$store.state.events[this.id].components;
-    },
     toggleValueEventElement(event) {
       /** @type {Element} */
       const target = event.target;
       this.$store.commit("toggleEventComponent", [
         `${target.name}`,
-        this.id,
+        this.uuid,
         target.checked,
       ]);
-      this.components = this.getEventComponents();
     },
     deleteEvent() {
-      this.$store.commit("deleteStatusBlock", ["events", this.id]);
+      this.$store.commit("deleteStatusBlock", ["events", this.uuid]);
     },
   },
 };

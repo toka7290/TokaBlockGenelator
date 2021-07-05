@@ -1177,10 +1177,10 @@
             </div>
             <div class="event status-block-body">
               <components
-                v-for="(event, i) in $store.state.events"
+                v-for="(event, key, i) in $store.state.events"
                 :key="i"
                 :is="`status_block_event`"
-                v-bind:class="{ [`${i}`]: true }"
+                :uuid="key"
               ></components>
             </div>
           </div>
@@ -1287,10 +1287,10 @@
             </div>
             <div class="blockState status-block-body">
               <components
-                v-for="(event, i) in $store.state.block_states"
+                v-for="(block_states, i) in $store.state.block_states"
                 :key="i"
                 :is="`status_block_blockState`"
-                v-bind:class="{ [`${i}`]: true }"
+                :number="i"
               ></components>
             </div>
           </div>

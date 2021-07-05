@@ -1,10 +1,32 @@
 export const state = () => ({
   format_version: "1.16.100",
-  main_components: {}, //component
+  // TODO:仕様変更合わせておく
+  /**
+   * メインのコンポーネント情報
+   * ["uuid","uuid"]
+   */
+  main: [],
+  /**
+   * パーミュテーションのコンポーネント情報
+   * [{condition:"",components:["uuid",uuid]}]
+   */
+  permutations: [],
+  /**
+   * イベントのコンポーネント情報
+   * [{name:"name",components:["uuid","uuid"]}]
+   */
+  events: [],
+  /**
+   * メイン、パーミュテーション、イベントのコンポーネント情報
+   * "key": {type:"",data:undefined}
+   */
+  components: {},
+  /**
+   * [{name:"",type:0,data:undefined}]
+   */
+  block_states: [],
+  main_components: {}, //廃止
   data: "test",
-  events: {},
-  permutations: {},
-  block_states: {},
   error_list: {},
   warning_list: {},
 });
@@ -51,23 +73,20 @@ export const mutations = {
           ...states.events,
           [uuid]: {
             id: uuid,
-            components: new Array(),
+            components: new Object(),
           },
         };
         break;
       case "block_states":
-        states.block_states = {
-          ...states.block_states,
-          [uuid]: {
-            id: uuid,
-            components: new Array(),
-          },
-        };
+        states.block_states.push({ name: "", type: 0, data: undefined });
         break;
     }
   },
   deleteStatusBlock(states, [/**@type {(block_states|events)} */ type, parent]) {
     this._vm.$delete(states[type], parent);
+  },
+  setBlockStatus(states, [number, name, type, data]) {
+    this._vm.$set(states.block_states, number, { name: name, type: type, data: data });
   },
   toggleEventComponent(states, [component, parent, hasComponent = undefined]) {
     if (component == undefined) return;
@@ -76,13 +95,37 @@ export const mutations = {
     }
     if (hasComponent) {
       const uuid = this.$getUuid_v4();
-      const data = { name: component, id: uuid, data: undefined };
-      states.events[parent].components.push(data);
+      states.events[parent].components = {
+        ...states.events[parent].components,
+        [uuid]: {
+          name: component,
+          group: parent,
+          data: undefined,
+        },
+      };
     } else {
-      states.events[parent].components = states.events[parent].components.filter(
-        (val) => val.name != `${component}`
+      for (const uuid in states.events[parent].components) {
+        if (states.events[parent].components[uuid].name == component) {
+          this._vm.$delete(states.events[parent].components, uuid);
+        }
+      }
+    }
+  },
+  setEventData(states, [target_id, group, data, pearents = undefined]) {
+    // TODO:階層構造対応
+    if (pearents == undefined) {
+      states.events[group].components[target_id].data = data;
+    } else {
+      // 作り直し
+      let [root, ...tree] = pearents;
+      tree = [...tree, target_id];
+      states.events[group].components[root].data = setObjectEventTreeData(
+        { ...states.events[group].components[root].data },
+        tree,
+        data
       );
     }
+    console.log(data);
   },
   setBlockTab(states, /**@type {(permutations)} */ type) {
     let uuid = this.$getUuid_v4();
@@ -139,6 +182,25 @@ export const mutations = {
     this._vm.$delete(states.error_list, id);
   },
 };
+
+/**
+ * 対象のオブジェクトにデータを挿入したデータを返す。
+ * @param {Object} obj
+ * @param {string|string[]} tree
+ * @param {any} data
+ * @return {Object}
+ */
+function setObjectEventTreeData(obj, tree, data) {
+  if (tree.length == 1) tree = tree.toString();
+  // 配列の場合
+  if (Array.isArray(tree)) {
+    let [key, ...next] = tree;
+    setObjectEventTreeData(obj[key].data, next, data);
+  } else {
+    obj[tree] = data;
+  }
+  return obj;
+}
 
 export const getters = {
   components: (states) => {

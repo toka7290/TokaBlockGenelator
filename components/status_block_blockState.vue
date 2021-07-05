@@ -8,6 +8,7 @@
             name="blockState-name"
             class="blockState-name"
             placeholder="プロパティ名"
+            @change="changeName"
         /></label>
         <div
           class="blockState remove-status-block"
@@ -34,7 +35,7 @@
           <select
             name="blockState-type"
             class="blockState-type"
-            @change="changeVal"
+            @change="changeValType"
           >
             <option value="val_Boolean">Boolean</option>
             <option value="val_Integer">Integer</option>
@@ -48,6 +49,7 @@
             <input
               type="checkbox"
               class="blockState-boolean invisible-Control"
+              @change="changeDatas"
             />
             <div class="checkbox-body">
               <div class="checkbox-body-box">
@@ -81,12 +83,13 @@
           </div>
           <div class="value-input type-array-integer">
             <div class="array-list">
-              <label class="array-data">
-                <div class="array-num">0</div>
+              <label class="array-data" v-for="(elem, i) in datas" :key="i">
+                <div class="array-num">{{ i }}</div>
                 <input
                   type="number"
                   name="blockState-integer"
                   class="blockState-integer type-array-integer"
+                  v-on:change="changeDatas($event, i)"
                 />
               </label>
             </div>
@@ -95,6 +98,7 @@
                 <input
                   type="button"
                   class="add-array-element invisible-Control"
+                  v-on:click="addData()"
                 />
                 <div class="add-array-label">
                   <div class="add-array-element-text">+ 値を追加</div>
@@ -104,6 +108,7 @@
                 <input
                   type="button"
                   class="remove-array-element invisible-Control"
+                  v-on:click="removeData()"
                 />
                 <div class="remove-array-label">
                   <div class="remove-array-element-text">- 値を削除</div>
@@ -123,12 +128,13 @@
           </div>
           <div class="value-input type-array-string">
             <div class="array-list">
-              <label class="array-data">
-                <div class="array-num">0</div>
+              <label class="array-data" v-for="(elem, i) in datas" :key="i">
+                <div class="array-num">{{ i }}</div>
                 <input
                   type="text"
                   name="blockState-string"
                   class="blockState-string type-array-string"
+                  v-on:change="changeDatas($event, i)"
                 />
               </label>
             </div>
@@ -137,6 +143,7 @@
                 <input
                   type="button"
                   class="add-array-element invisible-Control"
+                  v-on:click="addData()"
                 />
                 <div class="add-array-label">
                   <div class="add-array-element-text">+ 値を追加</div>
@@ -146,6 +153,7 @@
                 <input
                   type="button"
                   class="remove-array-element invisible-Control"
+                  v-on:click="removeData()"
                 />
                 <div class="remove-array-label">
                   <div class="remove-array-element-text">- 値を削除</div>
@@ -162,21 +170,67 @@
 export default {
   data() {
     return {
-      id: "",
       val_type: 0,
+      name: "",
+      type: 0,
+      datas: [false, true],
     };
   },
-  created() {
-    this.id = Object.keys(this.$vnode.data.class)[0];
-  },
+  // TODO:仕様変更に対応させる
+  props: ["number"],
   methods: {
     deleteBlockState() {
-      this.$store.commit("deleteStatusBlock", ["block_states", this.id]);
+      this.$store.commit("deleteStatusBlock", ["block_states", this.number]);
     },
-    changeVal(event) {
+    addData() {
+      if (this.val_type == 1) this.datas = [...this.datas, 0];
+      else if (this.val_type == 2) this.datas = [...this.datas, ""];
+    },
+    removeData() {
+      if (this.datas.length > 1) {
+        let tmp = this.datas.map((val) => val);
+        tmp.splice(tmp.length - 1, 1);
+        this.datas = tmp;
+      }
+    },
+    changeName(event) {
+      /** @type {Element} */
+      const target = event.target;
+      this.name = target.value;
+      this.onChangedValue();
+    },
+    changeValType(event) {
       /** @type {Element} */
       const target = event.target;
       this.val_type = target.selectedIndex;
+      this.datas = [];
+      this.onChangedValue();
+    },
+    changeDatas(event, index = 0) {
+      /** @type {Element} */
+      const target = event.target;
+      switch (this.val_type) {
+        case 1:
+          this.datas.splice(index, 1, Number(event.target.value));
+          break;
+        case 2:
+          this.datas.splice(index, 1, event.target.value);
+          break;
+        case 0:
+        default:
+          this.datas = [target.checked, !target.checked];
+          break;
+      }
+      console.log(this.datas);
+      this.onChangedValue();
+    },
+    onChangedValue() {
+      this.$store.commit("setBlockStatus", [
+        this.number,
+        this.name,
+        this.val_type,
+        this.datas,
+      ]);
     },
   },
 };
