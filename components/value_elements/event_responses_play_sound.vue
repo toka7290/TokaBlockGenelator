@@ -38,6 +38,7 @@
                     type="text"
                     name="event-responses-play-sound-id"
                     class="event-responses-play-sound-id"
+                    v-on:change="setId"
                   />
                 </label>
               </div>
@@ -49,6 +50,7 @@
                   <select
                     name="event-responses-play-sound-target"
                     class="event-responses-play-sound-target"
+                    v-on:change="setTarget"
                   >
                     <option value="default">default</option>
                     <option value="self">self</option>
@@ -83,20 +85,30 @@ export default {
   data() {
     return {
       svgClose,
+      data: {
+        id: "",
+        target: "default",
+      },
     };
   },
+  props: ["group", "uuid"],
   methods: {
-    onChangedValue(event) {
-      /** @type {Element} */
-      const target = event.target;
-      const uuid = this.$getClassUUID(
-        target.closest(".value-element.components_loot").classList
-      );
-      if (uuid == undefined) return;
-      const index = this.$store.state.main_components.findIndex(
-        (val) => val.id == uuid
-      );
-      this.$store.commit("setComponentData", [index, target.value]);
+    setId(event) {
+      this.data = {
+        ...this.data,
+        id: event.target.value,
+      };
+      this.onChangedValue();
+    },
+    setTarget(event) {
+      this.data = {
+        ...this.data,
+        target: event.target.value,
+      };
+      this.onChangedValue();
+    },
+    onChangedValue() {
+      this.$store.commit("setEventData", [this.uuid, this.group, this.data]);
     },
   },
 };

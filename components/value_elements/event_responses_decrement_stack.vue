@@ -37,7 +37,11 @@
                   <input
                     type="checkbox"
                     name="event-responses-decrement-stack-ignore-game-mode"
-                    class="event-responses-decrement-stack-ignore-game-mode invisible-Control"
+                    class="
+                      event-responses-decrement-stack-ignore-game-mode
+                      invisible-Control
+                    "
+                    v-on:change="setIgnoreGameMode"
                   />
                   <div class="checkbox-body">
                     <div class="checkbox-body-box">
@@ -79,20 +83,17 @@ export default {
   data() {
     return {
       svgClose,
+      data: false,
     };
   },
+  props: ["group", "uuid"],
   methods: {
-    onChangedValue(event) {
-      /** @type {Element} */
-      const target = event.target;
-      const uuid = this.$getClassUUID(
-        target.closest(".value-element.components_loot").classList
-      );
-      if (uuid == undefined) return;
-      const index = this.$store.state.main_components.findIndex(
-        (val) => val.id == uuid
-      );
-      this.$store.commit("setComponentData", [index, target.value]);
+    setIgnoreGameMode(event) {
+      this.data = event.target.checked;
+      this.onChangedValue();
+    },
+    onChangedValue() {
+      this.$store.commit("setEventData", [this.uuid, this.group, this.data]);
     },
   },
 };

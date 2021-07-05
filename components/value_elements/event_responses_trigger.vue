@@ -39,6 +39,7 @@
                     name="event-responses-trigger-event"
                     class="event-responses-trigger-event"
                     list="event-name-list"
+                    v-on:change="setEvent"
                   />
                 </label>
               </div>
@@ -51,6 +52,7 @@
                     type="text"
                     name="event-responses-trigger-condition"
                     class="event-responses-trigger-condition"
+                    v-on:change="setCondition"
                   />
                 </label>
               </div>
@@ -62,6 +64,7 @@
                   <select
                     name="event-responses-trigger-target"
                     class="event-responses-trigger-target"
+                    v-on:change="setTarget"
                   >
                     <option value="default">default</option>
                     <option value="self">self</option>
@@ -96,20 +99,38 @@ export default {
   data() {
     return {
       svgClose,
+      data: {
+        event: "",
+        condition: "",
+        target: "",
+      },
     };
   },
+  props: ["group", "uuid"],
   methods: {
-    onChangedValue(event) {
-      /** @type {Element} */
-      const target = event.target;
-      const uuid = this.$getClassUUID(
-        target.closest(".value-element.components_loot").classList
-      );
-      if (uuid == undefined) return;
-      const index = this.$store.state.main_components.findIndex(
-        (val) => val.id == uuid
-      );
-      this.$store.commit("setComponentData", [index, target.value]);
+    setEvent(event) {
+      this.data = {
+        ...this.data,
+        event: event.target.value,
+      };
+      this.onChangedValue();
+    },
+    setCondition(event) {
+      this.data = {
+        ...this.data,
+        condition: event.target.value,
+      };
+      this.onChangedValue();
+    },
+    setTarget(event) {
+      this.data = {
+        ...this.data,
+        target: event.target.value,
+      };
+      this.onChangedValue();
+    },
+    onChangedValue() {
+      this.$store.commit("setEventData", [this.uuid, this.group, this.data]);
     },
   },
 };

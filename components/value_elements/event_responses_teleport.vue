@@ -45,6 +45,7 @@
                       class="event-responses-teleport-destination-x"
                       value="0"
                       step="1"
+                      v-on:change="setAxisValue($event, 'destination', 0)"
                     />
                   </label>
                   <label>
@@ -55,6 +56,7 @@
                       class="event-responses-teleport-destination-y"
                       value="0"
                       step="1"
+                      v-on:change="setAxisValue($event, 'destination', 1)"
                     />
                   </label>
                   <label>
@@ -65,6 +67,7 @@
                       class="event-responses-teleport-destination-z"
                       value="0"
                       step="1"
+                      v-on:change="setAxisValue($event, 'destination', 2)"
                     />
                   </label>
                 </div>
@@ -85,6 +88,7 @@
                       class="event-responses-teleport-max-range-x"
                       value="0"
                       step="1"
+                      v-on:change="setAxisValue($event, 'max_range', 0)"
                     />
                   </label>
                   <label>
@@ -95,6 +99,7 @@
                       class="event-responses-teleport-max-range-y"
                       value="0"
                       step="1"
+                      v-on:change="setAxisValue($event, 'max_range', 1)"
                     />
                   </label>
                   <label>
@@ -105,6 +110,7 @@
                       class="event-responses-teleport-max-range-z"
                       value="0"
                       step="1"
+                      v-on:change="setAxisValue($event, 'max_range', 2)"
                     />
                   </label>
                 </div>
@@ -117,7 +123,11 @@
                   <input
                     type="checkbox"
                     name="event-responses-teleport-avoid_water"
-                    class="event-responses-teleport-avoid_water invisible-Control"
+                    class="
+                      event-responses-teleport-avoid_water
+                      invisible-Control
+                    "
+                    v-on:change="setAvoidWater"
                   />
                   <div class="checkbox-body">
                     <div class="checkbox-body-box">
@@ -148,7 +158,11 @@
                   <input
                     type="checkbox"
                     name="event-responses-teleport-land-on-block"
-                    class="event-responses-teleport-land-on-block invisible-Control"
+                    class="
+                      event-responses-teleport-land-on-block
+                      invisible-Control
+                    "
+                    v-on:change="setLandOnBlock"
                   />
                   <div class="checkbox-body">
                     <div class="checkbox-body-box">
@@ -179,6 +193,7 @@
                   <select
                     name="event-responses-teleport-target"
                     class="event-responses-teleport-target"
+                    v-on:change="setTarget"
                   >
                     <option value="default">default</option>
                     <option value="self">self</option>
@@ -213,20 +228,53 @@ export default {
   data() {
     return {
       svgClose,
+      data: {
+        destination: [0, 0, 0],
+        max_range: [0, 0, 0],
+        avoid_water: false,
+        land_on_block: false,
+        target: "default",
+      },
     };
   },
+  props: ["group", "uuid"],
   methods: {
-    onChangedValue(event) {
-      /** @type {Element} */
-      const target = event.target;
-      const uuid = this.$getClassUUID(
-        target.closest(".value-element.components_loot").classList
-      );
-      if (uuid == undefined) return;
-      const index = this.$store.state.main_components.findIndex(
-        (val) => val.id == uuid
-      );
-      this.$store.commit("setComponentData", [index, target.value]);
+    setAxisValue(
+      event,
+      /**@type {("destination"|"max_range")} */ axis_type,
+      /**@type {(0|1|2)} */ axis
+    ) {
+      let tmp = this.data[`${axis_type}`].map((val) => val);
+      tmp.splice(axis, 1, Number(event.target.value));
+      this.data = {
+        ...this.data,
+        [axis_type]: tmp,
+      };
+      this.onChangedValue();
+    },
+    setAvoidWater(event) {
+      this.data = {
+        ...this.data,
+        avoid_water: event.target.checked,
+      };
+      this.onChangedValue();
+    },
+    setLandOnBlock(event) {
+      this.data = {
+        ...this.data,
+        land_on_block: event.target.checked,
+      };
+      this.onChangedValue();
+    },
+    setTarget(event) {
+      this.data = {
+        ...this.data,
+        target: event.target.value,
+      };
+      this.onChangedValue();
+    },
+    onChangedValue() {
+      this.$store.commit("setEventData", [this.uuid, this.group, this.data]);
     },
   },
 };

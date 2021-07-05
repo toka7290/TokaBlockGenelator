@@ -34,6 +34,7 @@
                   <select
                     name="event-responses-die-target"
                     class="event-responses-die-target"
+                    v-on:change="onChangedValue"
                   >
                     <option value="default">default</option>
                     <option value="self">self</option>
@@ -63,25 +64,15 @@
 </template>
 
 <script>
-import svgClose from "~/assets/img/close.svg?raw";
 export default {
-  data() {
-    return {
-      svgClose,
-    };
-  },
+  props: ["group", "uuid"],
   methods: {
     onChangedValue(event) {
-      /** @type {Element} */
-      const target = event.target;
-      const uuid = this.$getClassUUID(
-        target.closest(".value-element.components_loot").classList
-      );
-      if (uuid == undefined) return;
-      const index = this.$store.state.main_components.findIndex(
-        (val) => val.id == uuid
-      );
-      this.$store.commit("setComponentData", [index, target.value]);
+      this.$store.commit("setEventData", [
+        this.uuid,
+        this.group,
+        event.target.value,
+      ]);
     },
   },
 };

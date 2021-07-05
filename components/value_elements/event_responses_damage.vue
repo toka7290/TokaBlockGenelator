@@ -37,6 +37,7 @@
                   <select
                     name="event-responses-damage-type"
                     class="event-responses-damage-type"
+                    v-on:change="setType"
                   >
                     <option value="all">all</option>
                     <option value="anvil">anvil</option>
@@ -80,11 +81,11 @@
                 <label class="value-input">
                   <input
                     type="number"
-                    min="0"
                     name="event-responses-damage-amount"
                     class="event-responses-damage-amount"
                     value="0"
                     step="1"
+                    v-on:change="setAmount"
                   />
                 </label>
               </div>
@@ -96,6 +97,7 @@
                   <select
                     name="event-responses-damage-target"
                     class="event-responses-damage-target"
+                    v-on:change="setTarget"
                   >
                     <option value="default">default</option>
                     <option value="self">self</option>
@@ -130,20 +132,38 @@ export default {
   data() {
     return {
       svgClose,
+      data: {
+        type: "all",
+        amount: 0,
+        target: "default",
+      },
     };
   },
+  props: ["group", "uuid"],
   methods: {
-    onChangedValue(event) {
-      /** @type {Element} */
-      const target = event.target;
-      const uuid = this.$getClassUUID(
-        target.closest(".value-element.components_loot").classList
-      );
-      if (uuid == undefined) return;
-      const index = this.$store.state.main_components.findIndex(
-        (val) => val.id == uuid
-      );
-      this.$store.commit("setComponentData", [index, target.value]);
+    setType(event) {
+      this.data = {
+        ...this.data,
+        type: event.target.value,
+      };
+      this.onChangedValue();
+    },
+    setAmount(event) {
+      this.data = {
+        ...this.data,
+        amount: Number(event.target.value),
+      };
+      this.onChangedValue();
+    },
+    setTarget(event) {
+      this.data = {
+        ...this.data,
+        target: event.target.value,
+      };
+      this.onChangedValue();
+    },
+    onChangedValue() {
+      this.$store.commit("setEventData", [this.uuid, this.group, this.data]);
     },
   },
 };

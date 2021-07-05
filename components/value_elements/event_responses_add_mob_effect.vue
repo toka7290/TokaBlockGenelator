@@ -38,6 +38,7 @@
                     type="text"
                     name="event-responses-add-mob-effect-id"
                     class="event-responses-add-mob-effect-id"
+                    v-on:change="setEffectId"
                   />
                 </label>
               </div>
@@ -53,6 +54,7 @@
                     class="event-responses-add-mob-effect-amplifier"
                     value="1"
                     step="1"
+                    v-on:change="setAmplifier"
                   />
                 </label>
               </div>
@@ -68,6 +70,7 @@
                     class="event-responses-add-mob-effect-duration"
                     value="0"
                     step="1"
+                    v-on:change="setDuration"
                   />
                 </label>
               </div>
@@ -79,6 +82,7 @@
                   <select
                     name="event-responses-add-mob-effect-target"
                     class="event-responses-add-mob-effect-target"
+                    v-on:change="setTarget"
                   >
                     <option value="default">default</option>
                     <option value="self">self</option>
@@ -113,20 +117,46 @@ export default {
   data() {
     return {
       svgClose,
+      data: {
+        effect_id: "",
+        amplifier: 1,
+        duration: 0,
+        target: "default",
+      },
     };
   },
+  props: ["group", "uuid"],
   methods: {
-    onChangedValue(event) {
-      /** @type {Element} */
-      const target = event.target;
-      const uuid = this.$getClassUUID(
-        target.closest(".value-element.components_loot").classList
-      );
-      if (uuid == undefined) return;
-      const index = this.$store.state.main_components.findIndex(
-        (val) => val.id == uuid
-      );
-      this.$store.commit("setComponentData", [index, target.value]);
+    setEffectId(event) {
+      this.data = {
+        ...this.data,
+        effect_id: event.target.value,
+      };
+      this.onChangedValue();
+    },
+    setAmplifier(event) {
+      this.data = {
+        ...this.data,
+        amplifier: Number(event.target.value),
+      };
+      this.onChangedValue();
+    },
+    setDuration(event) {
+      this.data = {
+        ...this.data,
+        duration: Number(event.target.value),
+      };
+      this.onChangedValue();
+    },
+    setTarget(event) {
+      this.data = {
+        ...this.data,
+        target: event.target.value,
+      };
+      this.onChangedValue();
+    },
+    onChangedValue() {
+      this.$store.commit("setEventData", [this.uuid, this.group, this.data]);
     },
   },
 };

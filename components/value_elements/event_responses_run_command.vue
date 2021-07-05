@@ -35,12 +35,17 @@
                 </div>
                 <div class="value-input type-array-string">
                   <div class="array-list">
-                    <label class="array-data">
-                      <div class="array-num">0</div>
+                    <label
+                      class="array-data"
+                      v-for="(elem, i) in data.command"
+                      :key="i"
+                    >
+                      <div class="array-num">{{ i }}</div>
                       <input
                         type="text"
                         name="event-responses-run-command"
                         class="event-responses-run-command type-array-string"
+                        v-on:change="setCommand($event, i)"
                       />
                     </label>
                   </div>
@@ -49,6 +54,7 @@
                       <input
                         type="button"
                         class="add-array-element invisible-Control"
+                        v-on:click="addArrayList"
                       />
                       <div class="add-array-label">
                         <div class="add-array-element-text">+ 追加</div>
@@ -58,6 +64,7 @@
                       <input
                         type="button"
                         class="remove-array-element invisible-Control"
+                        v-on:click="removeArrayList"
                       />
                       <div class="remove-array-label">
                         <div class="remove-array-element-text">- 削除</div>
@@ -74,6 +81,7 @@
                   <select
                     name="event-responses-run-command-target"
                     class="event-responses-run-command-target"
+                    v-on:change="setTarget"
                   >
                     <option value="default">default</option>
                     <option value="self">self</option>
@@ -108,20 +116,47 @@ export default {
   data() {
     return {
       svgClose,
+      data: {
+        command: [""],
+        target: "default",
+      },
     };
   },
+  props: ["group", "uuid"],
   methods: {
-    onChangedValue(event) {
-      /** @type {Element} */
-      const target = event.target;
-      const uuid = this.$getClassUUID(
-        target.closest(".value-element.components_loot").classList
-      );
-      if (uuid == undefined) return;
-      const index = this.$store.state.main_components.findIndex(
-        (val) => val.id == uuid
-      );
-      this.$store.commit("setComponentData", [index, target.value]);
+    addArrayList() {
+      this.data = {
+        ...this.data,
+        command: [...this.data.command, ""],
+      };
+    },
+    removeArrayList() {
+      let len = this.data.command.length;
+      if (len > 1) {
+        this.data = {
+          ...this.data,
+          command: this.data.command.map((val) => val).splice(len - 1, 1),
+        };
+      }
+    },
+    setCommand(event, index) {
+      this.data = {
+        ...this.data,
+        command: this.data.command.map((val, i) =>
+          i == index ? event.target?.value : val
+        ),
+      };
+      this.onChangedValue();
+    },
+    setTarget(event) {
+      this.data = {
+        ...this.data,
+        target: event.target.value,
+      };
+      this.onChangedValue();
+    },
+    onChangedValue() {
+      this.$store.commit("setEventData", [this.uuid, this.group, this.data]);
     },
   },
 };

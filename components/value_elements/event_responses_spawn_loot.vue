@@ -11,6 +11,7 @@
         type="text"
         name="event-responses-spawn-loot"
         class="event-responses-spawn-loot"
+        v-on:change="setLoot"
       />
     </label>
   </div>
@@ -18,18 +19,19 @@
 
 <script>
 export default {
+  data() {
+    return {
+      data: "",
+    };
+  },
+  props: ["group", "uuid"],
   methods: {
-    onChangedValue(event) {
-      /** @type {Element} */
-      const target = event.target;
-      const uuid = this.$getClassUUID(
-        target.closest(".value-element.components_loot").classList
-      );
-      if (uuid == undefined) return;
-      const index = this.$store.state.main_components.findIndex(
-        (val) => val.id == uuid
-      );
-      this.$store.commit("setComponentData", [index, target.value]);
+    setLoot(event) {
+      this.data = event.target.value;
+      this.onChangedValue();
+    },
+    onChangedValue() {
+      this.$store.commit("setEventData", [this.uuid, this.group, this.data]);
     },
   },
 };
