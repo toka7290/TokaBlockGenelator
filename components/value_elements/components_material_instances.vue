@@ -207,9 +207,6 @@ export default {
     modalClose(ev) {
       this.$closeModal(ev);
     },
-    thisEvent() {
-      return this;
-    },
     addInstances() {
       this.data = [
         ...this.data,
@@ -221,12 +218,14 @@ export default {
           refer_face: "*",
         },
       ];
+      this.onChangedValue();
     },
     removeInstances() {
       if (this.data.length > 1) {
         let tmp = this.data.map((val) => val);
         tmp.splice(tmp.length - 1, 1);
         this.data = tmp;
+        this.onChangedValue();
       }
     },
     setInstancesFace(event, index) {
