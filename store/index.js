@@ -78,12 +78,14 @@ export const mutations = {
         };
         break;
       case "block_states":
-        states.block_states.push({ name: "", type: 0, data: undefined });
+        states.block_states.push({ name: "", type: 0, data: [false, true] });
         break;
     }
   },
-  deleteStatusBlock(states, [/**@type {(block_states|events)} */ type, parent]) {
-    this._vm.$delete(states[type], parent);
+  deleteStatusBlock(states, [/**@type {"block_states"|"events"} */ type, parent]) {
+    console.log(parent);
+    states[type].splice(parent, 1);
+    // this._vm.$delete(states[type], parent);
   },
   setBlockStatus(states, [number, name, type, data]) {
     this._vm.$set(states.block_states, number, { name: name, type: type, data: data });
@@ -125,7 +127,6 @@ export const mutations = {
         data
       );
     }
-    console.log(data);
   },
   setBlockTab(states, /**@type {(permutations)} */ type) {
     let uuid = this.$getUuid_v4();

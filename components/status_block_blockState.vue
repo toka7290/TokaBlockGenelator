@@ -8,6 +8,7 @@
             name="blockState-name"
             class="blockState-name"
             placeholder="プロパティ名"
+            :value="name"
             @change="changeName"
         /></label>
         <div
@@ -36,6 +37,7 @@
             name="blockState-type"
             class="blockState-type"
             @change="changeValType"
+            :index="val_type"
           >
             <option value="val_Boolean">Boolean</option>
             <option value="val_Integer">Integer</option>
@@ -49,6 +51,7 @@
             <input
               type="checkbox"
               class="blockState-boolean invisible-Control"
+              :checked="datas[0]"
               @change="changeDatas"
             />
             <div class="checkbox-body">
@@ -89,6 +92,7 @@
                   type="number"
                   name="blockState-integer"
                   class="blockState-integer type-array-integer"
+                  :value="datas[number]"
                   v-on:change="changeDatas($event, i)"
                 />
               </label>
@@ -134,6 +138,7 @@
                   type="text"
                   name="blockState-string"
                   class="blockState-string type-array-string"
+                  v-bind:value="datas[number]"
                   v-on:change="changeDatas($event, i)"
                 />
               </label>
@@ -172,12 +177,15 @@ export default {
     return {
       val_type: 0,
       name: "",
-      type: 0,
       datas: [false, true],
     };
   },
-  // TODO:仕様変更に対応させる
   props: ["number"],
+  created() {
+    this.name = this.$store.state.block_states[this.number].name;
+    this.val_type = this.$store.state.block_states[this.number].type;
+    this.datas = this.$store.state.block_states[this.number].data;
+  },
   methods: {
     deleteBlockState() {
       this.$store.commit("deleteStatusBlock", ["block_states", this.number]);
@@ -221,7 +229,6 @@ export default {
           this.datas = [target.checked, !target.checked];
           break;
       }
-      console.log(this.datas);
       this.onChangedValue();
     },
     onChangedValue() {
