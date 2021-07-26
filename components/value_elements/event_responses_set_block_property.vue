@@ -160,7 +160,7 @@ export default {
       this.onChangedValue();
     },
     onChangedValue() {
-      this.$store.commit("setEventData", [this.uuid, this.group, this.data]);
+      this.$store.commit("setComponentData", [this.uuid, this.data]);
     },
   },
 };

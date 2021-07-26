@@ -462,10 +462,9 @@
             </div>
             <div class="editor-element-body">
               <components
-                v-for="(component, key, i) in $store.state.main_components"
+                v-for="(key, i) in $store.state.main"
                 :key="i"
-                :is="`${component.name}`"
-                :group="component.group"
+                :is="`${$store.state.components[key].type}`"
                 :uuid="key"
               ></components>
             </div>
@@ -1641,10 +1640,7 @@ export default {
     toggleValueElement(event) {
       /** @type {Element} */
       const target = event.target;
-      this.$store.commit("toggleMainComponent", [
-        `${target.name}`,
-        target.checked,
-      ]);
+      this.$store.commit("toggleMainComponent", [target.name, target.checked]);
     },
     addEvent() {
       this.$store.commit("setStatusBlock", "events");

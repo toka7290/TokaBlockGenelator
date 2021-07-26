@@ -38,11 +38,7 @@ export default {
   props: ["group", "uuid"],
   methods: {
     onChangedValue(event) {
-      this.$store.commit("setComponentData", [
-        this.uuid,
-        this.group,
-        event.target.checked,
-      ]);
+      this.$store.commit("setComponentData", [this.uuid, event.target.checked]);
     },
   },
 };

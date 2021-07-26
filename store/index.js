@@ -22,6 +22,7 @@ export const state = () => ({
    */
   components: {},
   /**
+   * 完了
    * [{name:"",type:0,data:undefined}]
    */
   block_states: [],
@@ -32,39 +33,71 @@ export const state = () => ({
 });
 
 export const mutations = {
+  // フォーマットバージョン変更
   setFormatVersion(states, version) {
     states.format_version = version;
   },
-  toggleMainComponent(states, [component, hasComponent = undefined]) {
-    if (component == undefined) return;
-    if (hasComponent == undefined) {
-      hasComponent = !states.main_components.some((val) => val == component);
+  // コンポーネントデータ変更
+  setComponentData(states, [target_id, data]) {
+    states.components[target_id].data = data;
+  },
+  // メインコンポーネントの管理
+  toggleMainComponent(states, [component_type, hasComponent = undefined]) {
+    if (component_type == undefined || hasComponent == undefined) {
+      console.error("toggleMainComponent: Unexpected value!");
+      return;
     }
     if (hasComponent) {
-      const uuid = this.$getUuid_v4();
-      states.main_components = {
-        ...states.main_components,
-        [uuid]: {
-          group: "main", // グループでコンポーネントは管理。
-          name: component,
-          data: Object(),
-        },
+      const target_id = this.$getUuid_v4();
+      // 新規登録
+      states.main = [...states.main, target_id];
+      states.components = {
+        ...states.components,
+        [target_id]: { type: component_type, data: undefined },
       };
     } else {
-      for (const uuid in states.main_components) {
-        if (states.main_components[uuid].name == component) {
-          this._vm.$delete(states.main_components, uuid);
+      for (const target_id of states.main) {
+        console.log(states.components[target_id]);
+        if (states.components[target_id].type == component_type) {
+          // 削除
+          states.main.splice(states.main.indexOf(target_id), 1);
+          this._vm.$delete(states.components, target_id);
+          break;
         }
       }
     }
   },
-  setComponentData(states, [target_id, group, data]) {
-    if (group == "main") states.main_components[target_id].data = data;
-    else {
-      states.permutations[group].components[target_id].data = data;
-    }
-    console.log(data);
-  },
+  /* ===============仕様変更前============== */
+  // toggleMainComponent(states, [component, hasComponent = undefined]) {
+  //   if (component == undefined) return;
+  //   if (hasComponent == undefined) {
+  //     hasComponent = !states.main_components.some((val) => val == component);
+  //   }
+  //   if (hasComponent) {
+  //     const uuid = this.$getUuid_v4();
+  //     states.main_components = {
+  //       ...states.main_components,
+  //       [uuid]: {
+  //         group: "main", // グループでコンポーネントは管理。
+  //         name: component,
+  //         data: Object(),
+  //       },
+  //     };
+  //   } else {
+  //     for (const uuid in states.main_components) {
+  //       if (states.main_components[uuid].name == component) {
+  //         this._vm.$delete(states.main_components, uuid);
+  //       }
+  //     }
+  //   }
+  // },
+  // setComponentData(states, [target_id, group, data]) {
+  //   if (group == "main") states.main_components[target_id].data = data;
+  //   else {
+  //     states.permutations[group].components[target_id].data = data;
+  //   }
+  //   console.log(data);
+  // },
   setStatusBlock(states, /**@type {(block_states|events)} */ type) {
     let uuid = this.$getUuid_v4();
     switch (type) {
@@ -83,7 +116,6 @@ export const mutations = {
     }
   },
   deleteStatusBlock(states, [/**@type {"block_states"|"events"} */ type, parent]) {
-    console.log(parent);
     states[type].splice(parent, 1);
     // this._vm.$delete(states[type], parent);
   },

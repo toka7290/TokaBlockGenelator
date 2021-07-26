@@ -110,11 +110,7 @@ export default {
       }
     },
     onChangedValue() {
-      this.$store.commit("setComponentData", [
-        this.uuid,
-        this.group,
-        this.data,
-      ]);
+      this.$store.commit("setComponentData", [this.uuid, this.data]);
     },
     changeVal(event) {
       /** @type {Element} */

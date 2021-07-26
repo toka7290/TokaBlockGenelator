@@ -53,7 +53,7 @@ export default {
   methods: {
     onChangedValue(event, /**@type {(0|1|2)} */ axis) {
       this.val[axis] = event.target.value;
-      this.$store.commit("setComponentData", [this.uuid, this.group, this.val]);
+      this.$store.commit("setComponentData", [this.uuid, this.val]);
     },
   },
 };

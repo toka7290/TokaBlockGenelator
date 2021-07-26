@@ -39,11 +39,7 @@ export default {
   methods: {
     onChangedValue(event) {
       this.val = event.target.value;
-      this.$store.commit("setComponentData", [
-        this.uuid,
-        this.group,
-        event.target.value,
-      ]);
+      this.$store.commit("setComponentData", [this.uuid, event.target.value]);
     },
   },
 };

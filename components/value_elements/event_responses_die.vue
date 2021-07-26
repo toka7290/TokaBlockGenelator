@@ -68,11 +68,7 @@ export default {
   props: ["group", "uuid"],
   methods: {
     onChangedValue(event) {
-      this.$store.commit("setEventData", [
-        this.uuid,
-        this.group,
-        event.target.value,
-      ]);
+      this.$store.commit("setComponentData", [this.uuid, event.target.value]);
     },
   },
 };

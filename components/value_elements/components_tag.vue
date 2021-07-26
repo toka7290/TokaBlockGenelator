@@ -70,11 +70,7 @@ export default {
       this.onChangedValue();
     },
     onChangedValue() {
-      this.$store.commit("setComponentData", [
-        this.uuid,
-        this.group,
-        this.lists,
-      ]);
+      this.$store.commit("setComponentData", [this.uuid, this.lists]);
     },
   },
 };
