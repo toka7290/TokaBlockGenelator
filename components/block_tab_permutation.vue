@@ -12,7 +12,12 @@
           <label for="permutations_condition">状況</label>
         </div>
         <div class="value-input">
-          <input type="text" name="uuid" class="permutations_condition" />
+          <input
+            type="text"
+            name="uuid"
+            class="permutations_condition"
+            v-on:change="onChangedCondition"
+          />
         </div>
       </div>
     </div>
@@ -1144,10 +1149,6 @@ export default {
     };
   },
   props: ["index"],
-  updated() {
-    // 更新されたら
-    console.log(this);
-  },
   methods: {
     toggleValueElement(event) {
       /** @type {Element} */
@@ -1157,6 +1158,11 @@ export default {
         this.index,
         target.checked,
       ]);
+    },
+    onChangedCondition(event) {
+      /** @type {Element} */
+      const target = event.target;
+      this.$store.commit("setPermutationCondition", [this.index, target.value]);
     },
   },
 };

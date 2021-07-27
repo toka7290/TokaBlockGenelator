@@ -68,6 +68,11 @@ export const mutations = {
       }
     }
   },
+  // パーミュテーション条件
+  setPermutationCondition(states, [permutation_index, value]) {
+    states.permutations[permutation_index].condition = value;
+    console.log(states.permutations[permutation_index]);
+  },
   // パーミュテーションコンポーネントの管理
   togglePermutationComponent(
     states,
@@ -162,7 +167,7 @@ export const mutations = {
   //   console.log(data);
   // },
   setStatusBlock(states, /**@type {(block_states|events)} */ type) {
-    let uuid = this.$getUuid_v4();
+    const uuid = this.$getUuid_v4();
     switch (type) {
       case "events":
         states.events = {
