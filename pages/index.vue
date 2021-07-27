@@ -1176,10 +1176,10 @@
             </div>
             <div class="event status-block-body">
               <components
-                v-for="(event, key, i) in $store.state.events"
-                :key="i"
+                v-for="(key, num) in $store.state.events"
+                :key="key.id"
                 :is="`status_block_event`"
-                :uuid="key"
+                :index="num"
               ></components>
             </div>
           </div>

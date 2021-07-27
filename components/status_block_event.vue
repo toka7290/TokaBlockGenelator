@@ -8,6 +8,7 @@
             name="event-name"
             class="event-name"
             placeholder="イベント名"
+            v-on:change="onChangedEventName"
         /></label>
         <div class="event remove-status-block" title="イベントを削除します。">
           <label class="invisible-Control">
@@ -21,12 +22,10 @@
         </div>
       </div>
       <div class="editor-element-body">
-        <!-- TODO: -->
         <components
-          v-for="(component, key, i) in $store.state.events[uuid].components"
-          :key="i"
-          :is="component.name"
-          :group="component.group"
+          v-for="key in $store.state.events[index].components"
+          :key="key"
+          :is="$store.state.components[key].type"
           :uuid="key"
         ></components>
       </div>
@@ -692,19 +691,22 @@ export default {
       svgClose,
     };
   },
-  props: ["uuid"],
+  props: ["index"],
   methods: {
+    onChangedEventName(event) {
+      this.$store.commit("setEventName", [this.index, event.target.value]);
+    },
     toggleValueEventElement(event) {
       /** @type {Element} */
       const target = event.target;
       this.$store.commit("toggleEventComponent", [
         `${target.name}`,
-        this.uuid,
+        this.index,
         target.checked,
       ]);
     },
     deleteEvent() {
-      this.$store.commit("deleteStatusBlock", ["events", this.uuid]);
+      this.$store.commit("deleteStatusBlock", ["events", this.index]);
     },
   },
 };
