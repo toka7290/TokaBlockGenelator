@@ -1227,29 +1227,29 @@
               </div>
               <div class="permutations block-tab-body">
                 <label
-                  v-for="(event, key, num) in $store.state.permutations"
-                  :key="num"
+                  v-for="(key, permutation_num) in $store.state.permutations"
+                  :key="key.id"
                   class="permutations block-tab-children invisible-Control"
                 >
                   <input
                     type="radio"
                     name="permutations"
                     class="permutations block-tab"
-                    v-on:change="changeBlockTab(num)"
-                    v-model="permutation"
-                    v-bind:value="permutation"
+                    v-on:change="changeSelectedPermutation(permutation_num)"
+                    v-model="selected_permutation"
+                    :value="permutation_num"
                   />
-                  <div class="tab-number">{{ num }}</div>
+                  <div class="tab-number">{{ permutation_num }}</div>
                 </label>
               </div>
             </div>
             <div class="permutations block-tab-contents">
               <components
-                v-for="(event, key, num) in $store.state.permutations"
-                :key="key"
-                :is="`block_tab_permutation`"
-                v-bind:class="{ [`${key}`]: true }"
-                v-show="num == permutation"
+                v-for="(key, num) in $store.state.permutations"
+                :key="key.id"
+                is="block_tab_permutation"
+                v-show="num == selected_permutation"
+                :index="num"
               ></components>
             </div>
           </div>
@@ -1528,7 +1528,7 @@ export default {
       page_about: false,
       hamburger_show: false,
       editor_show: [false, false, false, false],
-      permutation: 0,
+      selected_permutation: 0,
       show_issue: false,
       json: {},
     };
@@ -1652,10 +1652,13 @@ export default {
       this.$store.commit("setBlockTab", "permutations");
     },
     removePermutation() {
-      this.$store.commit("deleteBlockTab", ["permutations", this.permutation]);
+      this.$store.commit("deleteBlockTab", [
+        "permutations",
+        this.selected_permutation,
+      ]);
     },
-    changeBlockTab(i) {
-      this.permutation = i;
+    changeSelectedPermutation(i) {
+      this.selected_permutation = i;
     },
   },
 };

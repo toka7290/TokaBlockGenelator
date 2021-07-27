@@ -673,15 +673,6 @@ input.remove-array-element:not(:disabled):focus + .remove-array-label {
   overflow-y: auto;
   min-height: 0.5rem;
 }
-.block-tab-container {
-  /* 選択以外非表示 */
-  display: none;
-}
-.block-tab-container.selected {
-  /* 選択表示 */
-  display: block;
-  /* ブロック状タブ end */
-}
 
 .editor-element {
   /* 編集要素 */

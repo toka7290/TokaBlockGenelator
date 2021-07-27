@@ -1,5 +1,5 @@
 <template id="permutation-block-tab">
-  <div class="permutations block-tab-container selected">
+  <div class="permutations block-tab-container">
     <div class="editor-element">
       <div class="editor-element-legend">
         <p>Condition</p>
@@ -25,11 +25,9 @@
       </div>
       <div class="editor-element-body">
         <components
-          v-for="(component, key, i) in $store.state.permutations[id]
-            .components"
-          :key="i"
-          :is="`${component.name}`"
-          :group="component.group"
+          v-for="(key, num) in $store.state.permutations[index].components"
+          :key="num"
+          :is="`${$store.state.components[key].type}`"
           :uuid="key"
         ></components>
       </div>
@@ -1143,19 +1141,20 @@ export default {
   data() {
     return {
       svgClose,
-      id: "",
     };
   },
-  created() {
-    this.id = Object.keys(this.$vnode.data.class)[0];
+  props: ["index"],
+  updated() {
+    // 更新されたら
+    console.log(this);
   },
   methods: {
     toggleValueElement(event) {
       /** @type {Element} */
       const target = event.target;
       this.$store.commit("togglePermutationComponent", [
-        `${target.name}`,
-        this.id,
+        target.name,
+        this.index,
         target.checked,
       ]);
     },
