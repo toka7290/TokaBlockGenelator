@@ -76,6 +76,7 @@ input[type="color"] {
   width: 1.5rem;
 }
 input.invisible-Control,
+textarea.invisible-Control,
 label.invisible-Control > input {
   /* 不可視ボタン */
   width: 0;

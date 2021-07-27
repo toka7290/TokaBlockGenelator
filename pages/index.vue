@@ -1336,6 +1336,7 @@
                 name="code-buffer"
                 id="code-buffer"
                 tabindex="-1"
+                class="invisible-Control"
               ></textarea>
             </label>
           </div>

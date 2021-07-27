@@ -199,6 +199,7 @@ export const mutations = {
     // ステータスブロック削除
     states[type].splice(parent, 1);
   },
+  // イシュー管理
   addWarning(states, [id, issue_comment]) {
     // [id]: {comment:issue_comment,to:elem}
     states.warning_list = {
