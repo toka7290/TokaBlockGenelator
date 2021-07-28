@@ -4,7 +4,8 @@ export default ({}, inject) => {
   inject("getClassUUID", getClassUUID);
   inject("showModal", showModal);
   inject("closeModal", closeModal);
-  inject("Issue", Issue);
+  inject("getComponentObject", getComponentObject);
+  // inject("Issue", Issue);
 };
 // UUID生成
 const getUuid_v4 = () => {
@@ -54,6 +55,486 @@ function closeModal(event) {
   } else if (parent.classList.contains("modal-close")) {
     parent.closest(".modal").classList.add("hide");
   }
+}
+
+function getComponentObject(format_version, component_ids) {
+  let components = {};
+  for (const target_id of component_ids) {
+    let { type, data } = this.$store.getters.updateComponents[target_id];
+    console.log(type, data);
+    switch (type) {
+      case "components_loot":
+        switch (format_version) {
+          case "1.16.100":
+          case "1.16.0":
+            components["minecraft:loot"] = data;
+            break;
+          case "1.12.0":
+            components["minecraft:loot"] = new Object();
+            components["minecraft:loot"]["table"] = data;
+            break;
+          default:
+            break;
+        }
+        break;
+      case "components_display_name":
+        switch (format_version) {
+          case "1.16.100":
+            components["minecraft:display_name"] = data;
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "components_tag":
+        switch (format_version) {
+          case "1.16.100":
+            if (data)
+              for (const tag of data) {
+                components[`tag:${tag}`] = {};
+              }
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "components_placement_filter":
+        switch (format_version) {
+          case "1.16.100":
+            if (data) {
+              components["minecraft:placement_filter"] = {};
+              components["minecraft:placement_filter"]["conditions"] = data.map((condition) => {
+                return {
+                  allowed_faces: condition.faces,
+                  block_filter: condition.filter,
+                };
+              });
+            }
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "components_preventsjumping":
+        switch (format_version) {
+          case "1.16.100":
+            components["minecraft:preventsjumping"] = data;
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "components_unwalkable":
+        switch (format_version) {
+          case "1.16.100":
+            components["minecraft:unwalkable"] = data;
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "components_map_color":
+        switch (format_version) {
+          case "1.16.100":
+          case "1.16.0":
+            components["minecraft:map_color"] = data;
+            break;
+          case "1.12.0":
+            components["minecraft:map_color"] = new Object();
+            components["minecraft:map_color"]["color"] = data;
+            break;
+          default:
+            break;
+        }
+        break;
+      case "components_crafting_table":
+        switch (format_version) {
+          case "1.16.100":
+            components["minecraft:crafting_table"] = {};
+            components["minecraft:crafting_table"]["grid_size"] = data?.grid_size;
+            components["minecraft:crafting_table"]["crafting_tags"] = data?.tags;
+            components["minecraft:crafting_table"]["custom_description"] = data?.custom_description;
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "components_geometry":
+        switch (format_version) {
+          case "1.16.100":
+            switch (data?.type) {
+              case 0:
+                components["minecraft:unit_cube"] = {};
+                break;
+              case 1:
+                components["minecraft:geometry"] = data.geo;
+                break;
+              default:
+                break;
+            }
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "components_material_instances":
+        switch (format_version) {
+          case "1.16.100":
+            if (data) {
+              components["minecraft:material_instances"] = {};
+              for (const instance of data) {
+                switch (instance.type) {
+                  case 0:
+                    components["minecraft:material_instances"][`${instance.face}`] =
+                      instance.refer_face;
+                    break;
+                  case 1:
+                    components["minecraft:material_instances"][`${instance.face}`] = {
+                      texture: instance.texture,
+                      render_method: instance.material,
+                    };
+                    break;
+                  default:
+                    break;
+                }
+              }
+            }
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "components_entity_collision":
+        switch (format_version) {
+          case "1.16.100":
+            if (data?.type) {
+              components["minecraft:entity_collision"] = data?.simple;
+            } else {
+              components["minecraft:entity_collision"] = {
+                origin: data?.origin,
+                size: data?.size,
+              };
+            }
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "components_pick_collision":
+        switch (format_version) {
+          case "1.16.100":
+            if (data?.type) {
+              components["minecraft:pick_collision"] = data?.simple;
+            } else {
+              components["minecraft:pick_collision"] = {
+                origin: data?.origin,
+                size: data?.size,
+              };
+            }
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "components_rotation":
+        switch (format_version) {
+          case "1.16.100":
+            components["minecraft:rotation"] = data;
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "components_breathability":
+        switch (format_version) {
+          case "1.16.100":
+            components["minecraft:breathability"] = data;
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "components_block_light_absorption":
+        switch (format_version) {
+          case "1.16.100":
+          case "1.16.0":
+            components["minecraft:block_light_absorption"] = data;
+            break;
+          case "1.12.0":
+            components["minecraft:block_light_absorption"] = new Object();
+            components["minecraft:block_light_absorption"]["value"] = data;
+            break;
+          default:
+            break;
+        }
+        break;
+      case "components_block_light_emission":
+        switch (format_version) {
+          case "1.16.100":
+          case "1.16.0":
+            components["minecraft:block_light_emission"] = data;
+            break;
+          case "1.12.0":
+            components["minecraft:block_light_emission"] = new Object();
+            components["minecraft:block_light_emission"]["emission"] = data;
+            break;
+          default:
+            break;
+        }
+        break;
+      case "components_destroy_time":
+        switch (format_version) {
+          case "1.16.100":
+          case "1.16.0":
+            components["minecraft:destroy_time"] = data;
+            break;
+          case "1.12.0":
+            components["minecraft:destroy_time"] = new Object();
+            components["minecraft:destroy_time"]["value"] = data;
+            break;
+          default:
+            break;
+        }
+        break;
+      case "components_explosion_resistance":
+        switch (format_version) {
+          case "1.16.100":
+          case "1.16.0":
+            components["minecraft:explosion_resistance"] = data;
+            break;
+          case "1.12.0":
+            components["minecraft:explosion_resistance"] = new Object();
+            components["minecraft:explosion_resistance"]["value"] = data;
+          default:
+            break;
+        }
+        break;
+      case "components_breakonpush":
+        switch (format_version) {
+          case "1.16.100":
+            components["minecraft:breakonpush"] = data;
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "components_immovable":
+        switch (format_version) {
+          case "1.16.100":
+            components["minecraft:immovable"] = data;
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "components_onlypistonpush":
+        switch (format_version) {
+          case "1.16.100":
+            components["minecraft:onlypistonpush"] = data;
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "components_friction":
+        switch (format_version) {
+          case "1.16.100":
+          case "1.16.0":
+            components["minecraft:friction"] = data;
+            break;
+          case "1.12.0":
+            components["minecraft:friction"] = new Object();
+            components["minecraft:friction"]["value"] = data;
+            break;
+          default:
+            break;
+        }
+        break;
+      case "components_flammable":
+        switch (format_version) {
+          case "1.16.100":
+          case "1.16.0":
+          case "1.12.0":
+            components["minecraft:flammable"] = { flame_odds: data?.flame, burn_odds: data?.burn };
+            break;
+          default:
+            break;
+        }
+        break;
+      case "components_event_on_fall_on":
+        switch (format_version) {
+          case "1.16.100":
+            components["minecraft:on_fall_on"] = {
+              event: data?.event,
+              condition: data?.condition != "" ? data?.condition : undefined,
+              target: data?.target != "default" ? data?.target : undefined,
+            };
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "components_event_on_interact":
+        switch (format_version) {
+          case "1.16.100":
+            components["minecraft:on_interact"] = {
+              event: data?.event,
+              condition: data?.condition != "" ? data?.condition : undefined,
+              target: data?.target != "default" ? data?.target : undefined,
+            };
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "components_event_on_placed":
+        switch (format_version) {
+          case "1.16.100":
+            components["minecraft:on_placed"] = {
+              event: data?.event,
+              condition: data?.condition != "" ? data?.condition : undefined,
+              target: data?.target != "default" ? data?.target : undefined,
+            };
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "components_event_on_player_placing":
+        switch (format_version) {
+          case "1.16.100":
+            components["minecraft:on_player_placing"] = {
+              event: data?.event,
+              condition: data?.condition != "" ? data?.condition : undefined,
+              target: data?.target != "default" ? data?.target : undefined,
+            };
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "components_event_on_step_on":
+        switch (format_version) {
+          case "1.16.100":
+            components["minecraft:on_step_on"] = {
+              event: data?.event,
+              condition: data?.condition != "" ? data?.condition : undefined,
+              target: data?.target != "default" ? data?.target : undefined,
+            };
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "components_event_on_step_off":
+        switch (format_version) {
+          case "1.16.100":
+            components["minecraft:on_step_off"] = {
+              event: data?.event,
+              condition: data?.condition != "" ? data?.condition : undefined,
+              target: data?.target != "default" ? data?.target : undefined,
+            };
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "components_event_on_player_destroyed":
+        switch (format_version) {
+          case "1.16.100":
+            components["minecraft:on_player_destroyed"] = {
+              event: data?.event,
+              condition: data?.condition != "" ? data?.condition : undefined,
+              target: data?.target != "default" ? data?.target : undefined,
+            };
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "components_event_ticking":
+        switch (format_version) {
+          case "1.16.100":
+            components["minecraft:ticking"] = {
+              on_tick: {
+                event: data?.event,
+                condition: data?.condition != "" ? data?.condition : undefined,
+                target: data?.target != "default" ? data?.target : undefined,
+              },
+              range: data?.range,
+              looping: data?.loop,
+            };
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "components_event_random_ticking":
+        switch (format_version) {
+          case "1.16.100":
+            components["minecraft:random_ticking"] = {
+              on_tick: {
+                event: data?.event,
+                condition: data?.condition != "" ? data?.condition : undefined,
+                target: data?.target != "default" ? data?.target : undefined,
+              },
+            };
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+    }
+  }
+  return components;
 }
 
 class JSONReplace {

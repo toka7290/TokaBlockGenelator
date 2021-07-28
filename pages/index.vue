@@ -376,10 +376,7 @@
                 <select
                   name="format-version"
                   id="format-version"
-                  @change="
-                    changeFormatVersion();
-                    setJSON();
-                  "
+                  v-model="format_version"
                 >
                   <option value="1.16.100">1.16.100</option>
                   <option value="1.16.0">1.16.0</option>
@@ -404,7 +401,7 @@
                   type="text"
                   name="block-name"
                   id="description-block-name"
-                  @change="setJSON"
+                  v-model="block_id"
                 />
               </div>
             </div>
@@ -418,7 +415,7 @@
                   name="description-is-experimental"
                   id="description-is-experimental"
                   class="invisible-Control"
-                  @change="setJSON"
+                  v-model="is_experimental"
                 />
                 <div for="description-is-experimental" class="checkbox-body">
                   <div class="checkbox-body-box">
@@ -442,7 +439,7 @@
                   name="description-register-to-creative-menu"
                   id="description-register-to-creative-menu"
                   class="invisible-Control"
-                  @change="setJSON"
+                  v-model="register_to_creative_menu"
                 />
                 <div
                   for="description-register-to-creative-menu"
@@ -1328,7 +1325,7 @@
           </div>
           <div class="code-preview">
             <pre class="language-json">
-              <code class="language-json">{{json}}</code>
+              <code class="language-json" v-text="json_str"></code>
             </pre>
             <label>
               <div v-html="svgBlank" />
@@ -1476,6 +1473,7 @@ import svgBlank from "~/assets/img/blank.svg?raw";
 import svgChevron from "~/assets/img/chevron.svg?raw";
 import svgClose from "~/assets/img/close.svg?raw";
 import componetsSuportList from "@/static/json/format.json";
+import prism from "@/static/lib/prism.js";
 export default {
   components: {
     components_loot,
@@ -1531,11 +1529,61 @@ export default {
       editor_show: [false, false, false, false],
       selected_permutation: 0,
       show_issue: false,
-      json: {},
+      json_str: {},
+      format_version: "1.16.100",
+      block_id: "",
+      is_experimental: false,
+      register_to_creative_menu: false,
+      tmp: this.$store.state.components,
     };
   },
   created() {
     this.toggleEditor();
+    this.setJSON();
+  },
+  computed: {
+    updateComponents() {
+      return JSON.stringify(this.$store.getters.updateComponents);
+    },
+  },
+  watch: {
+    updateComponents: function (new_val) {
+      if (new_val) {
+        this.setJSON();
+      }
+    },
+    format_version: function (new_val) {
+      if (new_val) {
+        this.$store.commit("setFormatVersion", new_val);
+        for (const format_key in componetsSuportList) {
+          Array.prototype.forEach.call(
+            document.getElementsByClassName(format_key),
+            (element) => {
+              element.classList.toggle(
+                "unsupported",
+                !componetsSuportList[format_key].includes(new_val)
+              );
+            }
+          );
+        }
+        this.setJSON();
+      }
+    },
+    block_id: function (new_val) {
+      if (new_val) {
+        this.setJSON();
+      }
+    },
+    is_experimental: function (new_val) {
+      if (new_val) {
+        this.setJSON();
+      }
+    },
+    register_to_creative_menu: function (new_val) {
+      if (new_val) {
+        this.setJSON();
+      }
+    },
   },
   methods: {
     fileDragover(event) {
@@ -1594,49 +1642,37 @@ export default {
     toggleIssue() {
       this.show_issue = !this.show_issue;
     },
-    changeFormatVersion() {
-      this.$store.commit(
-        "setFormatVersion",
-        document.getElementById("format-version").value
-      );
-      const format_version = this.$store.state.format_version;
-      for (const format_key in componetsSuportList) {
-        Array.prototype.forEach.call(
-          document.getElementsByClassName(format_key),
-          (element) => {
-            element.classList.toggle(
-              "unsupported",
-              !componetsSuportList[format_key].includes(format_version)
-            );
-          }
-        );
-      }
-    },
     setJSON() {
-      this.json = new Object();
-      this.$set(this.json, "format_version", this.format_version);
-      this.$set(this.json, "minecraft:block", new Object());
+      let json_data = new Object();
+      json_data["format_version"] = this.$store.state.format_version;
+      json_data["minecraft:block"] = new Object();
 
       // description
       let description = new Object();
-      description["identifier"] = document.getElementById(
-        "description-block-name"
-      ).value;
+      description["identifier"] = this.block_id;
       switch (this.format_version) {
         case "1.16.100":
           // blockState
           break;
         case "1.16.0":
         case "1.12.0":
-          description["is_experimental"] = document.getElementById(
-            "description-is-experimental"
-          ).checked;
-          description["register_to_creative-menu"] = document.getElementById(
-            "description-register-to-creative-menu"
-          ).checked;
+          description["is_experimental"] = this.is_experimental;
+          description["register_to_creative-menu"] =
+            this.register_to_creative_menu;
           break;
       }
-      this.$set(this.json, ["minecraft:block"]["description"], description);
+      json_data["minecraft:block"]["description"] = description;
+
+      json_data["minecraft:block"]["components"] = this.$getComponentObject(
+        this.$store.state.format_version,
+        this.$store.getters.mainComponents
+      );
+      if (process.client) {
+        this.$nextTick(() => {
+          prism.highlightAll();
+        });
+      }
+      this.json_str = JSON.stringify(json_data, null, "  ");
     },
     toggleValueElement(event) {
       /** @type {Element} */

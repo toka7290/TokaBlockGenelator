@@ -172,7 +172,7 @@ export default {
       data: {
         event: "",
         condition: "",
-        target: "",
+        target: "default",
         range: [0, 0],
         loop: false,
       },

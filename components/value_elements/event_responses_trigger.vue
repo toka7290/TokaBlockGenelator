@@ -102,7 +102,7 @@ export default {
       data: {
         event: "",
         condition: "",
-        target: "",
+        target: "default",
       },
     };
   },

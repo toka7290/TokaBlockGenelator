@@ -238,7 +238,6 @@ function setObjectEventTreeData(obj, tree, data) {
 }
 
 export const getters = {
-  components: (states) => {
-    return states.components;
-  },
+  mainComponents: (states) => states.main,
+  updateComponents: (states) => states.components,
 };
