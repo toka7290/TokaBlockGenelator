@@ -125,7 +125,7 @@ export default {
       },
     };
   },
-  props: ["group", "uuid"],
+  props: ["uuid"],
   methods: {
     setEffectId(event) {
       this.data = {

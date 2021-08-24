@@ -86,7 +86,7 @@ export default {
       data: false,
     };
   },
-  props: ["group", "uuid"],
+  props: ["uuid"],
   methods: {
     setIgnoreGameMode(event) {
       this.data = event.target.checked;

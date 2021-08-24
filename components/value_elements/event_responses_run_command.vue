@@ -122,7 +122,7 @@ export default {
       },
     };
   },
-  props: ["group", "uuid"],
+  props: ["uuid"],
   methods: {
     addArrayList() {
       this.data = {

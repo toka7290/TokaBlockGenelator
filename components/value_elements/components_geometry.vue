@@ -98,7 +98,7 @@ export default {
       },
     };
   },
-  props: ["group", "uuid"],
+  props: ["uuid"],
   methods: {
     setGeometry(event) {
       if (this.val_type == 1) {

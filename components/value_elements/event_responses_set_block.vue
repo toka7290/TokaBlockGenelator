@@ -24,7 +24,7 @@ export default {
       data: "",
     };
   },
-  props: ["group", "uuid"],
+  props: ["uuid"],
   methods: {
     setId(event) {
       this.data = event.target.value;

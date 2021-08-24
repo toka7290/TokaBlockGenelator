@@ -35,7 +35,7 @@ export default {
       val: "",
     };
   },
-  props: ["group", "uuid"],
+  props: ["uuid"],
   methods: {
     onChangedValue(event) {
       this.val = event.target.value;

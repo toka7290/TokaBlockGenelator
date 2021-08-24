@@ -115,7 +115,7 @@ export default {
       ],
     };
   },
-  props: ["group", "uuid"],
+  props: ["uuid"],
   methods: {
     modalShow(ev) {
       this.$showModal(ev);

@@ -94,7 +94,7 @@ export default {
       },
     };
   },
-  props: ["group", "uuid"],
+  props: ["uuid"],
   methods: {
     setFlameOdds(event) {
       this.data = {

@@ -229,7 +229,7 @@ export default {
       ],
     };
   },
-  props: ["group", "uuid"],
+  props: ["uuid"],
   methods: {
     addTab() {
       this.data = [

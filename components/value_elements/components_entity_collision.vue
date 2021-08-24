@@ -210,7 +210,7 @@ export default {
       },
     };
   },
-  props: ["group", "uuid"],
+  props: ["uuid"],
   methods: {
     setCollisionSimple(event) {
       this.data = {

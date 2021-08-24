@@ -237,7 +237,7 @@ export default {
       },
     };
   },
-  props: ["group", "uuid"],
+  props: ["uuid"],
   methods: {
     setAxisValue(
       event,

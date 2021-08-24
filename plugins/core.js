@@ -532,6 +532,302 @@ function getComponentObject(format_version, component_ids) {
             break;
         }
         break;
+      case "event_responses_set_block_property":
+        switch (format_version) {
+          case "1.16.100":
+            if (data) {
+              components["set_block_property"] = {};
+              data.forEach((property) => {
+                components["set_block_property"] = {
+                  ...components["set_block_property"],
+                  [property?.state]: property?.value,
+                };
+              });
+            }
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "event_responses_set_block":
+        switch (format_version) {
+          case "1.16.100":
+            if (data) {
+              components["set_block"] = {
+                block_type: data,
+              };
+            }
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "event_responses_set_block_at_pos":
+        switch (format_version) {
+          case "1.16.100":
+            if (data) {
+              components["set_block"] = {
+                block_type: data?.id,
+                block_offset: data?.pos,
+              };
+            }
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "event_responses_spawn_loot":
+        switch (format_version) {
+          case "1.16.100":
+            if (data) {
+              components["spawn_loot"] = {
+                table: data,
+              };
+            }
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "event_responses_add_mob_effect":
+        switch (format_version) {
+          case "1.16.100":
+            if (data) {
+              components["add_mob_effect"] = {
+                effect: data?.effect_id,
+                amplifier: data?.amplifier,
+                duration: data?.duration,
+                target: data?.target,
+              };
+            }
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "event_responses_remove_mob_effect":
+        switch (format_version) {
+          case "1.16.100":
+            if (data) {
+              components["remove_mob_effect"] = {
+                effect: data?.id,
+                target: data?.target,
+              };
+            }
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "event_responses_damage":
+        switch (format_version) {
+          case "1.16.100":
+            if (data) {
+              components["damage"] = {
+                effect: data?.type,
+                amount: data?.amount,
+                target: data?.target,
+              };
+            }
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "event_responses_decrement_stack":
+        switch (format_version) {
+          case "1.16.100":
+            if (data) {
+              components["decrement_stack"] = {
+                decrement_stack: data,
+              };
+            }
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "event_responses_die":
+        switch (format_version) {
+          case "1.16.100":
+            if (data) {
+              components["die"] = {
+                target: data,
+              };
+            }
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "event_responses_play_effect":
+        switch (format_version) {
+          case "1.16.100":
+            if (data) {
+              components["play_effect"] = {
+                effect: data?.id,
+                data: data?.data,
+                target: data?.target,
+              };
+            }
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "event_responses_play_sound":
+        switch (format_version) {
+          case "1.16.100":
+            if (data) {
+              components["play_sound"] = {
+                sound: data?.id,
+                target: data?.target,
+              };
+            }
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "event_responses_teleport":
+        switch (format_version) {
+          case "1.16.100":
+            if (data) {
+              components["teleport"] = {
+                destination: data?.destination,
+                max_range: data?.max_range,
+                avoid_water: data?.avoid_water,
+                land_on_block: data?.land_on_block,
+                target: data?.target,
+              };
+            }
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "event_responses_transform_item":
+        switch (format_version) {
+          case "1.16.100":
+            if (data) {
+              components["transform_item"] = {
+                transform: data,
+              };
+            }
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "event_responses_trigger":
+        switch (format_version) {
+          case "1.16.100":
+            if (data) {
+              components["trigger"] = {
+                event: data?.event,
+                condition: data?.condition,
+                target: data?.target,
+              };
+            }
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "event_responses_run_command":
+        switch (format_version) {
+          case "1.16.100":
+            if (data) {
+              components["run_command"] = {
+                command: data?.command,
+                target: data?.target,
+              };
+            }
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "event_responses_swing":
+        switch (format_version) {
+          case "1.16.100":
+            components["swing"] = {};
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "event_responses_sequence":
+        switch (format_version) {
+          case "1.16.100":
+            if (data) {
+              data.forEach((sequence) => {
+                components["sequence"] = [
+                  ...components["sequence"],
+                  getComponentObject(format_version, sequence),
+                ];
+              });
+            }
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
+      case "event_responses_randomize":
+        switch (format_version) {
+          case "1.16.100":
+            if (data) {
+              data.forEach((sequence) => {
+                components["sequence"] = [
+                  ...components["sequence"],
+                  {
+                    ...getComponentObject(format_version, sequence.components),
+                    weight: sequence.weight,
+                  },
+                ];
+              });
+            }
+            break;
+          case "1.16.0":
+          case "1.12.0":
+          default:
+            break;
+        }
+        break;
     }
   }
   return components;

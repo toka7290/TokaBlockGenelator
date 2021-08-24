@@ -168,6 +168,21 @@ export const mutations = {
       }
     }
   },
+  toggleChildEventComponent(states, [component_type, target_id, hasComponent = undefined]) {
+    if (component_type == undefined || target_id == undefined || hasComponent == undefined) {
+      console.error("toggleChildEventComponent: Unexpected value!");
+      return;
+    }
+    if (hasComponent) {
+      // 新規登録
+      states.components = {
+        ...states.components,
+        [target_id]: { type: component_type, data: undefined },
+      };
+    } else {
+      this._vm.$delete(states.components, target_id);
+    }
+  },
   // ブロックステート管理
   setBlockStatus(states, [number, name, type, data]) {
     this._vm.$set(states.block_states, number, { name: name, type: type, data: data });

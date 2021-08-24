@@ -139,7 +139,7 @@ export default {
       },
     };
   },
-  props: ["group", "uuid"],
+  props: ["uuid"],
   methods: {
     setType(event) {
       this.data = {

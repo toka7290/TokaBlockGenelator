@@ -26,7 +26,7 @@
 
 <script>
 export default {
-  props: ["group", "uuid"],
+  props: ["uuid"],
   methods: {
     onChangedValue(event) {
       this.$store.commit("setComponentData", [this.uuid, event.target.value]);

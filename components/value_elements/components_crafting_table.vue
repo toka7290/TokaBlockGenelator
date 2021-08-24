@@ -140,7 +140,7 @@ export default {
       },
     };
   },
-  props: ["group", "uuid"],
+  props: ["uuid"],
   methods: {
     addArrayList() {
       this.lists = [...this.lists, ""];

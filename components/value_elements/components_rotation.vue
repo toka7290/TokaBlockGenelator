@@ -49,7 +49,7 @@ export default {
   data() {
     return { val: [0, 0, 0] };
   },
-  props: ["group", "uuid"],
+  props: ["uuid"],
   methods: {
     onChangedValue(event, /**@type {(0|1|2)} */ axis) {
       this.val[axis] = event.target.value;
