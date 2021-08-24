@@ -1073,16 +1073,17 @@ export default {
           target.checked,
         ]);
       } else {
-        for (const target_id of this.data[tab_index].components) {
+        for (
+          let index = 0;
+          index < this.data[tab_index].components.length;
+          index++
+        ) {
+          const target_id = this.data[tab_index].components[index];
           if (this.$store.state.components[target_id].type == target.name) {
             // 削除
-            // this.data[tab_index].components.splice(
-            //   this.data[tab_index].components.indexOf(target_id),
-            //   1
-            // );
             let tmp = this.data.map((v) => v);
             let list = tmp[tab_index].components.map((v) => v);
-            list.splice(tab_index, 1);
+            list.splice(index, 1);
             tmp.splice(tab_index, 1, { components: list });
             this.data = tmp;
             this.$store.commit("setComponentData", [this.uuid, this.data]);

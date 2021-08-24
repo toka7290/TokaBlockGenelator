@@ -1105,16 +1105,18 @@ export default {
           target.checked,
         ]);
       } else {
-        console.log(this.data[tab_index].components);
         // for
-        for (const target_id of this.data[tab_index].components) {
-          console.log(target_id);
-          console.log(this.$store.state.components[target_id].type);
+        for (
+          let index = 0;
+          index < this.data[tab_index].components.length;
+          index++
+        ) {
+          const target_id = this.data[tab_index].components[index];
           if (this.$store.state.components[target_id].type == target.name) {
             // 削除
             let tmp = this.data.map((v) => v);
             let list = tmp[tab_index].components.map((v) => v);
-            list.splice(tab_index, 1);
+            list.splice(index, 1);
             tmp.splice(tab_index, 1, { components: list });
             this.data = tmp;
             this.$store.commit("setComponentData", [this.uuid, this.data]);
