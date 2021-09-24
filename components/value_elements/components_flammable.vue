@@ -44,6 +44,7 @@
                     class="components-flammable-flame-odds"
                     value="0"
                     v-on:change="setFlameOdds"
+                    v-model.number="flame_odds"
                   />
                 </label>
               </div>
@@ -64,6 +65,7 @@
                       value="0"
                       v-on:change="setBurnOdds"
                       v-bind:disabled="0 >= data.flame"
+                      v-model.number="burn_odds"
                     />
                     <span>%</span>
                   </label>
@@ -88,6 +90,8 @@ export default {
   data() {
     return {
       svgClose,
+      flame_odds: 0,
+      burn_odds: 0,
       data: {
         flame: 0,
         burn: 0,
@@ -95,18 +99,21 @@ export default {
     };
   },
   props: ["uuid"],
+  created() {
+    this.onChangedValue();
+  },
   methods: {
-    setFlameOdds(event) {
+    setFlameOdds() {
       this.data = {
         ...this.data,
-        flame: event.target.value,
+        flame: this.flame_odds,
       };
       this.onChangedValue();
     },
-    setBurnOdds(event) {
+    setBurnOdds() {
       this.data = {
         ...this.data,
-        burn: this.data.flame > 0 ? event.target.value : 0,
+        burn: this.flame_odds > 0 ? this.burn_odds : 0,
       };
       this.onChangedValue();
     },

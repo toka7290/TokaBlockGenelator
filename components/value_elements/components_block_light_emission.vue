@@ -17,8 +17,11 @@
           value="0.0"
           step="0.1"
           v-on:change="onChangedValue"
+          v-model.number="val"
         />
-        <span class="components-block-light-emission-eq">=0</span>
+        <span class="components-block-light-emission-eq"
+          >={{ Math.round(val * 15) }}</span
+        >
       </label>
     </div>
   </div>
@@ -26,10 +29,18 @@
 
 <script>
 export default {
+  data() {
+    return {
+      val: 0.0,
+    };
+  },
   props: ["uuid"],
+  created() {
+    this.onChangedValue();
+  },
   methods: {
     onChangedValue(event) {
-      this.$store.commit("setComponentData", [this.uuid, event.target.value]);
+      this.$store.commit("setComponentData", [this.uuid, this.val]);
     },
   },
 };

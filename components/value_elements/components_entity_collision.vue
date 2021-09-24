@@ -97,7 +97,7 @@
                         type="number"
                         name=""
                         class="components-entity-collision-origin-x"
-                        value="0"
+                        value="-8"
                         step="1"
                         min="-8"
                         max="8"
@@ -123,7 +123,7 @@
                         type="number"
                         name=""
                         class="components-entity-collision-origin-z"
-                        value="0"
+                        value="-8"
                         step="1"
                         min="-8"
                         max="8"
@@ -146,7 +146,7 @@
                         type="number"
                         name=""
                         class="components-entity-collision-size-x"
-                        value="0"
+                        value="16"
                         step="1"
                         min="0"
                         max="16"
@@ -159,7 +159,7 @@
                         type="number"
                         name=""
                         class="components-entity-collision-size-y"
-                        value="0"
+                        value="16"
                         step="1"
                         min="0"
                         max="16"
@@ -172,7 +172,7 @@
                         type="number"
                         name=""
                         class="components-entity-collision-size-z"
-                        value="0"
+                        value="16"
                         step="1"
                         min="0"
                         max="16"
@@ -205,12 +205,15 @@ export default {
       data: {
         type: 0,
         simple: true,
-        origin: [0, 0, 0],
-        size: [0, 0, 0],
+        origin: [-8, 0, -8],
+        size: [16, 16, 16],
       },
     };
   },
   props: ["uuid"],
+  created() {
+    this.onChangedValue();
+  },
   methods: {
     setCollisionSimple(event) {
       this.data = {

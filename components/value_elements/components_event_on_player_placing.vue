@@ -115,7 +115,10 @@ export default {
       },
     };
   },
-  props: [, "uuid"],
+  props: ["uuid"],
+  created() {
+    this.onChangedValue();
+  },
   methods: {
     setEvent(event) {
       this.data = {

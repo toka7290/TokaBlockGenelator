@@ -16,6 +16,7 @@
           value="1.0"
           step="0.1"
           v-on:change="onChangedValue"
+          v-model.number="val"
         />
         <span>s</span>
       </label>
@@ -25,10 +26,18 @@
 
 <script>
 export default {
+  data() {
+    return {
+      val: 1.0,
+    };
+  },
   props: ["uuid"],
+  created() {
+    this.onChangedValue();
+  },
   methods: {
-    onChangedValue(event) {
-      this.$store.commit("setComponentData", [this.uuid, event.target.value]);
+    onChangedValue() {
+      this.$store.commit("setComponentData", [this.uuid, this.val]);
     },
   },
 };

@@ -230,6 +230,9 @@ export default {
     };
   },
   props: ["uuid"],
+  created() {
+    this.onChangedValue();
+  },
   methods: {
     addTab() {
       this.data = [

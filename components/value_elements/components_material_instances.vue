@@ -133,7 +133,6 @@
                           class="components-material-instances-refer-face"
                           v-on:change="setInstancesReferFace($event, index)"
                         >
-                          <option value="*">全面</option>
                           <option value="up">上</option>
                           <option value="down">下</option>
                           <option value="north">北</option>
@@ -194,12 +193,15 @@ export default {
           type: 0,
           texture: "",
           material: "opaque",
-          refer_face: "*",
+          refer_face: "up",
         },
       ],
     };
   },
   props: ["uuid"],
+  created() {
+    this.onChangedValue();
+  },
   methods: {
     modalShow(ev) {
       this.$showModal(ev);

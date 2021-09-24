@@ -8,6 +8,8 @@
         type="checkbox"
         name="components-breakonpush"
         class="components-breakonpush invisible-Control"
+        v-on:change="onChangedValue"
+        v-model="val"
       />
       <div for="components-breakonpush" class="checkbox-body">
         <div class="checkbox-body-box">
@@ -22,7 +24,6 @@
             stroke-width="3"
             stroke-linecap="round"
             stroke-linejoin="round"
-            v-on:change="onChangedValue"
           >
             <polyline points="20 6 9 17 4 12"></polyline>
           </svg>
@@ -35,10 +36,18 @@
 
 <script>
 export default {
+  data() {
+    return {
+      val: false,
+    };
+  },
   props: ["uuid"],
+  created() {
+    this.onChangedValue();
+  },
   methods: {
-    onChangedValue(event) {
-      this.$store.commit("setComponentData", [this.uuid, event.target.checked]);
+    onChangedValue() {
+      this.$store.commit("setComponentData", [this.uuid, this.val]);
     },
   },
 };

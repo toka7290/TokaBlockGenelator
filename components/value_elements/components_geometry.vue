@@ -99,6 +99,9 @@ export default {
     };
   },
   props: ["uuid"],
+  created() {
+    this.onChangedValue();
+  },
   methods: {
     setGeometry(event) {
       if (this.val_type == 1) {

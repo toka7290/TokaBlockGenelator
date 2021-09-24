@@ -116,6 +116,9 @@ export default {
     };
   },
   props: ["uuid"],
+  created() {
+    this.onChangedValue();
+  },
   methods: {
     modalShow(ev) {
       this.$showModal(ev);

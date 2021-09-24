@@ -126,6 +126,9 @@ export default {
     };
   },
   props: ["uuid"],
+  created() {
+    this.onChangedValue();
+  },
   methods: {
     setEffectId(event) {
       this.data = {

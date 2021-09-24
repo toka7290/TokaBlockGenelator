@@ -32,10 +32,13 @@
 export default {
   data() {
     return {
-      val: "",
+      val: "#000000",
     };
   },
   props: ["uuid"],
+  created() {
+    this.$store.commit("setComponentData", [this.uuid, this.val]);
+  },
   methods: {
     onChangedValue(event) {
       this.val = event.target.value;

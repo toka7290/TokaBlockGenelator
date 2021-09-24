@@ -22,6 +22,9 @@
 <script>
 export default {
   props: ["uuid"],
+  created() {
+    this.$store.commit("setComponentData", [this.uuid, "solid"]);
+  },
   methods: {
     onChangedValue(event) {
       this.$store.commit("setComponentData", [this.uuid, event.target.value]);

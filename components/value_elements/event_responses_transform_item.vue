@@ -38,7 +38,8 @@
                     type="text"
                     name="event-responses-transform-item-id"
                     class="event-responses-transform-item-id"
-                    v-on:change="setId"
+                    v-on:change="onChangedValue"
+                    v-model="data"
                   />
                 </label>
               </div>
@@ -65,11 +66,10 @@ export default {
     };
   },
   props: ["uuid"],
+  created() {
+    this.onChangedValue();
+  },
   methods: {
-    setId(event) {
-      this.data = event.target.value;
-      this.onChangedValue();
-    },
     onChangedValue() {
       this.$store.commit("setComponentData", [this.uuid, this.data]);
     },

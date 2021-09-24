@@ -57,11 +57,10 @@ function closeModal(event) {
   }
 }
 
-function getComponentObject(format_version, component_ids) {
+function getComponentObject(format_version, component_ids, scope = this) {
   let components = {};
   for (const target_id of component_ids) {
-    let { type, data } = this.$store.getters.updateComponents[target_id];
-    console.log(type, data);
+    let { type, data } = scope.$store.getters.updateComponents?.[target_id];
     switch (type) {
       case "components_loot":
         switch (format_version) {
@@ -124,7 +123,7 @@ function getComponentObject(format_version, component_ids) {
       case "components_preventsjumping":
         switch (format_version) {
           case "1.16.100":
-            components["minecraft:preventsjumping"] = data;
+            components["minecraft:preventsjumping"] = data ?? false;
             break;
           case "1.16.0":
           case "1.12.0":
@@ -135,7 +134,7 @@ function getComponentObject(format_version, component_ids) {
       case "components_unwalkable":
         switch (format_version) {
           case "1.16.100":
-            components["minecraft:unwalkable"] = data;
+            components["minecraft:unwalkable"] = data ?? false;
             break;
           case "1.16.0":
           case "1.12.0":
@@ -179,7 +178,7 @@ function getComponentObject(format_version, component_ids) {
                 components["minecraft:unit_cube"] = {};
                 break;
               case 1:
-                components["minecraft:geometry"] = data.geo;
+                components["minecraft:geometry"] = data?.geo ?? "";
                 break;
               default:
                 break;
@@ -199,14 +198,14 @@ function getComponentObject(format_version, component_ids) {
               for (const instance of data) {
                 switch (instance.type) {
                   case 0:
-                    components["minecraft:material_instances"][`${instance.face}`] =
-                      instance.refer_face;
-                    break;
-                  case 1:
                     components["minecraft:material_instances"][`${instance.face}`] = {
                       texture: instance.texture,
                       render_method: instance.material,
                     };
+                    break;
+                  case 1:
+                    components["minecraft:material_instances"][`${instance.face}`] =
+                      instance.refer_face;
                     break;
                   default:
                     break;
@@ -224,12 +223,12 @@ function getComponentObject(format_version, component_ids) {
         switch (format_version) {
           case "1.16.100":
             if (data?.type) {
-              components["minecraft:entity_collision"] = data?.simple;
-            } else {
               components["minecraft:entity_collision"] = {
                 origin: data?.origin,
                 size: data?.size,
               };
+            } else {
+              components["minecraft:entity_collision"] = data?.simple;
             }
             break;
           case "1.16.0":
@@ -242,12 +241,12 @@ function getComponentObject(format_version, component_ids) {
         switch (format_version) {
           case "1.16.100":
             if (data?.type) {
-              components["minecraft:pick_collision"] = data?.simple;
-            } else {
               components["minecraft:pick_collision"] = {
                 origin: data?.origin,
                 size: data?.size,
               };
+            } else {
+              components["minecraft:pick_collision"] = data?.simple;
             }
             break;
           case "1.16.0":
@@ -554,11 +553,9 @@ function getComponentObject(format_version, component_ids) {
       case "event_responses_set_block":
         switch (format_version) {
           case "1.16.100":
-            if (data) {
-              components["set_block"] = {
-                block_type: data,
-              };
-            }
+            components["set_block"] = {
+              block_type: data,
+            };
             break;
           case "1.16.0":
           case "1.12.0":
@@ -570,7 +567,7 @@ function getComponentObject(format_version, component_ids) {
         switch (format_version) {
           case "1.16.100":
             if (data) {
-              components["set_block"] = {
+              components["set_block_at_pos"] = {
                 block_type: data?.id,
                 block_offset: data?.pos,
               };
@@ -585,11 +582,10 @@ function getComponentObject(format_version, component_ids) {
       case "event_responses_spawn_loot":
         switch (format_version) {
           case "1.16.100":
-            if (data) {
-              components["spawn_loot"] = {
-                table: data,
-              };
-            }
+            components["spawn_loot"] = {
+              table: data,
+            };
+
             break;
           case "1.16.0":
           case "1.12.0":
@@ -651,11 +647,9 @@ function getComponentObject(format_version, component_ids) {
       case "event_responses_decrement_stack":
         switch (format_version) {
           case "1.16.100":
-            if (data) {
-              components["decrement_stack"] = {
-                decrement_stack: data,
-              };
-            }
+            components["decrement_stack"] = {
+              decrement_stack: data,
+            };
             break;
           case "1.16.0":
           case "1.12.0":
@@ -733,11 +727,9 @@ function getComponentObject(format_version, component_ids) {
       case "event_responses_transform_item":
         switch (format_version) {
           case "1.16.100":
-            if (data) {
-              components["transform_item"] = {
-                transform: data,
-              };
-            }
+            components["transform_item"] = {
+              transform: data,
+            };
             break;
           case "1.16.0":
           case "1.12.0":
@@ -793,10 +785,11 @@ function getComponentObject(format_version, component_ids) {
         switch (format_version) {
           case "1.16.100":
             if (data) {
+              components["sequence"] = new Array();
               data.forEach((sequence) => {
                 components["sequence"] = [
                   ...components["sequence"],
-                  getComponentObject(format_version, sequence),
+                  { ...getComponentObject(format_version, sequence.components, this) },
                 ];
               });
             }
@@ -811,11 +804,12 @@ function getComponentObject(format_version, component_ids) {
         switch (format_version) {
           case "1.16.100":
             if (data) {
+              components["randomize"] = new Array();
               data.forEach((sequence) => {
-                components["sequence"] = [
-                  ...components["sequence"],
+                components["randomize"] = [
+                  ...components["randomize"],
                   {
-                    ...getComponentObject(format_version, sequence.components),
+                    ...getComponentObject(format_version, sequence.components, this),
                     weight: sequence.weight,
                   },
                 ];

@@ -9,6 +9,7 @@
         name="components-onlypistonpush"
         class="components-onlypistonpush invisible-Control"
         v-on:change="onChangedValue"
+        v-model="val"
       />
       <div class="checkbox-body">
         <div class="checkbox-body-box">
@@ -35,10 +36,18 @@
 
 <script>
 export default {
+  data() {
+    return {
+      val: false,
+    };
+  },
   props: ["uuid"],
+  created() {
+    this.onChangedValue();
+  },
   methods: {
-    onChangedValue(event) {
-      this.$store.commit("setComponentData", [this.uuid, event.target.checked]);
+    onChangedValue() {
+      this.$store.commit("setComponentData", [this.uuid, this.val]);
     },
   },
 };

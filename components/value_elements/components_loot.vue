@@ -12,6 +12,7 @@
         name="components-loot"
         class="components-loot"
         v-on:change="onChangedValue"
+        v-model="val"
       />
     </label>
   </div>
@@ -19,10 +20,16 @@
 
 <script>
 export default {
+  data() {
+    return { val: "" };
+  },
   props: ["uuid"],
+  created() {
+    this.onChangedValue();
+  },
   methods: {
-    onChangedValue(event) {
-      this.$store.commit("setComponentData", [this.uuid, event.target.value]);
+    onChangedValue() {
+      this.$store.commit("setComponentData", [this.uuid, this.val]);
     },
   },
 };

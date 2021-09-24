@@ -11,7 +11,8 @@
         type="text"
         name="event-responses-spawn-loot"
         class="event-responses-spawn-loot"
-        v-on:change="setLoot"
+        v-on:change="onChangedValue"
+        v-model="data"
       />
     </label>
   </div>
@@ -25,11 +26,10 @@ export default {
     };
   },
   props: ["uuid"],
+  created() {
+    this.onChangedValue();
+  },
   methods: {
-    setLoot(event) {
-      this.data = event.target.value;
-      this.onChangedValue();
-    },
     onChangedValue() {
       this.$store.commit("setComponentData", [this.uuid, this.data]);
     },

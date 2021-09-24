@@ -1024,6 +1024,9 @@ export default {
     };
   },
   props: ["uuid"],
+  created() {
+    this.$store.commit("setComponentData", [this.uuid, this.data]);
+  },
   methods: {
     modalShow(ev) {
       this.$showModal(ev);

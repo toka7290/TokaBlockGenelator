@@ -41,7 +41,8 @@
                       event-responses-decrement-stack-ignore-game-mode
                       invisible-Control
                     "
-                    v-on:change="setIgnoreGameMode"
+                    v-on:change="onChangedValue"
+                    v-model="data"
                   />
                   <div class="checkbox-body">
                     <div class="checkbox-body-box">
@@ -87,11 +88,10 @@ export default {
     };
   },
   props: ["uuid"],
+  created() {
+    this.onChangedValue();
+  },
   methods: {
-    setIgnoreGameMode(event) {
-      this.data = event.target.checked;
-      this.onChangedValue();
-    },
     onChangedValue() {
       this.$store.commit("setComponentData", [this.uuid, this.data]);
     },

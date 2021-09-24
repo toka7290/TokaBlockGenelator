@@ -115,6 +115,9 @@ export default {
       },
     };
   },
+  created() {
+    this.onChangedValue();
+  },
   props: ["uuid"],
   methods: {
     setEvent(event) {

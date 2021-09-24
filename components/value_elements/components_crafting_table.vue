@@ -141,6 +141,9 @@ export default {
     };
   },
   props: ["uuid"],
+  created() {
+    this.onChangedValue();
+  },
   methods: {
     addArrayList() {
       this.lists = [...this.lists, ""];

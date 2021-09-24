@@ -175,10 +175,11 @@ export const mutations = {
     }
     if (hasComponent) {
       // 新規登録
-      states.components = {
+      let new_data = {
         ...states.components,
         [target_id]: { type: component_type, data: undefined },
       };
+      states.components = new_data;
     } else {
       this._vm.$delete(states.components, target_id);
     }

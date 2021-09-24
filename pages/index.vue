@@ -1667,6 +1667,21 @@ export default {
         this.$store.state.format_version,
         this.$store.getters.mainComponents
       );
+      let events = this.$store.state.events;
+      if (events.length) {
+        json_data["minecraft:block"]["events"] = {};
+        for (let index = 0; index < events.length; index++) {
+          const element = events[index];
+          // if (!!element.name)
+            json_data["minecraft:block"]["events"] = {
+              ...json_data["minecraft:block"]["events"],
+              [element.name]: this.$getComponentObject(
+                this.$store.state.format_version,
+                element.components
+              ),
+            };
+        }
+      }
       if (process.client) {
         this.$nextTick(() => {
           prism.highlightAll();

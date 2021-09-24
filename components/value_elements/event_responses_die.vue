@@ -35,6 +35,7 @@
                     name="event-responses-die-target"
                     class="event-responses-die-target"
                     v-on:change="onChangedValue"
+                    v-model="val"
                   >
                     <option value="default">default</option>
                     <option value="self">self</option>
@@ -65,10 +66,18 @@
 
 <script>
 export default {
+  data() {
+    return {
+      val: "default",
+    };
+  },
   props: ["uuid"],
+  created() {
+    this.onChangedValue();
+  },
   methods: {
-    onChangedValue(event) {
-      this.$store.commit("setComponentData", [this.uuid, event.target.value]);
+    onChangedValue() {
+      this.$store.commit("setComponentData", [this.uuid, this.val]);
     },
   },
 };
