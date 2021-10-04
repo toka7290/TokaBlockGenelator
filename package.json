@@ -1,15 +1,16 @@
 {
-  "name": "nextjs",
-  "version": "0.1.0",
-  "private": true,
+  "name": "toka-block-generator",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "start": "nuxt start"
   },
   "dependencies": {
-    "next": "^10.0.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "nuxt": "^2.15.8"
+  },
+  "devDependencies": {
+    "@nuxtjs/svg": "^0.2.0",
+    "nuxt-svg-loader": "^1.2.0"
   }
 }

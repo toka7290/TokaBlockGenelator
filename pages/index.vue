@@ -1,0 +1,1757 @@
+<template>
+  <div class="body" @dragover.prevent="fileDragover">
+    <header class="header" style="display: none">
+      <div class="header-main">
+        <div class="title-icon">
+          <img src="~/assets/img/icon.svg" alt="" height="32px" width="32px" />
+        </div>
+        <div class="title">
+          <h1>とかさんの Block Generator</h1>
+          <p>version:project_Nuts_dev</p>
+        </div>
+        <div class="header-menu">
+          <div class="header-menu-element import-file">
+            <label for="input-file">Import</label>
+            <div class="help-content top" id="help-content-1">
+              <p>すでファイルがある場合はデータをインポートします。</p>
+            </div>
+          </div>
+          <div class="header-menu-element" id="show-preview">
+            <span>Preview</span>
+            <div class="help-content top" id="help-content-3">
+              <p>
+                入力・編集したデータの実際の表示、json閲覧とダウンロード・コピーをします。
+              </p>
+            </div>
+          </div>
+          <div class="header-menu-element">
+            <p id="show-help">help</p>
+          </div>
+          <div class="header-menu-element">
+            <label for="open-about">About</label>
+          </div>
+        </div>
+        <div class="header-menu-alt">
+          <input
+            type="file"
+            name="input-file"
+            id="input-file"
+            accept=".json"
+            class="invisible-Control"
+          />
+          <label for="input-file" class="import-file">
+            <img
+              src="~/assets/img/import.svg"
+              alt="import"
+              width="32px"
+              height="32px"
+            />
+            <p>Import</p>
+          </label>
+          <details class="open-more-info">
+            <summary class="more-info-icon">
+              <img
+                src="~/assets/img/more.svg"
+                alt="more"
+                width="32px"
+                height="32px"
+              />
+            </summary>
+            <ul class="more-info">
+              <li>
+                <a
+                  href="https://tokamcwin10.blog.jp/"
+                  target="_blank"
+                  title="とかさんのホームページ"
+                  rel="noopener noreferrer"
+                  ><img
+                    src="~/assets/img/homepage.svg"
+                    alt=""
+                    width="32px"
+                    height="32px"
+                  />
+                  <p>Homepage</p>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://twitter.com/toka7290"
+                  target="_blank"
+                  title="Twitter"
+                  rel="noopener noreferrer"
+                  ><img
+                    src="~/assets/img/twitter.svg"
+                    alt=""
+                    width="32px"
+                    height="32px"
+                  />
+                  <p>Twitter</p>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/toka7290/TokaTools"
+                  target="_blank"
+                  title="Github"
+                  rel="noopener noreferrer"
+                  ><img
+                    src="~/assets/img/github.svg"
+                    alt=""
+                    width="32px"
+                    height="32px"
+                  />
+                  <p>GitHub</p>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://tokamcwin10.blog.jp/article-37132278"
+                  target="_blank"
+                  title="Block.jsonの解説ページに飛びます。"
+                  rel="noopener noreferrer"
+                  ><img
+                    src="~/assets/img/help.svg"
+                    alt=""
+                    width="32px"
+                    height="32px"
+                  />
+                  <p>Block Help</p>
+                </a>
+              </li>
+              <li>
+                <input
+                  type="button"
+                  id="open-about"
+                  class="invisible-Control"
+                  v-on:click="toggleAbout"
+                />
+                <label class="open-about" for="open-about">
+                  <img
+                    src="~/assets/img/icon.svg"
+                    alt=""
+                    height="32px"
+                    width="32px"
+                  />
+                  <p>about</p>
+                </label>
+              </li>
+            </ul>
+          </details>
+        </div>
+      </div>
+      <div id="page-help"></div>
+      <div class="page-about" v-show="page_about" v-on:click="toggleAbout">
+        <div class="about-area">
+          <div class="close-about">
+            <input
+              type="button"
+              id="close-about-btn"
+              class="invisible-Control"
+            />
+            <label
+              for="close-about-btn"
+              class="close-about-btn-icon"
+              v-html="svgClose"
+            >
+            </label>
+          </div>
+          <div class="about-content">
+            <img
+              src="~/assets/img/icon.svg"
+              alt=""
+              width="180px"
+              height="180px"
+            />
+            <div class="about-title">
+              <h2>とかさんの Block Generator</h2>
+              <p>version:project_Nuts_dev</p>
+            </div>
+            <div class="about-external-link">
+              <a
+                href="https://tokamcwin10.blog.jp/"
+                target="_blank"
+                title="とかさんのホームページ"
+                rel="noopener noreferrer"
+                ><img
+                  src="~/assets/img/homepage.svg"
+                  alt=""
+                  width="32px"
+                  height="32px"
+              /></a>
+              <a
+                href="https://twitter.com/toka7290"
+                target="_blank"
+                title="Twitter"
+                rel="noopener noreferrer"
+                ><img
+                  src="~/assets/img/twitter.svg"
+                  alt=""
+                  width="32px"
+                  height="32px"
+              /></a>
+              <a
+                href="https://github.com/toka7290/TokaTools"
+                target="_blank"
+                title="Github"
+                rel="noopener noreferrer"
+                ><img
+                  src="~/assets/img/github.svg"
+                  alt=""
+                  width="32px"
+                  height="32px"
+              /></a>
+              <a
+                href="https://tokamcwin10.blog.jp/article-37132278"
+                target="_blank"
+                title="Block.jsonの解説ページに飛びます。"
+                rel="noopener noreferrer"
+                ><img
+                  src="~/assets/img/help.svg"
+                  alt=""
+                  width="32px"
+                  height="32px"
+              /></a>
+              <div id="page-share">
+                <img
+                  src="~/assets/img/share.svg"
+                  alt=""
+                  width="32px"
+                  height="32px"
+                />
+              </div>
+            </div>
+            <div class="copyright">
+              <p>Copyright (c) 2021 とかさん</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="help-content bottom" id="help-content-2">
+      <p>データを編集します</p>
+      <p>エラー等は下にある[問題]タブから見ることができます。</p>
+    </div>
+    <div
+      class="file-drop-zone"
+      v-bind:class="{ hide: !show_drop_zone }"
+      @dragleave="fileDragleave"
+      @drop.stop="fileDragdrop"
+    >
+      <div class="file-drop-zone-textarea">
+        <img
+          src="~/assets/img/import.svg"
+          alt="import"
+          width="50px"
+          height="50px"
+        />
+        <p>ファイルをドロップして&NewLine;インポートします。</p>
+      </div>
+    </div>
+    <div class="content">
+      <div class="editor">
+        <div class="editor-switcher">
+          <div class="switcher-hamburger">
+            <input
+              type="checkbox"
+              name="hamburger-opener"
+              id="hamburger-opener"
+              class="invisible-Control"
+              v-on:click="toggleHamburger"
+            />
+            <label
+              for="hamburger-opener"
+              class="switch-element-body"
+              v-bind:class="{ open: hamburger_show }"
+            >
+              <div class="switcher-select-mark"></div>
+              <div class="switcher-icon">
+                <div v-html="svgMenu" />
+              </div>
+            </label>
+          </div>
+          <div class="switch-element">
+            <input
+              type="radio"
+              name="editor-switch"
+              id="editor-switch-main"
+              value="main"
+              class="invisible-Control"
+              checked
+              v-on:click="toggleEditor('main')"
+            />
+            <label
+              for="editor-switch-main"
+              class="switch-element-body"
+              v-bind:class="{ open: hamburger_show }"
+            >
+              <div class="switcher-select-mark"></div>
+              <div class="switcher-icon">
+                <div v-html="svgMain" />
+              </div>
+              <div class="switcher-editor-name">Main</div>
+            </label>
+          </div>
+          <div class="switch-element editor-event">
+            <input
+              type="radio"
+              name="editor-switch"
+              id="editor-switch-event"
+              value="event"
+              class="invisible-Control"
+              v-on:click="toggleEditor('event')"
+            />
+            <label
+              for="editor-switch-event"
+              class="switch-element-body"
+              v-bind:class="{ open: hamburger_show }"
+            >
+              <div class="switcher-select-mark"></div>
+              <div class="switcher-icon">
+                <div v-html="svgEvent" />
+              </div>
+              <div class="switcher-editor-name">イベント</div>
+            </label>
+          </div>
+          <div class="switch-element editor-permutations">
+            <input
+              type="radio"
+              name="editor-switch"
+              id="editor-switch-permutations"
+              value="permutations"
+              class="invisible-Control"
+              v-on:click="toggleEditor('permutations')"
+            />
+            <label
+              for="editor-switch-permutations"
+              class="switch-element-body"
+              v-bind:class="{ open: hamburger_show }"
+            >
+              <div class="switcher-select-mark"></div>
+              <div class="switcher-icon">
+                <div v-html="svgPermutation" />
+              </div>
+              <div class="switcher-editor-name">パーミュテーション</div>
+            </label>
+          </div>
+          <div class="switch-element editor-blockState">
+            <input
+              type="radio"
+              name="editor-switch"
+              id="editor-switch-blockState"
+              value="blockState"
+              class="invisible-Control"
+              v-on:click="toggleEditor('blockState')"
+            />
+            <label
+              for="editor-switch-blockState"
+              class="switch-element-body"
+              v-bind:class="{ open: hamburger_show }"
+            >
+              <div class="switcher-select-mark"></div>
+              <div class="switcher-icon">
+                <div v-html="svgBlockState" />
+              </div>
+              <div class="switcher-editor-name">ブロック状態</div>
+            </label>
+          </div>
+        </div>
+        <form
+          name="editor-main"
+          id="editor-main"
+          class="editor-main"
+          v-show="editor_show[0]"
+        >
+          <div class="editor-element">
+            <div class="editor-element-legend">
+              <p>Definition</p>
+            </div>
+            <div
+              class="value-element"
+              title="このブロック.jsonのフォーマットバージョンを設定します。"
+            >
+              <div class="value-label">
+                <label for="format-version">フォーマットバージョン</label>
+              </div>
+              <div class="value-input">
+                <select
+                  name="format-version"
+                  id="format-version"
+                  v-model="format_version"
+                >
+                  <option value="1.16.100">1.16.100</option>
+                  <option value="1.16.0">1.16.0</option>
+                  <option value="1.12.0">1.12.0</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="editor-element">
+            <div class="editor-element-legend">
+              <p>Description</p>
+            </div>
+            <div
+              class="value-element"
+              title="このブロックのIDを設定します。'名前空間:ブロックID'の形式で書く必要があります。"
+            >
+              <div class="value-label">
+                <label for="description-block-name">ブロックID</label>
+              </div>
+              <div class="value-input">
+                <input
+                  type="text"
+                  name="block-name"
+                  id="description-block-name"
+                  v-model="block_id"
+                />
+              </div>
+            </div>
+            <div
+              class="value-element description_is_experimental unsupported"
+              title="このチェックを有効にすると、試験的なゲームプレイでのみブロックが有効化されます。"
+            >
+              <label class="value-checkbox">
+                <input
+                  type="checkbox"
+                  name="description-is-experimental"
+                  id="description-is-experimental"
+                  class="invisible-Control"
+                  v-model="is_experimental"
+                />
+                <div for="description-is-experimental" class="checkbox-body">
+                  <div class="checkbox-body-box">
+                    <div v-html="svgCheck" />
+                  </div>
+                  <p class="checkbox-body-text">試験的なゲームプレイのみ</p>
+                </div>
+              </label>
+            </div>
+            <div
+              class="
+                value-element
+                description_register_to_creative_menu
+                unsupported
+              "
+              title="このチェックを有効にすると、ブロックがクリエイティブインベントリに追加されます。"
+            >
+              <label class="value-checkbox">
+                <input
+                  type="checkbox"
+                  name="description-register-to-creative-menu"
+                  id="description-register-to-creative-menu"
+                  class="invisible-Control"
+                  v-model="register_to_creative_menu"
+                />
+                <div
+                  for="description-register-to-creative-menu"
+                  class="checkbox-body"
+                >
+                  <div class="checkbox-body-box">
+                    <div v-html="svgCheck" />
+                  </div>
+                  <p class="checkbox-body-text">クリエイティブメニューに追加</p>
+                </div>
+              </label>
+            </div>
+          </div>
+          <div class="editor-element">
+            <div class="editor-element-legend">
+              <p>Components</p>
+            </div>
+            <div class="editor-element-body">
+              <components
+                v-for="(key, i) in $store.state.main"
+                :key="i"
+                :is="`${$store.state.components[key].type}`"
+                :uuid="key"
+              ></components>
+            </div>
+            <div class="editor-element-footer element-control">
+              <div class="type-modal">
+                <label class="invisible-Control">
+                  <input
+                    type="button"
+                    class="modal-open"
+                    v-on:click="this.$showModal"
+                  />
+                  <div class="element-control-text">要素の追加・削除</div>
+                </label>
+                <div class="modal hide" v-on:click="this.$closeModal">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <div class="modal-title">要素の追加・削除</div>
+                        <label class="modal-close-btn">
+                          <input
+                            type="button"
+                            value="閉じる"
+                            class="modal-close invisible-Control"
+                          />
+                          <div class="close-btn-icon" v-html="svgClose"></div>
+                        </label>
+                      </div>
+                      <div class="modal-body">
+                        <div
+                          class="value-element components_loot"
+                          title="このブロックが破壊された時に落とすアイテムが記述されたルートテーブルを指定します。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_loot"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">ルートテーブル</p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_display_name"
+                          title="ブロックの画面に表示される名前を設定します。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_display_name"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">表示名</p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_tag"
+                          title="ブロックにタグを設定します。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_tag"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">タグ</p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_placement_filter"
+                          title="ブロックが設置できる面とブロックを設定します。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_placement_filter"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">配置フィルター</p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_preventsjumping"
+                          title="MOBがブロックを飛び越えることを禁止します。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_preventsjumping"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">飛び越え禁止</p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_unwalkable"
+                          title="MOBがブロックを通り抜けるのを禁止します。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_unwalkable"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">通り抜け禁止</p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_map_color"
+                          title="地図に表示されるブロックの色を設定します。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_map_color"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">地図の色</p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_crafting_table"
+                          title="ブロックに作業台の機能を付けます。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_crafting_table"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">作業台</p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_geometry"
+                          title="ブロックのジオメトリを設定します。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_geometry"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">ジオメトリ</p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_material_instances"
+                          title="ブロックのマテリアルインスタンスを設定します。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_material_instances"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">
+                                マテリアルインスタンス
+                              </p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_entity_collision"
+                          title="ブロックの物理的な衝突判定を設定します。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_entity_collision"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">衝突判定</p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_pick_collision"
+                          title="ブロックの選択時の判定を設定します。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_pick_collision"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">選択判定</p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_rotation"
+                          title="ブロックを回転させます。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_rotation"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">回転</p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_breathability"
+                          title="ブロックの通気性を設定します。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_breathability"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">通気性</p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="
+                            value-element
+                            components_block_light_absorption
+                          "
+                          title="このブロックが吸収する光の量を設定します。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_block_light_absorption"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">光の吸収</p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_block_light_emission"
+                          title="このブロックが発する光の量を設定します。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_block_light_emission"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">発光量</p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_destroy_time"
+                          title="このブロックの破壊にかかる時間を設定します[秒]"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_destroy_time"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">破壊にかかる時間</p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_explosion_resistance"
+                          title="このブロックの爆発耐性を設定します。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_explosion_resistance"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">爆発耐性</p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_breakonpush"
+                          title="ブロックをピストンで押すと破壊されるようにします。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_breakonpush"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">ピストンで破壊</p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_immovable"
+                          title="ブロックをピストンで押し引きできないようにします。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_immovable"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">ピストン押引不可</p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_onlypistonpush"
+                          title="ブロックをピストンで押込みしかできないようにします。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_onlypistonpush"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">
+                                ピストン押込みのみ
+                              </p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_friction"
+                          title="このブロックの上をエンティティが移動するときの止まりにくさを設定します。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_friction"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">摩擦</p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_flammable"
+                          title="ブロックの燃焼に関する設定をします。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_flammable"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">燃焼</p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_event_on_fall_on"
+                          title="ブロックにエンティティが落ちてきた時のイベントを定義します。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_event_on_fall_on"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">
+                                トリガ(落ちてきた時)
+                              </p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_event_on_interact"
+                          title="ブロックにインタラクトした時のイベントを定義します。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_event_on_interact"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">
+                                トリガ(インタラクト)
+                              </p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_event_on_placed"
+                          title="ブロックが設置された時のイベントを定義します。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_event_on_placed"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">
+                                トリガ(置かれた時)
+                              </p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="
+                            value-element
+                            components_event_on_player_placing
+                          "
+                          title="ブロックがプレイヤーによって置かれた時のイベントを定義します。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_event_on_player_placing"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">
+                                トリガ(プレイヤーが置いた時)
+                              </p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_event_on_step_on"
+                          title="ブロックでエンティティが歩き始めた時no"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_event_on_step_on"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">トリガ(踏んだ時)</p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_event_on_step_off"
+                          title="エンティティがブロックを離れた時のイベントを定義します。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_event_on_step_off"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">トリガ(離れた時)</p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="
+                            value-element
+                            components_event_on_player_destroyed
+                          "
+                          title="プレイヤーによってブロックが破壊された時のイベントを定義します。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_event_on_player_destroyed"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">
+                                トリガ(破壊された時)
+                              </p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_event_ticking"
+                          title="ティック毎に発生するイベントを定義します。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_event_ticking"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">
+                                トリガ(ティック毎)
+                              </p>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="value-element components_event_random_ticking"
+                          title="ランダムテックごとに発生するイベントを定義します。"
+                        >
+                          <label class="value-checkbox">
+                            <input
+                              type="checkbox"
+                              name="components_event_random_ticking"
+                              class="element-control-switch invisible-Control"
+                              v-on:click="toggleValueElement"
+                            />
+                            <div class="checkbox-body">
+                              <div class="checkbox-body-box">
+                                <div v-html="svgCheck" />
+                              </div>
+                              <p class="checkbox-body-text">
+                                トリガ(ランダムティック)
+                              </p>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <label
+                          ><input
+                            type="button"
+                            value="Close"
+                            class="modal-close"
+                        /></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <form
+          name="editor-event"
+          id="editor-event"
+          class="editor-event"
+          v-show="editor_show[1]"
+        >
+          <div class="event status-block">
+            <div class="event status-block-controls">
+              <div class="event status-block-header">
+                <div class="event status-block-title">
+                  <p>Event</p>
+                </div>
+                <div class="event status-block-controlBar">
+                  <div
+                    class="event add-status-block"
+                    title="イベントを追加します。"
+                  >
+                    <label class="invisible-Control">
+                      <input
+                        type="button"
+                        id="event-add"
+                        class="event"
+                        v-on:click="addEvent"
+                      />
+                      <div class="add-button-text">+ 追加</div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="event status-block-body">
+              <components
+                v-for="(key, num) in $store.state.events"
+                :key="key.id"
+                :is="`status_block_event`"
+                :index="num"
+              ></components>
+            </div>
+          </div>
+        </form>
+        <form
+          name="editor-permutations"
+          id="editor-permutations"
+          class="editor-permutations"
+          v-show="editor_show[2]"
+        >
+          <div class="permutations block-tabPanel">
+            <div class="permutations block-tab-controls">
+              <div class="permutations block-tab-header">
+                <div class="permutations block-tab-title">
+                  <p>Permutations</p>
+                </div>
+                <div class="permutations block-tab-controlBar">
+                  <div
+                    class="permutations add-block-tab"
+                    title="パーミュテーションを追加します。"
+                  >
+                    <label class="invisible-Control">
+                      <input
+                        type="button"
+                        class="permutations add-block-tab-element"
+                        v-on:click="addPermutation"
+                      />
+                      <div class="add-button-text">+ 追加</div>
+                    </label>
+                  </div>
+                  <div
+                    class="permutations remove-block-tab"
+                    title="パーミュテーションを削除します。"
+                  >
+                    <label class="invisible-Control">
+                      <input
+                        type="button"
+                        class="permutations remove-block-tab-element"
+                        v-on:click="removePermutation"
+                      />
+                      <div class="remove-button-text">- 削除</div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="permutations block-tab-body">
+                <label
+                  v-for="(key, permutation_num) in $store.state.permutations"
+                  :key="key.id"
+                  class="permutations block-tab-children invisible-Control"
+                >
+                  <input
+                    type="radio"
+                    name="permutations"
+                    class="permutations block-tab"
+                    v-on:change="changeSelectedPermutation(permutation_num)"
+                    v-model="selected_permutation"
+                    :value="permutation_num"
+                  />
+                  <div class="tab-number">{{ permutation_num }}</div>
+                </label>
+              </div>
+            </div>
+            <div class="permutations block-tab-contents">
+              <components
+                v-for="(key, num) in $store.state.permutations"
+                :key="key.id"
+                is="block_tab_permutation"
+                v-show="num == selected_permutation"
+                :index="num"
+              ></components>
+            </div>
+          </div>
+        </form>
+        <form
+          name="editor-blockState"
+          id="editor-blockState"
+          class="editor-blockState"
+          v-show="editor_show[3]"
+        >
+          <div class="blockState status-block">
+            <div class="blockState status-block-controls">
+              <div class="blockState status-block-header">
+                <div class="blockState status-block-title">
+                  <p>BlockState</p>
+                </div>
+                <div class="blockState status-block-controlBar">
+                  <div
+                    class="blockState add-status-block"
+                    title="ブロック状態を追加します。"
+                  >
+                    <label class="invisible-Control">
+                      <input
+                        type="button"
+                        id="blockState-add"
+                        class="blockState"
+                        v-on:click="addBlockState"
+                      />
+                      <div class="add-button-text">+ 追加</div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="blockState status-block-body">
+              <components
+                v-for="(block_states, i) in $store.state.block_states"
+                :key="i"
+                :is="`status_block_blockState`"
+                :number="i"
+              ></components>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="separator"></div>
+      <div class="data-check">
+        <div class="preview">
+          <div class="preview-control-bar">
+            <div
+              class="preview-control-child"
+              title="jsonをクリップボードにコピーします。"
+            >
+              <input
+                type="button"
+                id="control-copy"
+                class="invisible-Control"
+              />
+              <label for="control-copy" class="control-text">
+                <p id="control-copy-text">Copy</p>
+              </label>
+            </div>
+            <div
+              class="preview-control-child"
+              title="manifest.jsonをダウンロードします。"
+            >
+              <input
+                type="button"
+                id="control-download"
+                class="invisible-Control"
+              />
+              <label for="control-download" class="control-text">
+                <p>Download</p>
+              </label>
+            </div>
+          </div>
+          <div class="code-preview">
+            <pre class="language-json">
+              <code class="language-json" v-text="json_str"></code>
+            </pre>
+            <label>
+              <div v-html="svgBlank" />
+              <textarea
+                name="code-buffer"
+                id="code-buffer"
+                tabindex="-1"
+                class="invisible-Control"
+              ></textarea>
+            </label>
+          </div>
+        </div>
+        <div class="issue">
+          <input
+            type="checkbox"
+            name="issue-control"
+            id="issue-control"
+            class="invisible-Control"
+            v-on:click="toggleIssue"
+          />
+          <label for="issue-control" class="issue-status-bar">
+            <div class="issue-status-label">
+              <div v-html="svgChevron" />
+              <span>問題</span>
+            </div>
+            <div class="issue-status-num">
+              <div class="issue-status-error">
+                <img
+                  src="~/assets/img/error.svg"
+                  alt=""
+                  width="19px"
+                  height="19px"
+                />
+                <span class="issue-error-num">エラー:0</span>
+              </div>
+              <div class="issue-status-warning">
+                <img
+                  src="~/assets/img/warning.svg"
+                  alt=""
+                  width="19px"
+                  height="19px"
+                />
+                <span class="issue-warning-num">警告:0</span>
+              </div>
+            </div>
+          </label>
+          <div class="issue-content" v-show="show_issue">
+            <ul class="issue-list">
+              <li
+                v-for="(elem, key, num) in $store.state.error_list"
+                :key="num"
+              >
+                <img
+                  src="~/assets/img/error.svg"
+                  alt=""
+                  width="19px"
+                  height="19px"
+                />
+                <p>{{ elem }}</p>
+              </li>
+              <li
+                v-for="(elem, key, num) in $store.state.warning_list"
+                :key="num"
+              >
+                <img
+                  src="~/assets/img/warning.svg"
+                  alt=""
+                  width="19px"
+                  height="19px"
+                />
+                <p>{{ elem }}</p>
+              </li>
+              <li
+                v-show="
+                  Object.keys($store.state.error_list).length == 0 &&
+                  Object.keys($store.state.warning_list).length == 0
+                "
+              >
+                問題はありません
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="unsupported">
+      <p>ご利用のブラウザ(Internet Explorer)では利用できません。</p>
+      <p>
+        <a
+          href="microsoft-edge:https://toka7290.github.io/TokaTools/TokaBlockGenerator/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Edge</a
+        >,Chrome,Firefox,Safariをご利用ください
+      </p>
+    </div>
+  </div>
+</template>
+
+<script>
+import components_loot from "@/components/value_elements/components_loot.vue";
+import components_display_name from "@/components/value_elements/components_display_name.vue";
+import components_tag from "@/components/value_elements/components_tag.vue";
+import components_placement_filter from "@/components/value_elements/components_placement_filter.vue";
+import components_preventsjumping from "@/components/value_elements/components_preventsjumping.vue";
+import components_unwalkable from "@/components/value_elements/components_unwalkable.vue";
+import components_map_color from "@/components/value_elements/components_map_color.vue";
+import components_crafting_table from "@/components/value_elements/components_crafting_table.vue";
+import components_geometry from "@/components/value_elements/components_geometry.vue";
+import components_material_instances from "@/components/value_elements/components_material_instances.vue";
+import components_entity_collision from "@/components/value_elements/components_entity_collision.vue";
+import components_pick_collision from "@/components/value_elements/components_pick_collision.vue";
+import components_rotation from "@/components/value_elements/components_rotation.vue";
+import components_breathability from "@/components/value_elements/components_breathability.vue";
+import components_block_light_absorption from "@/components/value_elements/components_block_light_absorption.vue";
+import components_block_light_emission from "@/components/value_elements/components_block_light_emission.vue";
+import components_destroy_time from "@/components/value_elements/components_destroy_time.vue";
+import components_explosion_resistance from "@/components/value_elements/components_explosion_resistance.vue";
+import components_breakonpush from "@/components/value_elements/components_breakonpush.vue";
+import components_immovable from "@/components/value_elements/components_immovable.vue";
+import components_onlypistonpush from "@/components/value_elements/components_onlypistonpush.vue";
+import components_friction from "@/components/value_elements/components_friction.vue";
+import components_flammable from "@/components/value_elements/components_flammable.vue";
+import components_event_on_fall_on from "@/components/value_elements/components_event_on_fall_on.vue";
+import components_event_on_interact from "@/components/value_elements/components_event_on_interact.vue";
+import components_event_on_placed from "@/components/value_elements/components_event_on_placed.vue";
+import components_event_on_player_placing from "@/components/value_elements/components_event_on_player_placing.vue";
+import components_event_on_step_on from "@/components/value_elements/components_event_on_step_on.vue";
+import components_event_on_step_off from "@/components/value_elements/components_event_on_step_off.vue";
+import components_event_on_player_destroyed from "@/components/value_elements/components_event_on_player_destroyed.vue";
+import components_event_ticking from "@/components/value_elements/components_event_ticking.vue";
+import components_event_random_ticking from "@/components/value_elements/components_event_random_ticking.vue";
+
+import status_block_event from "@/components/status_block_event.vue";
+import status_block_blockState from "@/components/status_block_blockState.vue";
+import block_tab_permutation from "@/components/block_tab_permutation.vue";
+
+import svgCheck from "~/assets/img/check.svg?raw";
+import svgMain from "~/assets/img/main.svg?raw";
+import svgMenu from "~/assets/img/menu.svg?raw";
+import svgEvent from "~/assets/img/event.svg?raw";
+import svgPermutation from "~/assets/img/permutation.svg?raw";
+import svgBlockState from "~/assets/img/blockState.svg?raw";
+import svgBlank from "~/assets/img/blank.svg?raw";
+import svgChevron from "~/assets/img/chevron.svg?raw";
+import svgClose from "~/assets/img/close.svg?raw";
+import componetsSuportList from "@/static/json/format.json";
+import prism from "@/static/lib/prism.js";
+export default {
+  components: {
+    components_loot,
+    components_display_name,
+    components_tag,
+    components_placement_filter,
+    components_preventsjumping,
+    components_unwalkable,
+    components_map_color,
+    components_crafting_table,
+    components_geometry,
+    components_material_instances,
+    components_entity_collision,
+    components_pick_collision,
+    components_rotation,
+    components_breathability,
+    components_block_light_absorption,
+    components_block_light_emission,
+    components_destroy_time,
+    components_explosion_resistance,
+    components_breakonpush,
+    components_immovable,
+    components_onlypistonpush,
+    components_friction,
+    components_flammable,
+    components_event_on_fall_on,
+    components_event_on_interact,
+    components_event_on_placed,
+    components_event_on_player_placing,
+    components_event_on_step_on,
+    components_event_on_step_off,
+    components_event_on_player_destroyed,
+    components_event_ticking,
+    components_event_random_ticking,
+    status_block_event,
+    block_tab_permutation,
+    status_block_blockState,
+  },
+  data() {
+    return {
+      svgCheck,
+      svgMain,
+      svgMenu,
+      svgEvent,
+      svgPermutation,
+      svgBlockState,
+      svgBlank,
+      svgChevron,
+      svgClose,
+      show_drop_zone: false,
+      page_about: false,
+      hamburger_show: false,
+      editor_show: [false, false, false, false],
+      selected_permutation: 0,
+      show_issue: false,
+      json_str: {},
+      format_version: "1.16.100",
+      block_id: "",
+      is_experimental: false,
+      register_to_creative_menu: false,
+      tmp: this.$store.state.components,
+    };
+  },
+  created() {
+    this.toggleEditor();
+    this.setJSON();
+  },
+  computed: {
+    updateComponents() {
+      return JSON.stringify(this.$store.getters.updateComponents);
+    },
+    updateBlockStates() {
+      return JSON.stringify(this.$store.getters.updateBlockStates);
+    },
+  },
+  watch: {
+    updateComponents: function (new_val) {
+      if (new_val) {
+        this.setJSON();
+      }
+    },
+    updateBlockStates: function (new_val) {
+      if (new_val) {
+        console.log(new_val);
+        this.setJSON();
+      }
+    },
+    format_version: function (new_val) {
+      if (new_val) {
+        this.$store.commit("setFormatVersion", new_val);
+        for (const format_key in componetsSuportList) {
+          Array.prototype.forEach.call(
+            document.getElementsByClassName(format_key),
+            (element) => {
+              element.classList.toggle(
+                "unsupported",
+                !componetsSuportList[format_key].includes(new_val)
+              );
+            }
+          );
+        }
+        this.setJSON();
+      }
+    },
+    block_id: function (new_val) {
+      if (new_val) {
+        this.setJSON();
+      }
+    },
+    is_experimental: function (new_val) {
+      if (new_val) {
+        this.setJSON();
+      }
+    },
+    register_to_creative_menu: function (new_val) {
+      if (new_val) {
+        this.setJSON();
+      }
+    },
+  },
+  methods: {
+    fileDragover(event) {
+      event.stopPropagation();
+      event.preventDefault();
+      this.show_drop_zone = true;
+    },
+    fileDragleave(event) {
+      event.stopPropagation();
+      event.preventDefault();
+      this.show_drop_zone = false;
+    },
+    fileDragdrop(_event) {
+      this.show_drop_zone = false;
+      var event = _event;
+      if (_event.originalEvent) {
+        event = _event.originalEvent;
+      }
+      event.stopPropagation();
+      event.preventDefault();
+      // $("#input-file").prop("files", event.dataTransfer.files);
+      // importJsonFile();
+    },
+    toggleAbout(event) {
+      /** @type {Element} */
+      const parent = event.target;
+      if (
+        parent.className == "page-about" ||
+        parent.id == "close-about-btn" ||
+        parent.id == "open-about"
+      ) {
+        this.page_about = !this.page_about;
+      }
+    },
+    toggleHamburger() {
+      this.hamburger_show = !this.hamburger_show;
+    },
+    toggleEditor(select_editor = "") {
+      this.editor_show.fill(false);
+      switch (select_editor) {
+        case "event":
+          this.$set(this.editor_show, 1, true);
+          break;
+        case "permutations":
+          this.$set(this.editor_show, 2, true);
+          break;
+        case "blockState":
+          this.$set(this.editor_show, 3, true);
+          break;
+        case "main":
+        default:
+          this.$set(this.editor_show, 0, true);
+          break;
+      }
+    },
+    toggleIssue() {
+      this.show_issue = !this.show_issue;
+    },
+    setJSON() {
+      let json_data = new Object();
+      json_data["format_version"] = this.$store.state.format_version;
+      json_data["minecraft:block"] = new Object();
+
+      // description
+      let description = new Object();
+      description["identifier"] = this.block_id;
+      switch (this.format_version) {
+        case "1.16.100":
+          // blockState
+          let block_states = this.$store.state.block_states;
+          if (block_states.length) {
+            description["properties"] = {};
+            let property = {};
+            for (let index = 0; index < block_states.length; index++) {
+              const element = block_states[index];
+              property[element.name] = element.data;
+            }
+            description = property;
+          }
+          break;
+        case "1.16.0":
+        case "1.12.0":
+          description["is_experimental"] = this.is_experimental;
+          description["register_to_creative-menu"] =
+            this.register_to_creative_menu;
+          break;
+      }
+      json_data["minecraft:block"]["description"] = description;
+
+      // コンポーネント
+      json_data["minecraft:block"]["components"] = this.$getComponentObject(
+        this.$store.state.format_version,
+        this.$store.getters.mainComponents
+      );
+      // イベント
+      let events = this.$store.state.events;
+      if (events.length) {
+        json_data["minecraft:block"]["events"] = {};
+        for (let index = 0; index < events.length; index++) {
+          const element = events[index];
+          if (!!element.name)
+            json_data["minecraft:block"]["events"] = {
+              ...json_data["minecraft:block"]["events"],
+              [element.name]: this.$getComponentObject(
+                this.$store.state.format_version,
+                element.components
+              ),
+            };
+        }
+      }
+      // パーミュテーション
+      let permutations = this.$store.state.permutations;
+      if (permutations.length) {
+        json_data["minecraft:block"]["permutations"] = new Array();
+        for (let index = 0; index < permutations.length; index++) {
+          const element = permutations[index];
+          if (element.condition)
+            json_data["minecraft:block"]["permutations"] = [
+              ...json_data["minecraft:block"]["permutations"],
+              {
+                condition: element.condition,
+                components: this.$getComponentObject(
+                  this.$store.state.format_version,
+                  element.components
+                ),
+              },
+            ];
+        }
+      }
+      if (process.client) {
+        this.$nextTick(() => {
+          prism.highlightAll();
+        });
+      }
+      this.json_str = JSON.stringify(json_data, null, "  ");
+    },
+    toggleValueElement(event) {
+      /** @type {Element} */
+      const target = event.target;
+      this.$store.commit("toggleMainComponent", [target.name, target.checked]);
+    },
+    addEvent() {
+      this.$store.commit("setStatusBlock", "events");
+    },
+    addBlockState() {
+      this.$store.commit("setStatusBlock", "block_states");
+    },
+    addPermutation() {
+      this.$store.commit("setBlockTab", "permutations");
+    },
+    removePermutation() {
+      this.$store.commit("deleteBlockTab", [
+        "permutations",
+        this.selected_permutation,
+      ]);
+    },
+    changeSelectedPermutation(i) {
+      this.selected_permutation = i;
+    },
+  },
+};
+</script>
