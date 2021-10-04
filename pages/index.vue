@@ -1545,10 +1545,19 @@ export default {
     updateComponents() {
       return JSON.stringify(this.$store.getters.updateComponents);
     },
+    updateBlockStates() {
+      return JSON.stringify(this.$store.getters.updateBlockStates);
+    },
   },
   watch: {
     updateComponents: function (new_val) {
       if (new_val) {
+        this.setJSON();
+      }
+    },
+    updateBlockStates: function (new_val) {
+      if (new_val) {
+        console.log(new_val);
         this.setJSON();
       }
     },
@@ -1653,6 +1662,16 @@ export default {
       switch (this.format_version) {
         case "1.16.100":
           // blockState
+          let block_states = this.$store.state.block_states;
+          if (block_states.length) {
+            description["properties"] = {};
+            let property = {};
+            for (let index = 0; index < block_states.length; index++) {
+              const element = block_states[index];
+              property[element.name] = element.data;
+            }
+            description = property;
+          }
           break;
         case "1.16.0":
         case "1.12.0":
@@ -1663,16 +1682,18 @@ export default {
       }
       json_data["minecraft:block"]["description"] = description;
 
+      // コンポーネント
       json_data["minecraft:block"]["components"] = this.$getComponentObject(
         this.$store.state.format_version,
         this.$store.getters.mainComponents
       );
+      // イベント
       let events = this.$store.state.events;
       if (events.length) {
         json_data["minecraft:block"]["events"] = {};
         for (let index = 0; index < events.length; index++) {
           const element = events[index];
-          // if (!!element.name)
+          if (!!element.name)
             json_data["minecraft:block"]["events"] = {
               ...json_data["minecraft:block"]["events"],
               [element.name]: this.$getComponentObject(
@@ -1680,6 +1701,25 @@ export default {
                 element.components
               ),
             };
+        }
+      }
+      // パーミュテーション
+      let permutations = this.$store.state.permutations;
+      if (permutations.length) {
+        json_data["minecraft:block"]["permutations"] = new Array();
+        for (let index = 0; index < permutations.length; index++) {
+          const element = permutations[index];
+          if (element.condition)
+            json_data["minecraft:block"]["permutations"] = [
+              ...json_data["minecraft:block"]["permutations"],
+              {
+                condition: element.condition,
+                components: this.$getComponentObject(
+                  this.$store.state.format_version,
+                  element.components
+                ),
+              },
+            ];
         }
       }
       if (process.client) {

@@ -8,8 +8,8 @@
             name="blockState-name"
             class="blockState-name"
             placeholder="プロパティ名"
-            :value="name"
-            @change="changeName"
+            v-model="name"
+            v-on:change="onChangedValue"
         /></label>
         <div
           class="blockState remove-status-block"
@@ -36,12 +36,12 @@
           <select
             name="blockState-type"
             class="blockState-type"
-            @change="changeValType"
-            :index="val_type"
+            v-model.number="val_type"
+            v-on:change="onChangedType"
           >
-            <option value="val_Boolean">Boolean</option>
-            <option value="val_Integer">Integer</option>
-            <option value="val_String">String</option>
+            <option v-bind:value="0">Boolean</option>
+            <option v-bind:value="1">Integer</option>
+            <option v-bind:value="2">String</option>
           </select>
         </div>
       </div>
@@ -92,7 +92,7 @@
                   type="number"
                   name="blockState-integer"
                   class="blockState-integer type-array-integer"
-                  :value="datas[number]"
+                  :value="datas[i]"
                   v-on:change="changeDatas($event, i)"
                 />
               </label>
@@ -138,7 +138,7 @@
                   type="text"
                   name="blockState-string"
                   class="blockState-string type-array-string"
-                  v-bind:value="datas[number]"
+                  v-bind:value="datas[i]"
                   v-on:change="changeDatas($event, i)"
                 />
               </label>
@@ -182,13 +182,28 @@ export default {
   },
   props: ["number"],
   created() {
-    this.name = this.$store.state.block_states[this.number].name;
-    this.val_type = this.$store.state.block_states[this.number].type;
-    this.datas = this.$store.state.block_states[this.number].data;
+    this.onChangedValue();
   },
   methods: {
     deleteBlockState() {
       this.$store.commit("deleteStatusBlock", ["block_states", this.number]);
+    },
+    onChangedType() {
+      let [...arr] = this.datas;
+      switch (this.val_type) {
+        case 1:
+          arr.fill(0);
+          break;
+        case 2:
+          arr.fill("");
+          break;
+        case 0:
+        default:
+          arr.splice(2);
+          break;
+      }
+      this.datas = arr;
+      this.onChangedValue();
     },
     addData() {
       if (this.val_type == 1) this.datas = [...this.datas, 0];
@@ -201,34 +216,24 @@ export default {
         this.datas = tmp;
       }
     },
-    changeName(event) {
-      /** @type {Element} */
-      const target = event.target;
-      this.name = target.value;
-      this.onChangedValue();
-    },
-    changeValType(event) {
-      /** @type {Element} */
-      const target = event.target;
-      this.val_type = target.selectedIndex;
-      this.datas = [];
-      this.onChangedValue();
-    },
     changeDatas(event, index = 0) {
       /** @type {Element} */
       const target = event.target;
+      let [...arr] = this.datas;
       switch (this.val_type) {
         case 1:
-          this.datas.splice(index, 1, Number(event.target.value));
+          arr.splice(index, 1, Number(event.target.value));
           break;
         case 2:
-          this.datas.splice(index, 1, event.target.value);
+          arr.splice(index, 1, event.target.value);
           break;
         case 0:
         default:
-          this.datas = [target.checked, !target.checked];
+          arr = [target.checked, !target.checked];
           break;
       }
+      console.log(arr);
+      this.datas = arr;
       this.onChangedValue();
     },
     onChangedValue() {

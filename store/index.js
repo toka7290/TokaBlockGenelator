@@ -29,7 +29,6 @@ export const state = () => ({
    * [{name:"",type:0,data:undefined}]
    */
   block_states: [],
-  main_components: {}, //廃止
   data: "test",
   error_list: {},
   warning_list: {},
@@ -256,4 +255,5 @@ function setObjectEventTreeData(obj, tree, data) {
 export const getters = {
   mainComponents: (states) => states.main,
   updateComponents: (states) => states.components,
+  updateBlockStates: (states) => states.block_states,
 };
