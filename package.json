@@ -14,5 +14,6 @@
   "devDependencies": {
     "@nuxtjs/svg": "^0.2.0",
     "nuxt-svg-loader": "^1.2.0"
-  }
+  },
+  "license": "MIT"
 }
