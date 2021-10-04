@@ -1,9 +1,6 @@
 export default {
   target: "static",
   htmlAttrs: { dir: "ltr" },
-  generate: {
-    dir: "dist",
-  },
   head: {
     title: "とかさんの Block Generator",
     meta: [

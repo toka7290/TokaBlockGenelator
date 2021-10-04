@@ -1,5 +1,7 @@
 {
   "name": "toka-block-generator",
+  "description": "test block generator",
+  "private": true,
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
