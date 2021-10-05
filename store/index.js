@@ -29,7 +29,7 @@ export const state = () => ({
    * [{name:"",type:0,data:undefined}]
    */
   block_states: [],
-  data: "test",
+  // data: "test",
   error_list: {},
   warning_list: {},
 });
@@ -230,6 +230,7 @@ export const mutations = {
   },
   deleteError(states, id) {
     this._vm.$delete(states.error_list, id);
+    console.log(states.error_list, id);
   },
 };
 
@@ -256,4 +257,5 @@ export const getters = {
   mainComponents: (states) => states.main,
   updateComponents: (states) => states.components,
   updateBlockStates: (states) => states.block_states,
+  updateIssue: (states) => states.error_list,
 };

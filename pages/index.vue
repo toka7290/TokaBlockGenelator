@@ -1359,7 +1359,11 @@
                   width="19px"
                   height="19px"
                 />
-                <span class="issue-error-num">エラー:0</span>
+                <span class="issue-error-num"
+                  >エラー:{{
+                    Object.keys($store.state.error_list).length
+                  }}</span
+                >
               </div>
               <div class="issue-status-warning">
                 <img
@@ -1368,7 +1372,11 @@
                   width="19px"
                   height="19px"
                 />
-                <span class="issue-warning-num">警告:0</span>
+                <span class="issue-warning-num"
+                  >警告:{{
+                    Object.keys($store.state.warning_list).length
+                  }}</span
+                >
               </div>
             </div>
           </label>
@@ -1548,6 +1556,9 @@ export default {
     updateBlockStates() {
       return JSON.stringify(this.$store.getters.updateBlockStates);
     },
+    checkIssue() {
+      return JSON.stringify(this.$store.getters.updateIssue);
+    },
   },
   watch: {
     updateComponents: function (new_val) {
@@ -1557,8 +1568,12 @@ export default {
     },
     updateBlockStates: function (new_val) {
       if (new_val) {
-        console.log(new_val);
         this.setJSON();
+      }
+    },
+    checkIssue: function (new_val) {
+      if (new_val) {
+        this.updateIssueList();
       }
     },
     format_version: function (new_val) {
@@ -1581,6 +1596,32 @@ export default {
     block_id: function (new_val) {
       if (new_val) {
         this.setJSON();
+        const block_ID = new_val.split(/:/);
+        let message_id = [
+            "description:identifier:no_namespace",
+            "description:identifier:over_colon",
+            "description:identifier:no_id",
+            "description:identifier:empty_namespace",
+          ],
+          message = [
+            '[Description:identifier] ブロックIDが ":" で区切られていません。"名前空間:ブロックID"の形式になっている必要があります。',
+            '[Description:identifier] 不明なID形式です。"名前空間:ブロックID"の形式になっている必要があります。',
+            '[Description:identifier] ブロックIDが空です。ブロックIDを入力してください。ブロックIDは"名前空間:ブロックID"を入力してください。',
+            '[Description:identifier] 名前空間が空です。名前空間を入力してください。ブロックIDは"名前空間:ブロックID"を入力してください。',
+          ],
+          conditions = [
+            block_ID.length < 2,
+            block_ID.length > 2,
+            block_ID[1] == "",
+            block_ID[0] == "",
+          ];
+        for (let index = 0; index < message_id.length; index++) {
+          if (conditions[index]) {
+            this.$store.commit("addError", [message_id[index], message[index]]);
+          } else {
+            this.$store.commit("deleteError", message_id[index]);
+          }
+        }
       }
     },
     is_experimental: function (new_val) {
@@ -1752,6 +1793,7 @@ export default {
     changeSelectedPermutation(i) {
       this.selected_permutation = i;
     },
+    updateIssueList() {},
   },
 };
 </script>
