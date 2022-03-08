@@ -1,5 +1,6 @@
 {
   "name": "toka-block-generator",
+  "description": "",
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
@@ -9,8 +10,9 @@
   "dependencies": {
     "nuxt": "^2.15.8"
   },
+  "license": "MIT",
   "devDependencies": {
-    "@nuxtjs/svg": "^0.2.0",
+    "@nuxtjs/svg": "^0.4.0",
     "nuxt-svg-loader": "^1.2.0"
   }
 }
